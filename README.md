@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🏭 Breezair Industrial México
 
-## Getting Started
+Sitio web corporativo para CG International, distribuidor oficial de sistemas de enfriamiento evaporativo Breezair en México.
 
-First, run the development server:
+## 🚀 Características
 
+### ✨ Diseño y UX
+- **Diseño Industrial Moderno**: Paleta de colores profesionales y elementos visuales que reflejan la industria
+- **Responsive Design**: Optimizado para desktop, tablet y móvil
+- **Animaciones Suaves**: Implementadas con Framer Motion para una experiencia fluida
+- **Componentes Interactivos**: Hover effects, transiciones y micro-interacciones
+
+### 🔧 Funcionalidades
+- **Navegación Moderna**: Header sticky con menú hamburguesa responsive
+- **Hero Dinámico**: Sección principal con gradientes, animaciones y CTAs llamativos
+- **Catálogo de Productos**: Tarjetas de productos con especificaciones y badges
+- **Testimonios Reales**: Carousel de testimonios con avatares y ratings
+- **Formulario Avanzado**: Validación en tiempo real y estados de loading
+- **Footer Completo**: Multiple columnas, newsletter y enlaces sociales
+
+### 🛠 Tecnologías
+
+- **Framework**: Next.js 15 (App Router)
+- **Styling**: Tailwind CSS v4
+- **Animaciones**: Framer Motion 11
+- **Formularios**: React hooks con validación
+- **Email**: Resend SDK para envío de correos
+- **Tipografía**: Inter font via Google Fonts
+
+## ⚡ Instalación y Desarrollo
+
+### Prerrequisitos
+- Node.js 18+ 
+- npm o yarn
+
+### Setup
 ```bash
+# Instalar dependencias
+npm install
+
+# Configurar variables de entorno (opcional para desarrollo)
+# Solo necesario para probar el formulario de contacto
+RESEND_API_KEY=your-resend-api-key-here
+
+# Desarrollo
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Scripts Disponibles
+```bash
+npm run dev         # Servidor desarrollo (Turbopack)
+npm run build       # Build de producción
+npm run start       # Servidor producción
+npm run lint        # ESLint check
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 📧 Configuración de Email
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+El formulario de contacto usa **Resend** para envío de emails:
 
-## Learn More
+1. Crear cuenta en [Resend](https://resend.com)
+2. Generar API key
+3. Agregar `RESEND_API_KEY` como variable de entorno
+4. Los emails se envían a: `ventas@cg.international` y `soporte@cg.international`
 
-To learn more about Next.js, take a look at the following resources:
+## 🔍 SEO y Metadatos
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Implementado
+- ✅ Meta tags dinámicos por página
+- ✅ Open Graph completo
+- ✅ Twitter Cards
+- ✅ Schema.org JSON-LD (Organization, Website, Product)
+- ✅ Sitemap XML completo
+- ✅ Robots.txt optimizado
+- ✅ Canonical URLs
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Keywords Principales
+- enfriamiento evaporativo industrial
+- Breezair México
+- ahorro energético industrial  
+- climatización industrial
+- CG International
 
-## Deploy on Vercel
+## 🚀 Deployment en Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+# Deploy automático conectando GitHub a Vercel
+# O manual:
+npm run build
+vercel --prod
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Variables en Producción
+- `RESEND_API_KEY`: API key de Resend (opcional)
+
+## 📞 Contacto
+
+**CG International**
+- Email: ventas@cg.international
+- Website: https://www.cg.international/
+- Teléfono: +52 55 5555-5555
+
+---
+
+*Sitio desarrollado con Next.js 15 y Tailwind CSS para la industria mexicana*
