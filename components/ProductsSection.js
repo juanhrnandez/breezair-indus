@@ -6,10 +6,10 @@ import Link from 'next/link';
 import ProductCard from './ProductCard';
 
 const productCategories = [
-  { id: 'all', name: 'Todos los Productos', icon: '🏭' },
-  { id: 'industrial', name: 'Industrial Heavy Duty', icon: '⚙️' },
-  { id: 'commercial', name: 'Comercial Premium', icon: '🏢' },
-  { id: 'specialized', name: 'Aplicaciones Especiales', icon: '🔬' }
+  { id: 'all', name: 'Todos los Productos', icon: <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/></svg> },
+  { id: 'industrial', name: 'Industrial Heavy Duty', icon: <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm.53 5.47a.75.75 0 00-1.06 0L6.72 12.47a.75.75 0 101.06 1.06L12 9.31l4.22 4.22a.75.75 0 101.06-1.06l-4.75-4.75z"/></svg> },
+  { id: 'commercial', name: 'Comercial Premium', icon: <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M4 21V9l8-6 8 6v12h-6v-7h-4v7H4zm2-2h2v-5h8v5h2v-9L12 6 6 10v9z"/></svg> },
+  { id: 'specialized', name: 'Aplicaciones Especiales', icon: <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0L19.2 12l-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg> }
 ];
 
 export default function ProductsSection({ products }) {
@@ -116,10 +116,10 @@ export default function ProductsSection({ products }) {
 
           <h2 className="heading-premium-2 max-w-4xl mx-auto mb-6">
             Soluciones Industriales de
-            <span className="text-gradient-premium"> Climatización Premium</span>
+            <span className="text-blue-900 font-bold"> Climatización Premium</span>
           </h2>
 
-          <p className="text-premium-large text-center max-w-3xl mx-auto mb-12">
+          <p className="text-premium-products text-center max-w-3xl mx-auto mb-12">
             Desde naves industriales hasta aplicaciones especializadas, 
             nuestra línea completa ofrece la solución perfecta para cada necesidad.
           </p>
@@ -130,15 +130,15 @@ export default function ProductsSection({ products }) {
               <motion.button
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
-                className={`px-6 py-3 rounded-2xl font-medium text-sm transition-all duration-300 ${
+                className={`px-6 py-3 rounded-2xl font-medium text-sm transition-all duration-300 flex items-center justify-center ${
                   activeCategory === category.id
-                    ? 'bg-gradient-primary text-white shadow-industrial-md'
+                    ? 'bg-gradient-primary text-blue-500 shadow-industrial-md'
                     : 'glass-effect border border-gray-200 text-steel hover:bg-gray-50'
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <span className="mr-2">{category.icon}</span>
+                <span className="mr-2 flex items-center">{category.icon}</span>
                 {category.name}
               </motion.button>
             ))}
@@ -152,7 +152,7 @@ export default function ProductsSection({ products }) {
                 onClick={() => setViewMode('grid')}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   viewMode === 'grid'
-                    ? 'bg-gradient-primary text-white shadow-sm'
+                    ? 'bg-gradient-primary text-blue-500 shadow-sm'
                     : 'text-steel hover:bg-gray-50'
                 }`}
               >
@@ -165,7 +165,7 @@ export default function ProductsSection({ products }) {
                 onClick={() => setViewMode('list')}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   viewMode === 'list'
-                    ? 'bg-gradient-primary text-white shadow-sm'
+                    ? 'bg-gradient-primary text-blue-500 shadow-sm'
                     : 'text-steel hover:bg-gray-50'
                 }`}
               >
@@ -217,34 +217,34 @@ export default function ProductsSection({ products }) {
                 <svg className="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
-                <span className="text-sm font-medium">Asesoría Técnica Especializada</span>
+                <span className="text-black text-sm font-medium">Asesoría Técnica Especializada</span>
               </div>
               
               <h3 className="heading-premium-3 text-white mb-6">
                 ¿Necesitas Ayuda para Elegir la Solución Perfecta?
               </h3>
               
-              <p className="text-premium-large text-white/90 mb-8 max-w-3xl mx-auto">
+              <p className="text-premium-products text-white/90 mb-8 max-w-3xl mx-auto">
                 Nuestro equipo de ingenieros especialistas puede analizar tu aplicación específica 
                 y recomendar la configuración óptima para tu proyecto industrial.
               </p>
               
               <div className="grid md:grid-cols-3 gap-6 mb-10">
                 {[
-                  { icon: '📋', title: 'Análisis Gratuito', desc: 'Evaluación técnica sin costo' },
-                  { icon: '🎯', title: 'Solución Personalizada', desc: 'Diseño específico para tu necesidad' },
-                  { icon: '⚡', title: 'ROI Garantizado', desc: 'Retorno de inversión demostrable' }
+                  { icon: <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>, title: 'Análisis Gratuito', desc: 'Evaluación técnica sin costo' },
+                  { icon: <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" /></svg>, title: 'Solución Personalizada', desc: 'Diseño específico para tu necesidad' },
+                  { icon: <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>, title: 'ROI Garantizado', desc: 'Retorno de inversión demostrable' }
                 ].map((item, idx) => (
                   <div key={idx} className="text-center">
-                    <div className="text-3xl mb-3">{item.icon}</div>
-                    <h4 className="font-semibold text-lg text-white mb-2">{item.title}</h4>
-                    <p className="text-white/80 text-sm">{item.desc}</p>
+                    <div className="text-3xl mb-3 flex justify-center">{item.icon}</div>
+                    <h4 className="font-semibold text-lg text-black mb-2">{item.title}</h4>
+                    <p className="text-black/80 text-sm">{item.desc}</p>
                   </div>
                 ))}
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="#contacto" className="btn-premium btn-premium-outline btn-premium-lg">
+                <Link href="#contacto" className="btn-premium btn-premium-primary btn-premium-lg">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>

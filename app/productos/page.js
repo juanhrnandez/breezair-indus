@@ -1,5 +1,6 @@
 import ProductsSection from '../../components/ProductsSection';
 import StructuredData from '../../components/StructuredData';
+import Image from 'next/image';
 
 export const metadata = {
   title: 'Productos | Breezair Industrial México',
@@ -198,6 +199,20 @@ export default function ProductosPage() {
       
       {/* Hero Section específico para productos */}
       <section className="section-premium relative overflow-hidden bg-gradient-hero text-white">
+        {/* Imagen principal de fondo */}
+        <div className="absolute inset-0">
+          <Image 
+            src="/images/breezair-1.jpg"
+            alt="Sistemas de enfriamiento evaporativo Breezair Industrial"
+            fill
+            className="object-cover"
+            style={{ filter: 'blur(1px)' }}
+            priority
+          />
+          {/* Overlay azul */}
+          <div className="absolute inset-0 bg-blue-900/60"></div>
+        </div>
+        
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-1/4 right-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
           <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-blue-400 rounded-full blur-3xl"></div>
@@ -216,7 +231,7 @@ export default function ProductosPage() {
             <span className="block text-blue-200">Evaporativo Industrial</span>
           </h1>
 
-          <p className="text-premium-large max-w-4xl mx-auto mb-12 text-blue-100">
+          <p className="text-premium-large max-w-4xl mx-auto mb-12 text-white">
             Descubre nuestra línea completa de soluciones Breezair: desde aplicaciones 
             industriales pesadas hasta configuraciones especializadas personalizadas. 
             Cada sistema garantiza máxima eficiencia energética y aire 100% exterior filtrado.
@@ -224,12 +239,12 @@ export default function ProductosPage() {
 
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             {[
-              { icon: '🏭', title: '4 Series Disponibles', desc: 'Para cada aplicación específica' },
-              { icon: '⚡', title: 'Hasta 87% Ahorro', desc: 'En costos de energía comprobado' },
-              { icon: '🛡️', title: 'Hasta 10 Años', desc: 'De garantía según serie' }
+              { icon: <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/></svg>, title: '4 Series Disponibles', desc: 'Para cada aplicación específica' },
+              { icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>, title: 'Hasta 87% Ahorro', desc: 'En costos de energía comprobado' },
+              { icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>, title: 'Hasta 10 Años', desc: 'De garantía según serie' }
             ].map((item, idx) => (
               <div key={idx} className="text-center">
-                <div className="text-4xl mb-4">{item.icon}</div>
+                <div className="flex justify-center mb-4">{item.icon}</div>
                 <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
                 <p className="text-blue-200 text-sm">{item.desc}</p>
               </div>
@@ -248,7 +263,7 @@ export default function ProductosPage() {
             <h2 className="heading-premium-2 text-steel-dark mb-6">
               Comparación Técnica de Series
             </h2>
-            <p className="text-premium-large text-steel-light max-w-3xl mx-auto">
+            <p className="text-premium-products text-steel-light max-w-3xl mx-auto">
               Encuentra la solución perfecta para tu proyecto comparando las especificaciones 
               técnicas de todas nuestras series Breezair.
             </p>
@@ -321,13 +336,13 @@ export default function ProductosPage() {
             ¿Necesitas Ayuda para Elegir la Serie Correcta?
           </h2>
           
-          <p className="text-premium-large max-w-3xl mx-auto mb-12 text-blue-100">
+          <p className="text-premium-products max-w-3xl mx-auto mb-12 text-blue-100">
             Nuestros ingenieros especialistas pueden analizar tu proyecto específico y 
             recomendar la configuración óptima, incluyendo cálculos de ROI y propuesta técnica detallada.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/contacto" className="btn-premium btn-premium-outline btn-premium-lg">
+            <a href="/contacto" className="btn-premium btn-premium-primary btn-premium-lg">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>

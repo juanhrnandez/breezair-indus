@@ -1,5 +1,6 @@
 import AboutSection from '../../components/AboutSection';
 import StructuredData from '../../components/StructuredData';
+import Image from 'next/image';
 
 export const metadata = {
   title: 'Acerca de Nosotros | CG International - Breezair Industrial México',
@@ -89,6 +90,20 @@ export default function NosotrosPage() {
       
       {/* Hero Section específico para nosotros */}
       <section className="section-premium relative overflow-hidden bg-gradient-steel text-white">
+        {/* Imagen principal de fondo */}
+        <div className="absolute inset-0">
+          <Image 
+            src="/images/breezair-1.jpg"
+            alt="CG International - Instalaciones industriales Breezair"
+            fill
+            className="object-cover"
+            style={{ filter: 'blur(1px)' }}
+            priority
+          />
+          {/* Overlay gris */}
+          <div className="absolute inset-0 bg-gray-800/70"></div>
+        </div>
+        
         <div className="absolute inset-0 opacity-30">
           <div className="absolute top-1/4 left-0 w-96 h-96 bg-blue-400 rounded-full blur-3xl"></div>
           <div className="absolute bottom-1/4 right-0 w-80 h-80 bg-white rounded-full blur-3xl"></div>
@@ -115,13 +130,13 @@ export default function NosotrosPage() {
 
           <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {[
-              { number: '25+', label: 'Años de Experiencia', icon: '🏆' },
-              { number: '500+', label: 'Proyectos Completados', icon: '🏭' },
-              { number: '50+', label: 'Clientes Satisfechos', icon: '🤝' },
-              { number: '87%', label: 'Ahorro Energético Promedio', icon: '⚡' }
+              { number: '25+', label: 'Años de Experiencia', icon: <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> },
+              { number: '500+', label: 'Proyectos Completados', icon: <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/></svg> },
+              { number: '50+', label: 'Clientes Satisfechos', icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg> },
+              { number: '87%', label: 'Ahorro Energético Promedio', icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> }
             ].map((stat, idx) => (
               <div key={idx} className="text-center">
-                <div className="text-3xl mb-2">{stat.icon}</div>
+                <div className="flex justify-center mb-2">{stat.icon}</div>
                 <div className="text-3xl font-bold mb-2">{stat.number}</div>
                 <div className="text-blue-200 text-sm">{stat.label}</div>
               </div>
@@ -140,7 +155,7 @@ export default function NosotrosPage() {
             <h2 className="heading-premium-2 text-steel-dark mb-6">
               Nuestro Equipo de Liderazgo
             </h2>
-            <p className="text-premium-large text-steel-light max-w-3xl mx-auto">
+            <p className="text-premium-products text-steel-light max-w-3xl mx-auto">
               Profesionales con décadas de experiencia en ingeniería industrial, 
               sustentabilidad y desarrollo de negocios especializados.
             </p>
@@ -198,13 +213,13 @@ export default function NosotrosPage() {
             ¿Listo para ser Nuestro Próximo Caso de Éxito?
           </h2>
           
-          <p className="text-premium-large max-w-3xl mx-auto mb-12 text-blue-100">
+          <p className="text-premium-products max-w-3xl mx-auto mb-12 text-blue-100">
             Con 25 años de experiencia transformando la industria mexicana, 
             estamos listos para hacer de tu proyecto el siguiente gran éxito sustentable.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/contacto" className="btn-premium btn-premium-outline btn-premium-lg">
+            <a href="/contacto" className="btn-premium btn-premium-primary btn-premium-lg">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>

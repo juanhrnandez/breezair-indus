@@ -3,6 +3,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ProductsPreview({ products }) {
   const ref = useRef(null);
@@ -63,7 +64,7 @@ export default function ProductsPreview({ products }) {
             <span className="text-gradient-premium"> Enfriamiento Evaporativo</span>
           </h2>
 
-          <p className="text-premium-large text-center max-w-3xl mx-auto">
+          <p className="text-premium-products text-center max-w-3xl mx-auto">
             Descubre nuestra línea completa de sistemas Breezair diseñados para maximizar 
             la eficiencia energética en aplicaciones industriales.
           </p>
@@ -82,11 +83,15 @@ export default function ProductsPreview({ products }) {
               variants={itemVariants}
               className="card-premium p-8 hover-float group text-center"
             >
-              {/* Product Icon */}
-              <div className="w-20 h-20 bg-gradient-hero rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
-                </svg>
+              {/* Product Image */}
+              <div className="w-full h-48 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl overflow-hidden mb-6 group-hover:scale-105 transition-transform duration-300">
+                <Image 
+                  src={`/images/breezair-product-${index + 1}.jpg`}
+                  alt={`${product.title} - ${product.series} Series`}
+                  width={300}
+                  height={192}
+                  className="w-full h-full object-cover"
+                />
               </div>
 
               {/* Badge */}
@@ -121,7 +126,7 @@ export default function ProductsPreview({ products }) {
               <div className="space-y-2 mb-6">
                 {product.features.slice(0, 2).map((feature, idx) => (
                   <div key={idx} className="flex items-center gap-2 text-sm text-steel">
-                    <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-green-500 shrink-0" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
                     <span>{feature}</span>
@@ -149,7 +154,7 @@ export default function ProductsPreview({ products }) {
                 ¿Necesitas Ver Todas Nuestras Series?
               </h3>
               
-              <p className="text-premium-large text-white/90 mb-8 max-w-3xl mx-auto">
+              <p className="text-premium-products text-white/90 mb-8 max-w-3xl mx-auto">
                 Explora nuestro catálogo completo con especificaciones técnicas detalladas, 
                 comparaciones entre series y configuraciones personalizadas.
               </p>
@@ -159,7 +164,7 @@ export default function ProductsPreview({ products }) {
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                   </svg>
-                  Ver Catálogo Completo
+                  <p className="text-sm text-black">Ver Catálogo Completo</p>
                 </Link>
                 
                 <Link href="#contacto" className="btn-premium btn-premium-primary btn-premium-lg">

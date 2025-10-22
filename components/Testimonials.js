@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 const testimonials = [
   {
@@ -114,6 +115,27 @@ export default function Testimonials() {
             backgroundSize: '80px 80px, 40px 40px'
           }}
         ></div>
+        
+        {/* Industrial facility images as background */}
+        <div className="absolute top-16 left-16 w-40 h-32 rounded-2xl overflow-hidden opacity-10">
+          <Image 
+            src="/images/breezair-8.png"
+            alt="Industrial Facility"
+            width={160}
+            height={128}
+            className="w-full h-full object-cover"
+          />
+        </div>
+        
+        <div className="absolute bottom-20 right-20 w-36 h-28 rounded-xl overflow-hidden opacity-10">
+          <Image 
+            src="/images/breezair-9.png"
+            alt="Breezair Installation"
+            width={144}
+            height={112}
+            className="w-full h-full object-cover"
+          />
+        </div>
       </div>
 
       <div className="container-premium relative z-10">
@@ -125,7 +147,7 @@ export default function Testimonials() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <div className="inline-flex items-center gap-3 glass-effect rounded-full px-6 py-3 mb-8 border border-white/20">
+          <div className="inline-flex items-center mt-8 gap-3 glass-effect rounded-full px-6 py-3 mb-8 border border-white/20">
             <div className="flex items-center gap-1">
               {[...Array(5)].map((_, i) => (
                 <svg key={i} className="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
@@ -244,7 +266,7 @@ export default function Testimonials() {
           transition={{ delay: 0.4, duration: 0.8 }}
           className="relative"
         >
-          <div className="card-premium p-12 relative overflow-hidden">
+          <div className="card-premium p-12 mb-8 relative overflow-hidden">
             {/* Background gradient */}
             <div className="absolute inset-0 bg-linear-to-r from-white via-gray-50 to-white rounded-3xl"></div>
             
@@ -260,10 +282,43 @@ export default function Testimonials() {
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                 {[
-                  { number: '500+', label: 'Instalaciones Activas', icon: '🏭' },
-                  { number: '98.7%', label: 'Satisfacción Cliente', icon: '⭐' },
-                  { number: '15+', label: 'Años de Experiencia', icon: '🏆' },
-                  { number: '24/7', label: 'Soporte Especializado', icon: '🔧' }
+                  { 
+                    number: '500+', 
+                    label: 'Instalaciones Activas', 
+                    icon: (
+                      <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                      </svg>
+                    )
+                  },
+                  { 
+                    number: '98.7%', 
+                    label: 'Satisfacción Cliente', 
+                    icon: (
+                      <svg className="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                      </svg>
+                    )
+                  },
+                  { 
+                    number: '15+', 
+                    label: 'Años de Experiencia', 
+                    icon: (
+                      <svg className="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                      </svg>
+                    )
+                  },
+                  { 
+                    number: '24/7', 
+                    label: 'Soporte Especializado', 
+                    icon: (
+                      <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 2.25a9.75 9.75 0 110 19.5 9.75 9.75 0 010-19.5z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+                      </svg>
+                    )
+                  }
                 ].map((stat, index) => (
                   <motion.div
                     key={index}
@@ -273,11 +328,11 @@ export default function Testimonials() {
                     transition={{ delay: 0.1 * index + 0.6 }}
                     className="group"
                   >
-                    <div className="text-3xl mb-2">{stat.icon}</div>
+                    <div className="flex justify-center mb-2">{stat.icon}</div>
                     <div className="text-4xl font-bold text-gradient-premium mb-2 group-hover:scale-110 transition-transform duration-300">
                       {stat.number}
                     </div>
-                    <div className="text-sm text-steel-light font-medium">
+                    <div className="text-sm text-gray-800 font-medium">
                       {stat.label}
                     </div>
                   </motion.div>
@@ -299,7 +354,7 @@ function TestimonialCardPremium({ testimonial, index }) {
       transition={{ type: "spring", stiffness: 300 }}
     >
       {/* Premium Quote Icon */}
-      <div className="absolute top-6 right-6 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
+      <div className="absolute top-2 right-2 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
         <svg className="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
           <path d="M14,17H17L19,13V7H13V13H16M6,17H9L11,13V7H5V13H8L6,17Z"/>
         </svg>
@@ -309,7 +364,7 @@ function TestimonialCardPremium({ testimonial, index }) {
       <div className="relative z-10">
         {/* Quote Text */}
         <div className="mb-8">
-          <p className="text-premium-body text-white/95 leading-relaxed italic">
+          <p className=" text-white leading-relaxed italic">
             &ldquo;{testimonial.text}&rdquo;
           </p>
         </div>
@@ -358,8 +413,12 @@ function TestimonialCardPremium({ testimonial, index }) {
             <span className="glass-effect px-3 py-1 rounded-full text-white/90 text-xs font-medium border border-white/20">
               {testimonial.industry}
             </span>
-            <span className="glass-effect px-3 py-1 rounded-full text-white/80 text-xs border border-white/20">
-              📍 {testimonial.location}
+            <span className="glass-effect px-3 py-1 rounded-full text-white/80 text-xs border border-white/20 flex items-center gap-1">
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              {testimonial.location}
             </span>
           </div>
           

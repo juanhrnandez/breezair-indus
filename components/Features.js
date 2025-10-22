@@ -2,6 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import Image from 'next/image';
 
 const features = [
   {
@@ -160,7 +161,7 @@ export default function Features() {
             <span className="text-gradient-premium"> Vanguardia Global</span>
           </h2>
 
-          <p className="text-premium-large text-center max-w-3xl mx-auto">
+          <p className="text-premium-products text-center max-w-3xl mx-auto">
             Soluciones de enfriamiento evaporativo que combinan eficiencia energética extrema, 
             sostenibilidad ambiental y rendimiento industrial superior.
           </p>
@@ -250,20 +251,23 @@ export default function Features() {
                 <svg className="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
-                <span className="text-sm font-medium">Consultoría Premium</span>
+                <span className="text-black font-medium">Consultoría Premium</span>
               </div>
               
               <h3 className="heading-premium-3 text-white mb-4">
                 ¿Necesitas una Solución Industrial Personalizada?
               </h3>
               
-              <p className="text-premium-large text-white/90 mb-8 max-w-2xl mx-auto">
+              <p className="text-premium-products text-white/90 mb-8 max-w-2xl mx-auto">
                 Nuestro equipo de ingenieros especialistas puede diseñar y dimensionar 
                 la solución perfecta para tu aplicación industrial específica.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#contacto" className="btn-premium btn-premium-outline btn-premium-lg">
+                <a 
+                  href="#contacto" 
+                  className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl font-semibold text-gray-900 bg-white border-2 border-gray-900 hover:bg-gray-900 hover:text-white transition-all duration-300"
+                >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>

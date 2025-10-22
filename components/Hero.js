@@ -1,6 +1,7 @@
-'use client';
+ 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 
@@ -12,7 +13,7 @@ export default function Hero() {
   });
 
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 1]); // Mantener opacidad hasta 80% del scroll
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -66,22 +67,36 @@ export default function Hero() {
     <section 
       ref={ref}
       className="section-hero relative overflow-hidden"
-      style={{
-        backgroundImage: `
-          radial-gradient(circle at 20% 80%, rgba(0, 76, 151, 0.3) 0%, transparent 50%),
-          radial-gradient(circle at 80% 20%, rgba(47, 58, 69, 0.4) 0%, transparent 50%),
-          linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 30%, var(--color-steel) 100%)
-        `
-      }}
     >
-      {/* Parallax Background Elements */}
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0">
+        <Image 
+          src="/images/breezair-1.jpg"
+          alt="Breezair Industrial Installation"
+          fill
+          className="object-cover" 
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/85 via-slate-500/75 to-blue-900/85"></div>
+        <div className="absolute inset-0 "></div>
+      </div>
+      {/* Parallax Background Elements - Converted to Particles */}
       <motion.div 
         className="absolute inset-0 overflow-hidden"
         style={{ y }}
       >
-        <div className="absolute top-10 right-10 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 left-10 w-64 h-64 bg-gradient-primary opacity-10 rounded-full blur-2xl"></div>
-        <div className="absolute top-1/2 left-1/3 w-32 h-32 bg-white/5 rounded-full blur-xl"></div>
+        {/* Subtle animated particles */}
+        <div className="absolute top-10 right-10 w-2 h-2 bg-white/20 rounded-full animate-pulse"></div>
+        <div className="absolute top-32 right-32 w-1 h-1 bg-blue-200/30 rounded-full animate-ping"></div>
+        <div className="absolute bottom-20 left-10 w-3 h-3 bg-white/15 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute bottom-40 left-40 w-1.5 h-1.5 bg-blue-100/25 rounded-full animate-ping" style={{animationDelay: '2s'}}></div>
+        <div className="absolute top-1/2 left-1/3 w-2 h-2 bg-white/10 rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
+        <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-blue-200/20 rounded-full animate-ping" style={{animationDelay: '1.5s'}}></div>
+        
+        {/* Floating geometric shapes */}
+        <div className="absolute top-16 left-16 w-8 h-8 border border-white/10 rounded-lg rotate-45 animate-pulse"></div>
+        <div className="absolute bottom-24 right-24 w-6 h-6 border border-blue-200/15 rounded-full animate-ping" style={{animationDelay: '3s'}}></div>
+        <div className="absolute top-3/4 left-1/4 w-4 h-4 border border-white/8 rotate-12 animate-pulse" style={{animationDelay: '2.5s'}}></div>
       </motion.div>
 
       {/* Grid Pattern Overlay */}
@@ -99,8 +114,7 @@ export default function Hero() {
       </div>
 
       <motion.div 
-        className="container-premium relative z-10"
-        style={{ opacity }}
+        className="container-premium relative z-20"
       >
         <motion.div
           className="hero-content"
@@ -111,17 +125,17 @@ export default function Hero() {
           {/* Badge Industrial */}
           <motion.div
             variants={itemVariants}
-            className="inline-flex items-center gap-3 glass-effect rounded-full px-6 py-3 mb-8 border border-white/20"
+            className="inline-flex items-center gap-3 bg-white/15 backdrop-blur-md rounded-full px-6 py-3 mb-8 border border-white/30 shadow-xl"
           >
             <div className="relative">
               <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
               <div className="absolute inset-0 w-3 h-3 bg-green-400 rounded-full animate-ping"></div>
             </div>
-            <span className="text-white/90 font-medium text-sm tracking-wide">
+            <span className="text-white font-medium text-sm tracking-wide">
               Tecnología industrial líder en México
             </span>
-            <div className="w-1 h-1 bg-white/40 rounded-full"></div>
-            <span className="text-white/70 text-xs">2024</span>
+            <div className="w-1 h-1 bg-white/60 rounded-full"></div>
+            <span className="text-white/90 text-xs font-medium">2024</span>
           </motion.div>
 
           {/* Título Principal */}
@@ -174,19 +188,31 @@ export default function Hero() {
             className="hero-stats"
           >
             {[
-              { number: "87%", label: "Ahorro Energético", icon: "⚡" },
-              { number: "100%", label: "Aire Exterior", icon: "🌿" },
-              { number: "24/7", label: "Operación Continua", icon: "🔄" }
+              { 
+                number: "87%", 
+                label: "Ahorro Energético", 
+                icon: <svg className="w-8 h-8 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" /></svg>
+              },
+              { 
+                number: "100%", 
+                label: "Aire Exterior", 
+                icon: <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+              },
+              { 
+                number: "24/7", 
+                label: "Operación Continua", 
+                icon: <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+              }
             ].map((stat, index) => (
               <motion.div
                 key={index}
-                className="hero-stat hover-float"
-                whileHover={{ scale: 1.05 }}
+                className="hero-stat hover-float bg-white/10 backdrop-blur-md border border-white/20"
+                whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.15)" }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <div className="text-2xl mb-2">{stat.icon}</div>
-                <div className="hero-stat-number">{stat.number}</div>
-                <div className="hero-stat-label">{stat.label}</div>
+                <div className="mb-3">{stat.icon}</div>
+                <div className="hero-stat-number text-white font-bold">{stat.number}</div>
+                <div className="hero-stat-label text-white/90">{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>
@@ -196,13 +222,13 @@ export default function Hero() {
             variants={itemVariants}
             className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12"
           >
-            <Link href="#productos" className="btn-premium btn-premium-primary btn-premium-lg group">
+            <Link href="#productos" className="btn-premium btn-premium-primary btn-premium-lg group bg-blue-600 hover:bg-blue-700 text-white shadow-xl">
               <svg className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
               </svg>
               Explorar Productos
             </Link>
-            <Link href="#contacto" className="btn-premium btn-premium-outline btn-premium-lg group">
+            <Link href="#contacto" className="btn-premium btn-premium-outline btn-premium-lg group bg-white/10 backdrop-blur-md border-2 border-white text-white hover:bg-white hover:text-blue-700 shadow-xl">
               <svg className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
@@ -210,16 +236,14 @@ export default function Hero() {
             </Link>
           </motion.div>
 
-          {/* Floating Industrial Elements */}
+          {/* Floating Industrial Elements - Converted to Subtle Particles */}
           <div className="absolute top-20 right-10 hidden lg:block">
             <motion.div
               variants={floatingVariants}
               animate="floating"
-              className="w-24 h-24 glass-effect rounded-2xl border border-white/20 flex items-center justify-center"
+              className="w-12 h-12 border-2 border-white/20 rounded-2xl backdrop-blur-sm bg-white/5 flex items-center justify-center"
             >
-              <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
-              </svg>
+              <div className="w-3 h-3 bg-white/40 rounded-full animate-pulse"></div>
             </motion.div>
           </div>
 
@@ -228,11 +252,9 @@ export default function Hero() {
               variants={floatingVariants}
               animate="floating"
               style={{ animationDelay: "2s" }}
-              className="w-16 h-16 glass-effect rounded-xl border border-white/20 flex items-center justify-center"
+              className="w-8 h-8 border border-white/15 rounded-xl backdrop-blur-sm bg-white/5 flex items-center justify-center"
             >
-              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
+              <div className="w-2 h-2 bg-blue-200/50 rounded-full animate-ping"></div>
             </motion.div>
           </div>
 
@@ -241,24 +263,21 @@ export default function Hero() {
               variants={floatingVariants}
               animate="floating"
               style={{ animationDelay: "4s" }}
-              className="w-20 h-20 glass-effect rounded-full border border-white/20 flex items-center justify-center"
+              className="w-10 h-10 border border-white/10 rounded-full backdrop-blur-sm bg-white/5 flex items-center justify-center"
             >
-              <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-              </svg>
+              <div className="w-2.5 h-2.5 bg-white/30 rounded-full animate-pulse"></div>
             </motion.div>
           </div>
         </motion.div>
 
         {/* Scroll Indicator Premium */}
         <motion.div
-          className="scroll-indicator"
+          className="scroll-indicator text-white"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5 }}
         >
-          <div className="scroll-mouse"></div>
-          <p className="text-sm font-medium tracking-wide">Descubre más</p>
+         
         </motion.div>
       </motion.div>
 

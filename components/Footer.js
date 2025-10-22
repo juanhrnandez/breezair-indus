@@ -135,38 +135,6 @@ export default function Footer() {
               </motion.div>
             ))}
           </div>
-
-          {/* Newsletter Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-12 pt-8 border-t border-white/20"
-          >
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8">
-              <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div>
-                  <h3 className="text-xl font-semibold mb-2 text-white">Mantente actualizado</h3>
-                  <p className="text-white">
-                    Recibe las últimas noticias sobre tecnología industrial y tips de eficiencia energética.
-                  </p>
-                </div>
-                <div className="flex gap-2">
-                  <input
-                    type="email"
-                    placeholder="tu.email@empresa.com"
-                    className="flex-1 px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/70 focus:outline-none focus:border-white/40"
-                  />
-                  <button className="btn btn-primary">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </motion.div>
         </div>
 
         {/* Bottom Bar */}

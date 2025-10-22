@@ -256,7 +256,7 @@ ${message}
         </head>
         <body>
           <div class="header">
-            <h1>✅ ¡Consulta Recibida!</h1>
+            <h1>✓ ¡Consulta Recibida!</h1>
             <p style="margin: 10px 0 0 0; opacity: 0.9;">Gracias por contactar a Breezair Industrial México</p>
           </div>
           
@@ -266,7 +266,7 @@ ${message}
             <p>Hemos recibido tu consulta sobre <strong>${inquiryTypeLabel}</strong> y queremos agradecerte por tu interés en nuestras soluciones de enfriamiento evaporativo industrial.</p>
 
             <div class="highlight-box">
-              <h3 style="margin-top: 0; color: #0ea5e9;">🚀 ¿Qué sigue ahora?</h3>
+              <h3 style="margin-top: 0; color: #0ea5e9;">⚡ ¿Qué sigue ahora?</h3>
               <ul style="margin: 0; padding-left: 20px;">
                 <li><strong>Análisis especializado:</strong> Nuestro equipo técnico revisará tu consulta detalladamente</li>
                 <li><strong>Respuesta personalizada:</strong> Te contactaremos en las próximas 24 horas con información específica</li>
@@ -294,16 +294,16 @@ ${message}
               <h3 style="margin-top: 0;">📞 ¿Necesitas Atención Inmediata?</h3>
               <p>Si tu proyecto es urgente, puedes contactarnos directamente:</p>
               <a href="tel:+525555555555" class="btn">📞 Llamar: +52 55 5555-5555</a>
-              <a href="mailto:ventas@cg.international" class="btn">✉️ Email: ventas@cg.international</a>
+              <a href="mailto:ventas@cg.international" class="btn">@ Email: ventas@cg.international</a>
             </div>
 
             <h3>🏆 ¿Por qué elegir Breezair Industrial?</h3>
             <ul>
-              <li>✅ <strong>25+ años de experiencia</strong> en el mercado mexicano</li>
-              <li>✅ <strong>Hasta 87% ahorro energético</strong> comprobado</li>
-              <li>✅ <strong>500+ proyectos exitosos</strong> en diversos sectores</li>
-              <li>✅ <strong>Soporte técnico especializado</strong> 24/7</li>
-              <li>✅ <strong>Garantía extendida</strong> y servicio post-venta</li>
+              <li>✓ <strong>25+ años de experiencia</strong> en el mercado mexicano</li>
+              <li>✓ <strong>Hasta 87% ahorro energético</strong> comprobado</li>
+              <li>✓ <strong>500+ proyectos exitosos</strong> en diversos sectores</li>
+              <li>✓ <strong>Soporte técnico especializado</strong> 24/7</li>
+              <li>✓ <strong>Garantía extendida</strong> y servicio post-venta</li>
             </ul>
 
             <p style="margin-top: 30px;">
@@ -344,7 +344,7 @@ ${message}
     const clientEmail = await resend.emails.send({
       from: 'Breezair Industrial México <no-reply@cg.international>',
       to: [email],
-      subject: `✅ Consulta Recibida - ${inquiryTypeLabel} | Breezair Industrial`,
+      subject: `✓ Consulta Recibida - ${inquiryTypeLabel} | Breezair Industrial`,
       html: clientEmailHtml,
       replyTo: 'ventas@cg.international'
     });

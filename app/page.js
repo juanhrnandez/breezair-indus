@@ -5,7 +5,7 @@ import Testimonials from '../components/Testimonials'
 import StructuredData from '../components/StructuredData'
 import ProductsPreview from '../components/ProductsPreview'
 import AboutPreview from '../components/AboutPreview'
-import ContactSection from '../components/ContactSection'
+import ContactPreview from '../components/ContactPreview'
 
 export const metadata = {
   title: 'Inicio',
@@ -155,7 +155,7 @@ export default function Home(){
       <ProductsPreview products={products} />
       <AboutPreview />
       <Testimonials />
-      <ContactSection />
+      <ContactPreview />
     </div>
   )
 }

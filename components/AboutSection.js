@@ -5,10 +5,10 @@ import { useRef } from 'react';
 import Link from 'next/link';
 
 const companyStats = [
-  { number: '25+', label: 'Años de Experiencia', icon: '🏆' },
-  { number: '500+', label: 'Proyectos Completados', icon: '🏭' },
-  { number: '50+', label: 'Clientes Satisfechos', icon: '🤝' },
-  { number: '87%', label: 'Ahorro Energético Promedio', icon: '⚡' }
+  { number: '25+', label: 'Años de Experiencia', icon: <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> },
+  { number: '500+', label: 'Proyectos Completados', icon: <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/></svg> },
+  { number: '50+', label: 'Clientes Satisfechos', icon: <svg className="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg> },
+  { number: '87%', label: 'Ahorro Energético Promedio', icon: <svg className="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> }
 ];
 
 const timeline = [
@@ -16,52 +16,52 @@ const timeline = [
     year: '1999',
     title: 'Fundación de CG International',
     description: 'Inicio como distribuidores especializados en soluciones industriales sustentables.',
-    icon: '🚀'
+    icon: <svg className="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
   },
   {
     year: '2005',
     title: 'Alianza Estratégica con Breezair',
     description: 'Nos convertimos en distribuidores oficiales de Breezair para México.',
-    icon: '🤝'
+    icon: <svg className="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
   },
   {
     year: '2010', 
     title: 'Expansión Nacional',
     description: 'Cobertura completa en territorio mexicano con equipo técnico especializado.',
-    icon: '🗺️'
+    icon: <svg className="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
   },
   {
     year: '2020',
     title: 'Innovación Digital',
     description: 'Implementación de IoT y monitoreo remoto en sistemas de enfriamiento.',
-    icon: '🌐'
+    icon: <svg className="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
   },
   {
     year: '2024',
     title: 'Líderes en Sustentabilidad',
     description: 'Reconocidos como la empresa #1 en soluciones de enfriamiento sustentable.',
-    icon: '🌱'
+    icon: <svg className="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
   }
 ];
 
 const values = [
   {
-    icon: '🎯',
+    icon: <svg className="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" /></svg>,
     title: 'Excelencia Técnica',
     description: 'Cada solución está respaldada por ingeniería de precisión y estándares internacionales.'
   },
   {
-    icon: '🌱',
+    icon: <svg className="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>,
     title: 'Compromiso Ambiental',
     description: 'Promovemos tecnologías limpias que reducen el impacto ambiental y los costos operativos.'
   },
   {
-    icon: '🔧',
+    icon: <svg className="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>,
     title: 'Servicio Integral',
     description: 'Desde el análisis inicial hasta el mantenimiento preventivo, acompañamos cada proyecto.'
   },
   {
-    icon: '⚡',
+    icon: <svg className="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>,
     title: 'Innovación Constante',
     description: 'Adoptamos las últimas tecnologías para ofrecer las soluciones más eficientes del mercado.'
   }
@@ -174,7 +174,7 @@ export default function AboutSection() {
               className="text-center group"
             >
               <div className="card-premium p-8 hover-float">
-                <div className="text-4xl mb-4">{stat.icon}</div>
+                <div className="flex justify-center mb-4">{stat.icon}</div>
                 <div className="text-4xl font-bold text-gradient-premium mb-2">{stat.number}</div>
                 <div className="text-steel font-medium">{stat.label}</div>
               </div>
@@ -254,7 +254,7 @@ export default function AboutSection() {
                 className="card-premium p-8 hover-float group"
               >
                 <div className="flex items-start gap-4">
-                  <div className="text-3xl">{value.icon}</div>
+                  <div className="flex justify-center">{value.icon}</div>
                   <div>
                     <h4 className="heading-premium-4 text-steel-dark mb-3">{value.title}</h4>
                     <p className="text-premium-body text-steel-light leading-relaxed">
@@ -301,7 +301,7 @@ export default function AboutSection() {
                     <div className={`card-premium p-8 ${
                       index % 2 === 0 ? 'lg:text-right' : 'lg:text-left'
                     } text-center`}>
-                      <div className="text-3xl mb-4">{item.icon}</div>
+                      <div className="flex justify-center mb-4">{item.icon}</div>
                       <div className="text-2xl font-bold text-gradient-primary mb-3">{item.year}</div>
                       <h4 className="heading-premium-4 text-steel-dark mb-4">{item.title}</h4>
                       <p className="text-premium-body text-steel-light">{item.description}</p>
@@ -344,7 +344,7 @@ export default function AboutSection() {
                 ¿Por Qué Elegir CG International?
               </h3>
               
-              <p className="text-premium-large text-white/90 mb-10 max-w-4xl mx-auto">
+              <p className="text-premium-products text-white/90 mb-10 max-w-4xl mx-auto">
                 Con 25 años de experiencia, somos más que distribuidores: somos sus socios 
                 estratégicos en eficiencia energética y sustentabilidad industrial.
               </p>
@@ -352,31 +352,31 @@ export default function AboutSection() {
               <div className="grid md:grid-cols-3 gap-8 mb-10">
                 {[
                   { 
-                    icon: '🏆', 
+                    icon: <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>, 
                     title: 'Certificación Oficial', 
                     desc: 'Distribuidores autorizados y certificados por Breezair'
                   },
                   { 
-                    icon: '🔧', 
+                    icon: <svg className="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>, 
                     title: 'Soporte Técnico 24/7', 
                     desc: 'Equipo de ingenieros especializados siempre disponible'
                   },
                   { 
-                    icon: '📊', 
+                    icon: <svg className="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>, 
                     title: 'ROI Demostrable', 
                     desc: 'Proyectos con retorno de inversión garantizado'
                   }
                 ].map((item, idx) => (
                   <div key={idx} className="text-center">
-                    <div className="text-4xl mb-4">{item.icon}</div>
-                    <h4 className="font-semibold text-lg text-white mb-3">{item.title}</h4>
-                    <p className="text-white/80 text-sm leading-relaxed">{item.desc}</p>
+                    <div className="flex justify-center mb-4">{item.icon}</div>
+                    <h4 className="font-semibold text-lg text-black mb-3">{item.title}</h4>
+                    <p className="text-black/80 text-sm leading-relaxed">{item.desc}</p>
                   </div>
                 ))}
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="#contacto" className="btn-premium btn-premium-outline btn-premium-lg">
+                <Link href="#contacto" className="btn-premium btn-premium-primary btn-premium-lg">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2v-2M9 4h6a2 2 0 012 2v4a2 2 0 01-2 2H9a2 2 0 01-2-2V6a2 2 0 012-2z" />
                   </svg>
