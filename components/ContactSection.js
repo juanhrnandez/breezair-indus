@@ -193,7 +193,7 @@ export default function ContactSection() {
             <span className="text-gradient-premium"> Transformar tu Proyecto</span>
           </h2>
 
-          <p className="text-premium-large text-center max-w-4xl mx-auto">
+          <p className="text-premium-products text-center max-w-4xl mx-auto">
             Nuestro equipo de especialistas está listo para analizar tu proyecto y ofrecerte 
             la solución de enfriamiento industrial más eficiente y sustentable.
           </p>

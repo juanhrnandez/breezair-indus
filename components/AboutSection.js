@@ -153,7 +153,7 @@ export default function AboutSection() {
             <span className="text-gradient-premium"> Enfriamiento Evaporativo Industrial</span>
           </h2>
 
-          <p className="text-premium-large text-center max-w-4xl mx-auto">
+          <p className="text-premium-products text-center max-w-4xl mx-auto">
             Desde 1999, CG International ha sido el distribuidor oficial de Breezair en México, 
             ofreciendo soluciones de enfriamiento sustentable que han transformado más de 500 
             proyectos industriales en todo el país.
@@ -241,7 +241,7 @@ export default function AboutSection() {
         >
           <motion.div variants={itemVariants} className="text-center mb-16">
             <h3 className="heading-premium-2 text-steel-dark mb-6">Nuestros Valores</h3>
-            <p className="text-premium-large text-steel-light max-w-3xl mx-auto">
+            <p className="text-premium-products text-steel-light max-w-3xl mx-auto">
               Los principios que guían cada decisión y cada proyecto que desarrollamos.
             </p>
           </motion.div>
@@ -277,7 +277,7 @@ export default function AboutSection() {
         >
           <div className="text-center mb-16">
             <h3 className="heading-premium-2 text-steel-dark mb-6">Nuestra Historia</h3>
-            <p className="text-premium-large text-steel-light max-w-3xl mx-auto">
+            <p className="text-premium-products text-steel-light max-w-3xl mx-auto">
               25 años de crecimiento, innovación y excelencia en el mercado mexicano.
             </p>
           </div>
