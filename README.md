@@ -3,7 +3,7 @@
 Sitio web corporativo para CG International, distribuidor oficial de sistemas de enfriamiento evaporativo Breezair en México.
 
 ## 🚀 Características
-
+a
 ### ✨ Diseño y UX
 - **Diseño Industrial Moderno**: Paleta de colores profesionales y elementos visuales que reflejan la industria
 - **Responsive Design**: Optimizado para desktop, tablet y móvil
