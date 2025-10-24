@@ -1,4 +1,4 @@
-import { getPostBySlug } from '../../../../lib/posts'
+import { getPostBySlug } from '../../../lib/posts'
 
 export default function Post({ params }){
   const post = getPostBySlug(params.slug)
