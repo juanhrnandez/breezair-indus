@@ -16,8 +16,8 @@ const contactInfo = [
     icon: <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>,
     title: 'Contacto Directo',
     details: [
-      'Ventas: +52 55 5555-5555',
-      'Soporte: +52 55 5555-5556'
+      'Ventas: +52 1 (55) 1228 1088',
+      'Soporte: +52 1 (55) 1228 1089'
     ]
   },
   {
@@ -188,7 +188,7 @@ export default function ContactSection() {
             <span className="text-xs text-steel/60 font-medium">RESPUESTA EN 24H</span>
           </div>
 
-          <h2 className="heading-premium-1 max-w-4xl mx-auto mb-8">
+          <h2 className="heading-title max-w-4xl mx-auto mb-8">
             Conectemos para
             <span className="text-gradient-premium"> Transformar tu Proyecto</span>
           </h2>
@@ -235,7 +235,7 @@ export default function ContactSection() {
               
               <div className="space-y-4">
                 <a 
-                  href="tel:+525555555555" 
+                  href="tel:+52 1 (55) 1228 1088" 
                   className="btn-premium btn-premium-primary w-full"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -266,7 +266,7 @@ export default function ContactSection() {
           >
             <div className="card-premium p-10">
               <h3 className="heading-premium-3 text-steel-dark mb-8 text-center">
-                Formulario de Contacto Especializado
+                CONTACTA NUESTROS ESPECIALISTAS
               </h3>
 
               {submitStatus && (
@@ -339,7 +339,7 @@ export default function ContactSection() {
                       onChange={handleInputChange}
                       required
                       className="input-premium"
-                      placeholder="+52 55 5555-5555"
+                      placeholder="+52 1 (55) 1228 1088"
                     />
                   </div>
                   

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 
@@ -46,17 +47,16 @@ export default function Header() {
 
   return (
     <motion.header 
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${shouldHaveBackground ? 'py-4' : 'py-6'} px-4 md:px-6`}
       style={{
         background: shouldHaveBackground 
-          ? 'linear-gradient(135deg, rgba(0, 76, 151, 0.15) 0%, rgba(0, 43, 92, 0.25) 50%, rgba(47, 58, 69, 0.20) 100%)'
+          ? 'linear-gradient(135deg, rgba(0, 76, 151, 0.25) 0%, rgba(0, 43, 92, 0.35) 50%, rgba(47, 58, 69, 0.30) 100%)'
           : 'transparent',
-        backdropFilter: shouldHaveBackground ? 'blur(20px) saturate(180%)' : 'none',
-        WebkitBackdropFilter: shouldHaveBackground ? 'blur(20px) saturate(180%)' : 'none',
-        border: shouldHaveBackground ? '1px solid rgba(255, 255, 255, 0.1)' : 'none',
-        borderBottom: shouldHaveBackground ? '1px solid rgba(255, 255, 255, 0.1)' : 'none',
-        boxShadow: shouldHaveBackground ? '0 20px 40px rgba(47, 58, 69, 0.3)' : 'none',
-        padding: shouldHaveBackground ? '1rem 0' : '1.5rem 0'
+        backdropFilter: shouldHaveBackground ? 'blur(55px) saturate(200%)' : 'none',
+        WebkitBackdropFilter: shouldHaveBackground ? 'blur(55px) saturate(200%)' : 'none',
+        border: shouldHaveBackground ? '1px solid rgba(255, 255, 255, 0.15)' : 'none',
+        borderBottom: shouldHaveBackground ? '1px solid rgba(255, 255, 255, 0.15)' : 'none',
+        boxShadow: shouldHaveBackground ? '0 20px 40px rgba(47, 58, 69, 0.4)' : 'none'
       }}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -71,51 +71,28 @@ export default function Header() {
               background: 'linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%)'
             }}
           />
-          <div 
-            className="absolute bottom-0 left-0 right-0 h-px"
-            style={{
-              background: 'linear-gradient(90deg, transparent 0%, rgba(0, 76, 151, 0.3) 20%, rgba(255, 255, 255, 0.2) 50%, rgba(0, 76, 151, 0.3) 80%, transparent 100%)'
-            }}
-          />
+                      <div 
+                className="absolute bottom-0 left-0 right-0 h-px"
+                style={{
+                  background: 'linear-gradient(90deg, transparent 0%, rgba(0, 76, 151, 0.5) 20%, rgba(59, 130, 246, 0.4) 50%, rgba(0, 76, 151, 0.5) 80%, transparent 100%)'
+                }}
+              />
         </div>
       )}
 
       <div className="container-premium relative z-10">
         <nav className="flex items-center justify-between">
           {/* Logo Premium */}
-          <Link href="/" className="flex items-center space-x-3 group">
-            <motion.div 
-              className="relative w-12 h-12 bg-gradient-primary rounded-xl shadow-industrial-md overflow-hidden"
-              whileHover={{ scale: 1.05, rotate: 5 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-              <div className="flex items-center justify-center h-full">
-                <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
-                  <path d="M8 12h8M8 16h8M8 8h8" stroke="currentColor" strokeWidth="1.5" fill="none"/>
-                </svg>
-              </div>
-            </motion.div>
-            <div className="hidden sm:block">
-              <h1 
-                className="text-xl font-bold text-white group-hover:text-white/90 transition-colors"
-                style={{
-                  textShadow: shouldHaveBackground ? '0 4px 8px rgba(0, 0, 0, 0.3)' : 'none'
-                }}
-              >
-                Breezair
-              </h1>
-              <p 
-                className="text-sm leading-none transition-colors"
-                style={{
-                  color: shouldHaveBackground ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.7)',
-                  textShadow: shouldHaveBackground ? '0 2px 4px rgba(0, 0, 0, 0.2)' : 'none'
-                }}
-              >
-                Industrial México
-              </p>
-            </div>
+                    {/* Logo Premium */}
+          <Link href="/" className="flex items-center group">
+            {/* Placeholder para el logo de Breezair - reemplaza el src con tu archivo de logo */}
+            <Image 
+              src="/images/breezair-logo-2.png" 
+              alt="Breezair Logo" 
+              width={120}
+              height={120}
+              className="object-contain" 
+            />
           </Link>
 
           {/* Navegación Desktop */}
@@ -162,11 +139,14 @@ export default function Header() {
             >
               <Link 
                 href="/contacto" 
-                className="btn-premium btn-premium-outline"
+                className={scrolled ? "btn-premium btn-premium-primary" : "btn-premium btn-premium-outline"}
                 style={{
-                  background: scrolled ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.1)',
-                  borderColor: scrolled ? 'rgba(255, 255, 255, 0.3)' : 'rgba(255, 255, 255, 0.3)',
-                  backdropFilter: scrolled ? 'blur(10px)' : 'blur(20px)'
+                  background: scrolled 
+                    ? 'linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%)' 
+                    : 'rgba(255, 255, 255, 0.1)',
+                  borderColor: scrolled ? 'rgba(59, 130, 246, 0.5)' : 'rgba(255, 255, 255, 0.3)',
+                  backdropFilter: scrolled ? 'blur(10px)' : 'blur(20px)',
+                  boxShadow: scrolled ? '0 4px 15px rgba(59, 130, 246, 0.3)' : 'none'
                 }}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -218,7 +198,7 @@ export default function Header() {
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              className="lg:hidden absolute top-full left-0 right-0 mt-2 mx-4"
+              className="lg:hidden absolute top-full left-0 right-0 mt-4 mx-6"
               variants={menuVariants}
               initial="hidden"
               animate="visible"
