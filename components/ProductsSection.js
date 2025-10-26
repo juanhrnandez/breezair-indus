@@ -4,6 +4,7 @@ import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import Link from 'next/link';
 import ProductCard from './ProductCard';
+import Image from 'next/image';
 
 const productCategories = [
   { id: 'all', name: 'Todos los Productos', icon: <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/></svg> },
@@ -276,27 +277,41 @@ function ProductListItem({ product, index }) {
       {/* Image Section */}
       <div className="lg:w-1/3">
         <div className="aspect-4/3 bg-gradient-hero rounded-xl flex items-center justify-center relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
-            <div 
-              className="w-full h-full"
-              style={{
-                backgroundImage: `
-                  linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
-                  linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%)
-                `,
-                backgroundSize: '20px 20px'
-              }}
-            ></div>
-          </div>
-          
-          <div className="relative z-10 text-center text-white">
-            <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-3">
-              <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
-              </svg>
-            </div>
-            <div className="text-xs font-semibold">{product.series}</div>
-          </div>
+          {product.image ? (
+            <>
+              <Image
+                src={product.image}
+                alt={product.title}
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-linear-to-t from-black/30 to-transparent"></div>
+            </>
+          ) : (
+            <>
+              <div className="absolute inset-0 opacity-10">
+                <div 
+                  className="w-full h-full"
+                  style={{
+                    backgroundImage: `
+                      linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
+                      linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%)
+                    `,
+                    backgroundSize: '20px 20px'
+                  }}
+                ></div>
+              </div>
+              
+              <div className="relative z-10 text-center text-white">
+                <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-3">
+                  <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
+                  </svg>
+                </div>
+                <div className="text-xs font-semibold">{product.series}</div>
+              </div>
+            </>
+          )}
 
           {product.badge && (
             <div className="absolute top-3 left-3 glass-effect px-2 py-1 rounded-full text-white text-xs font-semibold border border-white/20">

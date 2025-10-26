@@ -3,9 +3,19 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function ProductCard({ product, index = 0 }) {
   const [isHovered, setIsHovered] = useState(false);
+
+  const glassStyle = {
+    background: 'linear-gradient(135deg, rgba(0, 76, 151, 0.25) 0%, rgba(0, 43, 92, 0.35) 50%, rgba(47, 58, 69, 0.30) 100%)',
+    backdropFilter: 'blur(55px) saturate(200%)',
+    WebkitBackdropFilter: 'blur(55px) saturate(200%)',
+    border: '1px solid rgba(255, 255, 255, 0.15)',
+    borderBottom: '1px solid rgba(255, 255, 255, 0.15)',
+    boxShadow: '0 20px 40px rgba(47, 58, 69, 0.4)'
+  };
 
   return (
     <motion.div
@@ -25,43 +35,35 @@ export default function ProductCard({ product, index = 0 }) {
         {/* Premium Product Image Section */}
         <div className="relative overflow-hidden bg-gradient-hero">
           <div className="aspect-4/3 flex items-center justify-center relative">
-            {/* Industrial Pattern Background */}
-            <div className="absolute inset-0">
-              <div 
-                className="w-full h-full opacity-5"
-                style={{
-                  backgroundImage: `
-                    linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
-                    linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
-                    linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.1) 75%),
-                    linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.1) 75%)
-                  `,
-                  backgroundSize: '20px 20px',
-                  backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px'
-                }}
-              ></div>
-            </div>
-
-            {/* Product Showcase */}
-            <div className="relative z-10 text-center p-8">
-              <motion.div 
-                className="w-24 h-24 bg-white/15 backdrop-blur-md rounded-2xl shadow-industrial-lg flex items-center justify-center mx-auto mb-6 border border-white/20"
-                animate={isHovered ? { scale: 1.1, rotate: 5 } : { scale: 1, rotate: 0 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
-                  <path d="M8 12h8M8 16h8M8 8h8" stroke="currentColor" strokeWidth="1.5" fill="none"/>
-                </svg>
-              </motion.div>
-              
-              <div className="text-white/90 font-medium text-sm tracking-wide">
-                BREEZAIR INDUSTRIAL
+            {/* Product Image */}
+            {product.image ? (
+              <div className="absolute inset-0">
+                <Image
+                  src={product.image}
+                  alt={product.title}
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"></div>
               </div>
-              <div className="text-white/60 text-xs mt-1">
-                PREMIUM SERIES
+            ) : (
+              /* Industrial Pattern Background when no image */
+              <div className="absolute inset-0">
+                <div 
+                  className="w-full h-full opacity-5"
+                  style={{
+                    backgroundImage: `
+                      linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
+                      linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
+                      linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.1) 75%),
+                      linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.1) 75%)
+                    `,
+                    backgroundSize: '20px 20px',
+                    backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px'
+                  }}
+                ></div>
               </div>
-            </div>
+            )}
             
             {/* Premium Badges */}
             {product.badge && (
@@ -71,7 +73,10 @@ export default function ProductCard({ product, index = 0 }) {
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: index * 0.1 + 0.3 }}
               >
-                <div className="glass-effect rounded-full px-3 py-1 border border-white/20">
+                <div 
+                  className="rounded-full px-3 py-1"
+                  style={glassStyle}
+                >
                   <span className="text-white text-xs font-semibold tracking-wide">
                     {product.badge}
                   </span>
@@ -86,7 +91,10 @@ export default function ProductCard({ product, index = 0 }) {
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: index * 0.1 + 0.4 }}
             >
-              <div className="glass-effect rounded-xl px-4 py-2 border border-white/20">
+              <div 
+                className="rounded-xl px-4 py-2"
+                style={glassStyle}
+              >
                 <span className="text-white font-bold text-sm">
                   {product.series || 'PRO'}
                 </span>
@@ -177,10 +185,10 @@ export default function ProductCard({ product, index = 0 }) {
           {/* Premium Price Section */}
           {product.priceRange && (
             <div className="mb-6">
-              <div className="card-industrial p-4 bg-gradient-hero text-white text-center">
-                <div className="text-sm text-white/80 mb-1">Inversión desde</div>
+              <div className="card-industrial p-4 bg-gradient-hero text-black text-center">
+                <div className="text-sm text-black/80 mb-1">Inversión desde</div>
                 <div className="text-2xl font-bold mb-2">{product.priceRange}</div>
-                <div className="text-xs text-white/60">
+                <div className="text-xs text-black/60">
                   * Precio sujeto a configuración y volumen
                 </div>
               </div>

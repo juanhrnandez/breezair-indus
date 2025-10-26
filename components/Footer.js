@@ -72,7 +72,7 @@ export default function Footer() {
                     <Image
                       src="/images/breezair-logo-2.png"
                       alt="Breezair Logo"
-                      width={96}
+                      width={236}
                       height={96}
                       className="w-full h-full object-contain"
                       priority

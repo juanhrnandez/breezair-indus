@@ -29,6 +29,12 @@ const products = [
     badge: 'MÁS VENDIDO',
     slug: 'tbsi-series',
     category: 'industrial',
+    image: '/images/breezair-product-1.jpg',
+    images: [
+      '/images/breezair-product-1.jpg',
+      '/images/breezair-product-2.jpg',
+      '/images/breezair-product-3.jpg'
+    ],
     features: [
       'Hasta 87% ahorro energético vs. aire acondicionado tradicional',
       'Capacidad de 18,000-50,000 m³/h de aire tratado',
@@ -57,6 +63,12 @@ const products = [
     series: 'EXS',
     slug: 'exs-series',
     category: 'commercial',
+    image: '/images/breezair-product-2.jpg',
+    images: [
+      '/images/breezair-product-2.jpg',
+      '/images/breezair-product-2.jpg',
+      '/images/breezair-product-2.jpg'
+    ],
     features: [
       'Diseño modular completamente flexible',
       'Filtración HEPA opcional para ambientes críticos',
@@ -86,6 +98,12 @@ const products = [
     badge: 'COMPACTO',
     slug: 'icon-series',
     category: 'specialized',
+    image: '/images/breezair-product-3.jpg',
+    images: [
+      '/images/breezair-product-3.jpg',
+      '/images/breezair-product-3.jpg',
+      '/images/breezair-product-3.jpg'
+    ],
     features: [
       'Instalación plug-and-play simplificada',
       'Mantenimiento mínimo requerido',
@@ -115,6 +133,12 @@ const products = [
     badge: 'PERSONALIZADO',
     slug: 'custom-solutions',
     category: 'specialized',
+    image: '/images/breezair-product-4.jpg',
+    images: [
+      '/images/breezair-product-4.jpg',
+      '/images/breezair-product-4.jpg',
+      '/images/breezair-product-4.jpg'
+    ],
     features: [
       'Diseño 100% personalizado según necesidades',
       'Ingeniería especializada incluida',
@@ -271,7 +295,7 @@ export default function ProductosPage() {
 
           <div className="overflow-x-auto">
             <table className="w-full bg-white rounded-2xl shadow-industrial-lg overflow-hidden">
-              <thead className="bg-gradient-primary text-white">
+              <thead className="bg-gradient-primary text-black">
                 <tr>
                   <th className="px-6 py-4 text-left font-semibold">Especificación</th>
                   <th className="px-6 py-4 text-center font-semibold">TBSI Series</th>
