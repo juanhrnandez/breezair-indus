@@ -94,17 +94,22 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="section-dark section-overlay relative overflow-hidden"
-      style={{
-        backgroundImage: `
-          radial-gradient(circle at 30% 40%, rgba(0, 76, 151, 0.3) 0%, transparent 50%),
-          radial-gradient(circle at 70% 80%, rgba(47, 58, 69, 0.4) 0%, transparent 50%),
-          linear-gradient(135deg, var(--color-steel-dark) 0%, var(--color-primary-dark) 100%)
-        `
-      }}
-    >
+    <section className="section-dark relative overflow-hidden">
+      {/* Background Image with Blur Overlay */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <Image 
+          src="/images/breezair-1.jpg"
+          alt="Breezair Industrial Installation"
+          width={1920}
+          height={1080}
+          className="absolute inset-0 w-full h-full object-cover object-center scale-110"
+          priority
+        />
+        {/* Blue blur overlay - controlado para ver la imagen */}
+        <div className="absolute inset-0 bg-linear-to-br from-blue-900/50 via-blue-800/40 to-slate-900/70 backdrop-blur-[1px]"></div>
+      </div>
       {/* Background Pattern Premium */}
-      <div className="absolute inset-0 opacity-5">
+      <div className="absolute inset-0 z-10 opacity-5">
         <div 
           className="w-full h-full"
           style={{
@@ -138,7 +143,7 @@ export default function Testimonials() {
         </div>
       </div>
 
-      <div className="container-premium relative z-10">
+      <div className="container-premium relative z-20">
         {/* Section Header Premium */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -162,10 +167,10 @@ export default function Testimonials() {
             <span className="text-white/60 text-xs font-medium">500+ INSTALACIONES</span>
           </div>
 
-          <h2 className="heading-premium-2 text-white max-w-4xl mx-auto mb-6">
+          <h2 className="heading-premium-title text-white max-w-4xl mx-auto mb-6">
             Líderes Industriales Confían en
             <span className="text-gradient-premium bg-linear-to-r from-blue-200 via-white to-blue-100 bg-clip-text text-transparent">
-              {' '}Nuestra Tecnología
+              {' '}Nuestra Tecnología evaporativa
             </span>
           </h2>
 
@@ -272,10 +277,10 @@ export default function Testimonials() {
             
             <div className="relative z-10">
               <div className="text-center mb-10">
-                <h3 className="heading-premium-3 text-steel-dark mb-4">
+                <h3 className="heading-premium-3 text-gray-800 mb-4">
                   Resultados Comprobados a Nivel Industrial
                 </h3>
-                <p className="text-premium-body text-steel-light max-w-2xl mx-auto">
+                <p className="text-premium-body text-gray-700 max-w-2xl mx-auto">
                   Más de 15 años liderando la transformación energética en el sector industrial mexicano
                 </p>
               </div>

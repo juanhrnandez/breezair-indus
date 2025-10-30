@@ -125,7 +125,7 @@ export default function Hero() {
           {/* Badge Industrial */}
           <motion.div
             variants={itemVariants}
-            className="inline-flex items-center gap-3 bg-white/15 backdrop-blur-md rounded-full px-6 py-3 mb-8 border border-white/30 shadow-xl"
+            className="inline-flex items-center gap-3 bg-white/15 backdrop-blur-md rounded-full px-6 py-3 mt-22 mb-8 border border-white/30 shadow-xl"
           >
             <div className="relative">
               <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
@@ -280,9 +280,6 @@ export default function Hero() {
          
         </motion.div>
       </motion.div>
-
-      {/* Bottom Gradient Transition */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-white via-white/50 to-transparent"></div>
     </section>
   );
 }

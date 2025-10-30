@@ -145,60 +145,105 @@ export default function NosotrosPage() {
         </div>
       </section>
 
-      {/* Sección principal About */}
-      <AboutSection />
-
-      {/* Sección de Liderazgo y Equipo */}
+      {/* Sección Company Overview */}
       <section className="section-premium bg-white">
-        <div className="container-premium">
-          <div className="text-center mb-20">
-            <h2 className="heading-premium-2 text-steel-dark mb-6">
-              Nuestro Equipo de Liderazgo
-            </h2>
-            <p className="text-premium-products text-steel-light max-w-3xl mx-auto">
-              Profesionales con décadas de experiencia en ingeniería industrial, 
-              sustentabilidad y desarrollo de negocios especializados.
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+          {/* Company Stats */}
+          <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8 mb-20">
+            {[
+              { number: '25+', label: 'Años de Experiencia', icon: <svg className="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> },
+              { number: '500+', label: 'Proyectos Completados', icon: <svg className="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/></svg> },
+              { number: '50+', label: 'Clientes Satisfechos', icon: <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg> },
+              { number: '87%', label: 'Ahorro Energético Promedio', icon: <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> }
+            ].map((stat, index) => (
+              <div key={index} className="text-center group">
+                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:transform hover:-translate-y-2">
+                  <div className="flex justify-center mb-4">{stat.icon}</div>
+                  <div className="text-4xl font-bold text-gray-900 mb-2">{stat.number}</div>
+                  <div className="text-gray-600 font-medium">{stat.label}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Mission & Vision */}
+          <div className="grid lg:grid-cols-2 gap-12 mb-20">
+            <div className="bg-linear-to-br from-blue-50 to-white rounded-3xl p-8 lg:p-12">
+              <div className="inline-flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900">Nuestra Misión</h3>
+              </div>
+              <p className="text-gray-700 leading-relaxed text-lg">
+                Proporcionar soluciones de enfriamiento evaporativo de clase mundial que maximicen 
+                la eficiencia energética, mejoren la calidad del aire y reduzcan significativamente 
+                los costos operativos en aplicaciones industriales, contribuyendo a un futuro 
+                más sustentable para la industria mexicana.
+              </p>
+            </div>
+
+            <div className="bg-linear-to-br from-gray-50 to-white rounded-3xl p-8 lg:p-12">
+              <div className="inline-flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 bg-gray-700 rounded-2xl flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900">Nuestra Visión</h3>
+              </div>
+              <p className="text-gray-700 leading-relaxed text-lg">
+                Ser reconocidos como la empresa líder en México en soluciones de climatización 
+                industrial sustentable, estableciendo el estándar de excelencia técnica, 
+                innovación y compromiso ambiental que inspire a la transformación de la 
+                industria hacia prácticas más eficientes y responsables.
+              </p>
+            </div>
+          </div>
+
+          {/* Values Section */}
+          <div className="text-center mb-16">
+            <h3 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">Nuestros Valores</h3>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Los principios que guían cada decisión y cada proyecto que desarrollamos.
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 mb-16">
+          <div className="grid lg:grid-cols-2 gap-8">
             {[
               {
-                name: 'Ing. Carlos García',
-                position: 'Director General',
-                experience: '30+ años en ingeniería industrial',
-                specialties: ['Gestión de Proyectos Industriales', 'Desarrollo de Negocios B2B', 'Estrategia Comercial']
+                icon: <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" /></svg>,
+                title: 'Excelencia Técnica',
+                description: 'Cada solución está respaldada por ingeniería de precisión y estándares internacionales.'
               },
               {
-                name: 'Ing. María Fernández',
-                position: 'Directora Técnica',
-                experience: '25+ años en sistemas HVAC',
-                specialties: ['Diseño de Sistemas HVAC', 'Eficiencia Energética', 'Certificaciones Técnicas']
+                icon: <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>,
+                title: 'Compromiso Ambiental',
+                description: 'Promovemos tecnologías limpias que reducen el impacto ambiental y los costos operativos.'
               },
               {
-                name: 'Ing. Roberto López',
-                position: 'Gerente de Operaciones',
-                experience: '20+ años en manufactura',
-                specialties: ['Operaciones Industriales', 'Control de Calidad', 'Mantenimiento Predictivo']
+                icon: <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>,
+                title: 'Servicio Integral',
+                description: 'Desde el análisis inicial hasta el mantenimiento preventivo, acompañamos cada proyecto.'
+              },
+              {
+                icon: <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>,
+                title: 'Innovación Constante',
+                description: 'Adoptamos las últimas tecnologías para ofrecer las soluciones más eficientes del mercado.'
               }
-            ].map((member, index) => (
-              <div key={index} className="card-premium p-8 text-center hover-float">
-                <div className="w-32 h-32 bg-gradient-hero rounded-full mx-auto mb-6 flex items-center justify-center">
-                  <div className="text-white text-4xl font-bold">
-                    {member.name.split(' ').map(n => n[0]).join('')}
+            ].map((value, index) => (
+              <div key={index} className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:transform hover:-translate-y-1">
+                <div className="flex items-start gap-4">
+                  <div className="flex justify-center">{value.icon}</div>
+                  <div>
+                    <h4 className="text-xl font-bold text-gray-900 mb-3">{value.title}</h4>
+                    <p className="text-gray-700 leading-relaxed">
+                      {value.description}
+                    </p>
                   </div>
-                </div>
-                
-                <h3 className="heading-premium-4 text-steel-dark mb-2">{member.name}</h3>
-                <div className="text-primary font-semibold mb-3">{member.position}</div>
-                <div className="text-steel-light text-sm mb-4">{member.experience}</div>
-                
-                <div className="space-y-2">
-                  {member.specialties.map((specialty, idx) => (
-                    <div key={idx} className="bg-gray-50 px-3 py-1 rounded-full text-xs text-steel">
-                      {specialty}
-                    </div>
-                  ))}
                 </div>
               </div>
             ))}

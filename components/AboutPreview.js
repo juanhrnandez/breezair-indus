@@ -141,14 +141,14 @@ export default function AboutPreview() {
           >
             <div className="card-premium p-10 h-full">
               <div className="inline-flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-primary rounded-2xl flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
+                  <div className=" bg-gradient-primary rounded-2xl">
+                    <svg className="w-1 h-1 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
                 </div>
-                <h3 className="heading-premium-3 text-steel-dark">Nuestra Misión</h3>
+                  <h3 className="heading-premium-3 text-steel-dark text-left">Nuestra Misión</h3>
               </div>
-              <p className="text-premium-body text-steel-light leading-relaxed">
+              <p className="text-premium-body text-steel-light leading-relaxed text-left">
                 Proporcionar soluciones de enfriamiento evaporativo de clase mundial que maximicen 
                 la eficiencia energética y reduzcan significativamente los costos operativos en 
                 aplicaciones industriales.
@@ -165,13 +165,12 @@ export default function AboutPreview() {
           >
             <div className="card-premium p-10 h-full">
               <div className="inline-flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-steel rounded-2xl flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="">
+                  <svg className="w-1 h-1 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                   </svg>
                 </div>
-                <h3 className="heading-premium-3 text-steel-dark">Por Qué Elegirnos</h3>
+                <h3 className="heading-premium-3 text-steel-dark">¿Por Qué Elegirnos?</h3>
               </div>
               <div className="space-y-3">
                 {[

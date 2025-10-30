@@ -156,7 +156,7 @@ export default function ContactoPage() {
           <div className="absolute inset-0 bg-gray-800/70"></div>
         </div>
         
-        <div className="container-premium relative z-10">
+        <div className="container-premium mt-12 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-3 glass-effect rounded-full px-6 py-3 mb-8 border border-white/20">
               <div className="w-3 h-3 bg-white rounded-full pulse-glow"></div>
@@ -195,7 +195,7 @@ export default function ContactoPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a 
-                href="tel:+525555555555" 
+                href="tel:+52 1 (55) 1228 1088" 
                 className="btn-premium btn-premium-primary btn-premium-lg"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
