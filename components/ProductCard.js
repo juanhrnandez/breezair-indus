@@ -182,18 +182,6 @@ export default function ProductCard({ product, index = 0 }) {
             </div>
           )}
 
-          {/* Premium Price Section */}
-          {product.priceRange && (
-            <div className="mb-6">
-              <div className="card-industrial p-4 bg-gradient-hero text-black text-center">
-                <div className="text-sm text-black/80 mb-1">Inversión desde</div>
-                <div className="text-2xl font-bold mb-2">{product.priceRange}</div>
-                <div className="text-xs text-black/60">
-                  * Precio sujeto a configuración y volumen
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* Premium Action Buttons */}
           <div className="space-y-3 mt-auto">
@@ -214,7 +202,7 @@ export default function ProductCard({ product, index = 0 }) {
               <svg className="w-5 h-5 group-hover/btn:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
-              Solicitar Cotización Premium
+              Solicitar Cotización 
             </Link>
           </div>
 
@@ -228,7 +216,7 @@ export default function ProductCard({ product, index = 0 }) {
               ))}
             </div>
             <span className="text-xs text-steel-light font-medium">
-              Calidad Industrial Premium
+              Calidad Industrial 
             </span>
           </div>
         </div>

@@ -188,15 +188,6 @@ export default function ContactSection() {
             <span className="text-xs text-steel/60 font-medium">RESPUESTA EN 24H</span>
           </div>
 
-          <h2 className="heading-title max-w-4xl mx-auto mb-8">
-            Conectemos para
-            <span className="text-gradient-premium"> Transformar tu Proyecto</span>
-          </h2>
-
-          <p className="text-premium-products text-center max-w-4xl mx-auto">
-            Nuestro equipo de especialistas está listo para analizar tu proyecto y ofrecerte 
-            la solución de enfriamiento industrial más eficiente y sustentable.
-          </p>
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-16">

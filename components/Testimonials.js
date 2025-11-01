@@ -169,7 +169,7 @@ export default function Testimonials() {
 
           <h2 className="heading-premium-title text-white max-w-4xl mx-auto mb-6">
             Líderes Industriales Confían en
-            <span className="text-gradient-premium bg-linear-to-r from-blue-200 via-white to-blue-100 bg-clip-text text-transparent">
+            <span className="text-gradient-premium-testimonials ">
               {' '}Nuestra Tecnología evaporativa
             </span>
           </h2>
