@@ -9,7 +9,7 @@ import Image from 'next/image';
 const productCategories = [
   { id: 'all', name: 'Todos los Productos', icon: <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/></svg> },
   { id: 'industrial', name: 'Industrial Heavy Duty', icon: <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm.53 5.47a.75.75 0 00-1.06 0L6.72 12.47a.75.75 0 101.06 1.06L12 9.31l4.22 4.22a.75.75 0 101.06-1.06l-4.75-4.75z"/></svg> },
-  { id: 'commercial', name: 'Comercial Premium', icon: <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M4 21V9l8-6 8 6v12h-6v-7h-4v7H4zm2-2h2v-5h8v5h2v-9L12 6 6 10v9z"/></svg> },
+  { id: 'commercial', name: 'Comercial ', icon: <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M4 21V9l8-6 8 6v12h-6v-7h-4v7H4zm2-2h2v-5h8v5h2v-9L12 6 6 10v9z"/></svg> },
   { id: 'specialized', name: 'Aplicaciones Especiales', icon: <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0L19.2 12l-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg> }
 ];
 
@@ -117,7 +117,7 @@ export default function ProductsSection({ products }) {
 
           <h2 className="heading-premium-2 max-w-4xl mx-auto mb-6">
             Soluciones Industriales de
-            <span className="text-blue-900 font-bold"> Climatización Premium</span>
+            <span className="text-blue-900 font-bold"> Climatización </span>
           </h2>
 
           <p className="text-premium-products text-center max-w-3xl mx-auto mb-12">

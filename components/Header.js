@@ -50,13 +50,13 @@ export default function Header() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${shouldHaveBackground ? 'py-4' : 'py-6'} px-4 md:px-6`}
       style={{
         background: shouldHaveBackground 
-          ? 'linear-gradient(135deg, rgba(0, 76, 151, 0.25) 0%, rgba(0, 43, 92, 0.35) 50%, rgba(47, 58, 69, 0.30) 100%)'
+          ? 'linear-gradient(135deg, rgba(30, 64, 175, 0.65) 0%, rgba(37, 99, 235, 0.55) 50%, rgba(59, 130, 246, 0.50) 100%)'
           : 'transparent',
-        backdropFilter: shouldHaveBackground ? 'blur(55px) saturate(200%)' : 'none',
-        WebkitBackdropFilter: shouldHaveBackground ? 'blur(55px) saturate(200%)' : 'none',
-        border: shouldHaveBackground ? '1px solid rgba(255, 255, 255, 0.15)' : 'none',
-        borderBottom: shouldHaveBackground ? '1px solid rgba(255, 255, 255, 0.15)' : 'none',
-        boxShadow: shouldHaveBackground ? '0 20px 40px rgba(47, 58, 69, 0.4)' : 'none'
+        backdropFilter: shouldHaveBackground ? 'blur(40px) saturate(180%)' : 'none',
+        WebkitBackdropFilter: shouldHaveBackground ? 'blur(40px) saturate(180%)' : 'none',
+        border: shouldHaveBackground ? '1px solid rgba(255, 255, 255, 0.18)' : 'none',
+        borderBottom: shouldHaveBackground ? '1px solid rgba(255, 255, 255, 0.18)' : 'none',
+        boxShadow: shouldHaveBackground ? '0 8px 32px rgba(30, 64, 175, 0.4), 0 4px 16px rgba(59, 130, 246, 0.2)' : 'none'
       }}
       initial={{ y: -100 }}
       animate={{ y: 0 }}

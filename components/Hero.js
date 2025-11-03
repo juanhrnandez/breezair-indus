@@ -143,7 +143,7 @@ export default function Hero() {
             {[
               "Transformamos Ambientes",
               "Industriales con Tecnología",
-              "Breezair Premium"
+              "Breezair"
             ].map((line, lineIndex) => (
               <div key={lineIndex} className="overflow-hidden">
                 <motion.h1
