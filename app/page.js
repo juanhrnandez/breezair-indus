@@ -5,6 +5,10 @@ import ProductsPreview from '../components/ProductsPreview'
 import AboutPreview from '../components/AboutPreview'
 import ContactPreview from '../components/ContactPreview'
 
+// Configuración para SSG optimizado
+export const revalidate = 86400; // Revalidar cada 24 horas
+export const dynamic = 'force-static'; // Forzar generación estática
+
 export const metadata = {
   title: 'Breezair México | Soluciones de Enfriamiento Industrial',
   description: 'Breezair Industrial México: Líderes en enfriamiento evaporativo industrial. Ahorro energético hasta 87%, aire 100% exterior filtrado para naves industriales.',

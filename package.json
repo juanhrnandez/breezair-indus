@@ -5,8 +5,11 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
-    "start": "next start",
-    "lint": "eslint"
+    "build:static": "next build && next export",
+    "build:analyze": "ANALYZE=true next build",
+    "start": "next start", 
+    "lint": "eslint",
+    "preview": "next build && next start"
   },
   "dependencies": {
     "framer-motion": "^11.11.0",

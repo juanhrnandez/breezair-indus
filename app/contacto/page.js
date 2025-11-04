@@ -1,6 +1,11 @@
 import ContactSection from '@/components/ContactSection'
 import StructuredData from '@/components/StructuredData'
 import Image from 'next/image'
+import Link from 'next/link'
+
+// Configuración para SSG optimizado 
+export const revalidate = 86400; // Revalidar cada 24 horas
+export const dynamic = 'force-static'; // Forzar generación estática
 
 export const metadata = {
   title: 'Contacto - Breezair Industrial | Soluciones de Enfriamiento Evaporativo',
@@ -203,7 +208,7 @@ export default function ContactoPage() {
                 </svg>
                 Llamar Ahora
               </a>
-              <a 
+              <Link 
                 href="/productos" 
                 className="btn-premium btn-premium-primary btn-premium-lg text-slate-700 border-slate-300 hover:bg-slate-700 hover:text-white"
               >
@@ -211,7 +216,7 @@ export default function ContactoPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10" />
                 </svg>
                 Ver Productos
-              </a>
+              </Link>
             </div>
           </div>
         </div>

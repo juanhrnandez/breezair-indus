@@ -46,22 +46,20 @@ export default function sitemap() {
     priority: 0.6,
   }))
 
-  // Páginas de productos (si las tienes dinámicas)
-  const productRoutes = [
-    {
-      url: `${baseUrl}/productos/tbsi`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/productos/exs-series`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    // Agregar más productos según sea necesario
+  // Páginas de productos dinámicas
+  const products = [
+    'tbsi-series',
+    'exs-series', 
+    'icon-series',
+    'custom-solutions'
   ]
+  
+  const productRoutes = products.map((productId) => ({
+    url: `${baseUrl}/productos/${productId}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }))
 
   return [...staticRoutes, ...blogRoutes, ...productRoutes]
 }

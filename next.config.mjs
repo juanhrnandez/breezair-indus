@@ -1,7 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Optimizaciones para SEO y rendimiento
-  output: 'standalone', // Para mejor despliegue
+  output: 'standalone', // Para mejor despliegue con ISR
+  
+  // Configuración de generación estática
+  trailingSlash: true,
+  
+  // Configuración de ISR global
+  experimental: {
+    staticGenerationMaxConcurrency: 4, // Paralelizar generación estática
+    staticGenerationRetryCount: 3,
+    optimizePackageImports: ['@tailwindcss/forms', 'framer-motion']
+  },
   
   // Configuración de imágenes para mejor rendimiento
   images: {
@@ -15,11 +25,6 @@ const nextConfig = {
   
   // Optimizar para producción
   poweredByHeader: false,
-  
-  // Configuración experimental para mejor rendimiento
-  experimental: {
-    optimizePackageImports: ['@tailwindcss/forms', 'framer-motion']
-  },
 
   // Configurar headers para SEO
   async headers() {
