@@ -143,7 +143,7 @@ export default function Home() {
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
       "name": "Sistemas de Enfriamiento Evaporativo",
-      "itemListElement": products.map(product => ({
+      "itemListElement": products.map((product, index) => ({
         "@type": "Offer",
         "priceCurrency": "MXN",
         "price": "0",
