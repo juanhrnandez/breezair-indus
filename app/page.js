@@ -154,11 +154,52 @@ export default function Home() {
         },
         "priceValidUntil": "2025-12-31",
         "category": "Cotización bajo solicitud",
+        "shippingDetails": {
+          "@type": "OfferShippingDetails",
+          "shippingRate": {
+            "@type": "MonetaryAmount",
+            "value": "0",
+            "currency": "MXN"
+          },
+          "deliveryTime": {
+            "@type": "ShippingDeliveryTime",
+            "businessDays": {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+            },
+            "cutoffTime": "14:00",
+            "handlingTime": {
+              "@type": "QuantitativeValue",
+              "minValue": 2,
+              "maxValue": 5,
+              "unitCode": "DAY"
+            }
+          },
+          "shippingDestination": {
+            "@type": "DefinedRegion",
+            "addressCountry": "MX"
+          }
+        },
+        "hasMerchantReturnPolicy": {
+          "@type": "MerchantReturnPolicy",
+          "applicableCountry": "MX",
+          "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+          "merchantReturnDays": 30,
+          "returnMethod": "https://schema.org/ReturnByMail",
+          "returnFees": "https://schema.org/FreeReturn"
+        },
         "itemOffered": {
           "@type": "Product",
           "name": product.title,
           "description": product.summary,
           "category": "Equipos de Climatización Industrial",
+          "image": {
+            "@type": "ImageObject",
+            "url": `https://www.breezair.com.mx/images/breezair-product-${index + 1}.jpg`,
+            "width": 800,
+            "height": 600,
+            "caption": product.title
+          },
           "brand": {
             "@type": "Brand",
             "name": "Breezair"
@@ -230,6 +271,13 @@ export default function Home() {
         "name": product.title,
         "description": product.summary,
         "category": "Equipos de Climatización Industrial",
+        "image": {
+          "@type": "ImageObject",
+          "url": `https://www.breezair.com.mx/images/breezair-product-${index + 1}.jpg`,
+          "width": 800,
+          "height": 600,
+          "caption": product.title
+        },
         "brand": {
           "@type": "Brand",
           "name": "Breezair"
@@ -254,7 +302,41 @@ export default function Home() {
             "name": "Breezair Industrial México"
           },
           "priceValidUntil": "2025-12-31",
-          "category": "Cotización bajo solicitud"
+          "category": "Cotización bajo solicitud",
+          "shippingDetails": {
+            "@type": "OfferShippingDetails",
+            "shippingRate": {
+              "@type": "MonetaryAmount",
+              "value": "0",
+              "currency": "MXN"
+            },
+            "deliveryTime": {
+              "@type": "ShippingDeliveryTime",
+              "businessDays": {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+              },
+              "cutoffTime": "14:00",
+              "handlingTime": {
+                "@type": "QuantitativeValue",
+                "minValue": 2,
+                "maxValue": 5,
+                "unitCode": "DAY"
+              }
+            },
+            "shippingDestination": {
+              "@type": "DefinedRegion",
+              "addressCountry": "MX"
+            }
+          },
+          "hasMerchantReturnPolicy": {
+            "@type": "MerchantReturnPolicy",
+            "applicableCountry": "MX",
+            "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+            "merchantReturnDays": 30,
+            "returnMethod": "https://schema.org/ReturnByMail",
+            "returnFees": "https://schema.org/FreeReturn"
+          }
         },
         "aggregateRating": {
           "@type": "AggregateRating",
