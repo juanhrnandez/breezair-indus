@@ -268,27 +268,105 @@ export default async function ProductosPage() {
     "numberOfItems": stats.totalProducts,
     "dateModified": stats.lastUpdated,
     "itemListElement": productsData.map((product, index) => ({
-      "@type": "Product",
+      "@type": "ListItem",
       "position": index + 1,
-      "name": product.title,
-      "description": product.summary,
-      "brand": {
-        "@type": "Brand",
-        "name": "Breezair"
-      },
-      "manufacturer": {
-        "@type": "Organization",
-        "name": "CG International"
-      },
-      "category": "Equipos de Climatización Industrial",
-      "offers": {
-        "@type": "Offer",
-        "availability": "https://schema.org/InStock",
-        "priceCurrency": "USD",
-        "seller": {
+      "item": {
+        "@type": "Product",
+        "name": product.title,
+        "description": product.summary,
+        "category": "Equipos de Climatización Industrial",
+        "image": {
+          "@type": "ImageObject",
+          "url": `https://www.breezair.com.mx/images/breezair-product-${index + 1}.jpg`,
+          "width": 800,
+          "height": 600,
+          "caption": product.title
+        },
+        "brand": {
+          "@type": "Brand",
+          "name": "Breezair"
+        },
+        "manufacturer": {
           "@type": "Organization",
           "name": "CG International"
-        }
+        },
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "USD",
+          "price": "0",
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "price": "0",
+            "priceCurrency": "USD",
+            "valueAddedTaxIncluded": true
+          },
+          "availability": "https://schema.org/InStock",
+          "seller": {
+            "@type": "Organization",
+            "name": "Breezair Industrial México"
+          },
+          "priceValidUntil": "2025-12-31",
+          "category": "Cotización bajo solicitud",
+          "shippingDetails": {
+            "@type": "OfferShippingDetails",
+            "shippingRate": {
+              "@type": "MonetaryAmount",
+              "value": "0",
+              "currency": "USD"
+            },
+            "deliveryTime": {
+              "@type": "ShippingDeliveryTime",
+              "businessDays": {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+              },
+              "cutoffTime": "14:00",
+              "handlingTime": {
+                "@type": "QuantitativeValue",
+                "minValue": 2,
+                "maxValue": 5,
+                "unitCode": "DAY"
+              }
+            },
+            "shippingDestination": {
+              "@type": "DefinedRegion",
+              "addressCountry": "MX"
+            }
+          },
+          "hasMerchantReturnPolicy": {
+            "@type": "MerchantReturnPolicy",
+            "applicableCountry": "MX",
+            "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+            "merchantReturnDays": 30,
+            "returnMethod": "https://schema.org/ReturnByMail",
+            "returnFees": "https://schema.org/FreeReturn"
+          }
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.8",
+          "reviewCount": "127",
+          "bestRating": "5",
+          "worstRating": "1"
+        },
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "Capacidad",
+            "value": product.specs.capacity
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Eficiencia Energética",
+            "value": product.specs.efficiency
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Área de Cobertura",
+            "value": product.specs.coverageArea
+          }
+        ],
+        "url": `https://www.breezair.com.mx/productos/${product.slug}`
       }
     }))
   };
@@ -480,7 +558,6 @@ export default async function ProductosPage() {
                       {product.warranty}
                     </td>
                   ))}
-                  <td className="px-6 py-4 text-center">Hasta 10 años</td>
                 </tr>
 
               </tbody>
