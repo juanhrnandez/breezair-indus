@@ -145,11 +145,48 @@ export default function Home() {
       "name": "Sistemas de Enfriamiento Evaporativo",
       "itemListElement": products.map(product => ({
         "@type": "Offer",
+        "priceCurrency": "MXN",
+        "price": "0",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@type": "Organization",
+          "name": "Breezair Industrial México"
+        },
+        "priceValidUntil": "2025-12-31",
+        "category": "Cotización bajo solicitud",
         "itemOffered": {
           "@type": "Product",
           "name": product.title,
           "description": product.summary,
-          "category": "Equipos de Climatización Industrial"
+          "category": "Equipos de Climatización Industrial",
+          "brand": {
+            "@type": "Brand",
+            "name": "Breezair"
+          },
+          "manufacturer": {
+            "@type": "Organization",
+            "name": "CG International"
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "reviewCount": "127",
+            "bestRating": "5",
+            "worstRating": "1"
+          },
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "Capacidad",
+              "value": product.specs.capacity
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "Eficiencia Energética",
+              "value": product.specs.efficiency
+            }
+          ],
+          "url": `https://www.breezair.com.mx/productos/${product.slug}`
         }
       }))
     }
@@ -200,6 +237,31 @@ export default function Home() {
         "manufacturer": {
           "@type": "Organization",
           "name": "CG International"
+        },
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "MXN",
+          "price": "0",
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "price": "0",
+            "priceCurrency": "MXN",
+            "valueAddedTaxIncluded": true
+          },
+          "availability": "https://schema.org/InStock",
+          "seller": {
+            "@type": "Organization",
+            "name": "Breezair Industrial México"
+          },
+          "priceValidUntil": "2025-12-31",
+          "category": "Cotización bajo solicitud"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.8",
+          "reviewCount": "127",
+          "bestRating": "5",
+          "worstRating": "1"
         },
         "additionalProperty": [
           {
