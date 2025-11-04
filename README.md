@@ -98,7 +98,7 @@ vercel --prod
 **CG International**
 - Email: ventas@cg.international
 - Website: https://www.cg.international/
-- Teléfono: +52 55 5555-5555
+- Teléfono: (55) 5919-7533
 
 ---
 

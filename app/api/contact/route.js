@@ -293,7 +293,7 @@ ${message}
             <div class="contact-info">
               <h3 style="margin-top: 0;">📞 ¿Necesitas Atención Inmediata?</h3>
               <p>Si tu proyecto es urgente, puedes contactarnos directamente:</p>
-              <a href="tel:+525555555555" class="btn">📞 Llamar: +52 55 5555-5555</a>
+              <a href="tel:+5255591975333" class="btn">📞 Llamar: (55) 5919-7533</a>
               <a href="mailto:ventas@cg.international" class="btn">@ Email: ventas@cg.international</a>
             </div>
 
@@ -316,8 +316,8 @@ ${message}
           <div class="footer">
             <p><strong>CG International</strong> | Distribuidores Oficiales Breezair</p>
             <p>
-              📧 ventas@cg.international | 📞 +52 55 5555-5555<br>
-              🌐 <a href="https://breezair-industrial.mx" style="color: #3b82f6;">breezair-industrial.mx</a>
+              📧 ventas@cg.international | 📞 (55) 5919-7533<br>
+              🌐 <a href="https://www.breezair.com.mx" style="color: #3b82f6;">www.breezair.com.mx</a>
             </p>
           </div>
         </body>

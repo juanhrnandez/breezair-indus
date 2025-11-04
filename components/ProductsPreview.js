@@ -84,13 +84,13 @@ export default function ProductsPreview({ products }) {
               className="card-premium p-8 hover-float group text-center"
             >
               {/* Product Image */}
-              <div className="w-full h-48 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl overflow-hidden mb-6 group-hover:scale-105 transition-transform duration-300">
+              <div className="w-full h-48 bg-gray-50 rounded-2xl overflow-hidden mb-6 group-hover:scale-105 transition-transform duration-300">
                 <Image 
                   src={`/images/breezair-product-${index + 1}.jpg`}
                   alt={`${product.title} - ${product.series} Series`}
                   width={300}
                   height={192}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain p-4"
                 />
               </div>
 
@@ -133,6 +133,17 @@ export default function ProductsPreview({ products }) {
                   </div>
                 ))}
               </div>
+
+              {/* CTA Button */}
+              <Link 
+                href={`/productos/${product.id}`}
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold transition-all duration-300 group-hover:bg-blue-700 w-full"
+              >
+                <span>Ver Especificaciones Completas</span>
+                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
             </motion.div>
           ))}
         </motion.div>

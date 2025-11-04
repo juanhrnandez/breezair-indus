@@ -1,28 +1,56 @@
+import Link from 'next/link';
 import ProductsSection from '../../components/ProductsSection';
 import StructuredData from '../../components/StructuredData';
 import Image from 'next/image';
 
-export const metadata = {
-  title: 'Productos | Breezair Industrial México',
-  description: 'Catálogo completo de sistemas de enfriamiento evaporativo industrial Breezair. Series TBSI, EXS e Icon con hasta 87% de ahorro energético para naves industriales.',
-  openGraph: {
-    title: 'Productos Breezair Industrial | Sistemas de Enfriamiento Evaporativo',
-    description: 'Descubre nuestra línea completa de sistemas Breezair: TBSI, EXS e Icon. Soluciones industriales con hasta 87% de ahorro energético.',
-    url: 'https://breezair-industrial.mx/productos',
-    images: [
-      {
-        url: '/images/og-productos.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Catálogo de productos Breezair Industrial'
-      }
-    ]
-  }
-};
+// Configuración de rendering y caching
+export const revalidate = 3600; // ISR - Revalidar cada hora
+export const dynamic = 'force-static'; // Forzar generación estática cuando sea posible
+export const dynamicParams = true; // Permitir parámetros dinámicos
+export const fetchCache = 'auto'; // Cache automático para fetch requests
+
+// Generar metadata de forma dinámica
+export async function generateMetadata() {
+  // Se puede hacer fetch de datos si es necesario
+  const productsCount = products.length;
+  
+  return {
+    title: 'Productos | Breezair Industrial México',
+    description: `Catálogo completo de ${productsCount} series de sistemas de enfriamiento evaporativo industrial Breezair. Series TBSI, EXS e Icon con hasta 87% de ahorro energético para naves industriales.`,
+    openGraph: {
+      title: 'Productos Breezair Industrial | Sistemas de Enfriamiento Evaporativo',
+      description: `Descubre nuestra línea completa de ${productsCount} series Breezair: TBSI, EXS e Icon. Soluciones industriales con hasta 87% de ahorro energético.`,
+      url: 'https://www.breezair.com.mx/productos',
+      images: [
+        {
+          url: '/images/og-productos.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'Catálogo de productos Breezair Industrial'
+        }
+      ]
+    },
+    alternates: {
+      canonical: 'https://www.breezair.com.mx/productos'
+    }
+  };
+}
+
+// Función para generar parámetros estáticos (SSG)
+export async function generateStaticParams() {
+  // Aquí podrías hacer fetch de productos desde una API o base de datos
+  // Para este ejemplo, usamos los productos estáticos definidos más abajo
+  return products.map((product) => ({
+    // Estos parámetros se pueden usar para rutas dinámicas si es necesario
+    slug: product.slug,
+    category: product.category
+  }));
+}
 
 // Datos expandidos de productos para la página dedicada
 const products = [
   {
+    id: 'tbsi-series',
     title: 'Breezair TBSI Series',
     summary: 'La serie premium para grandes instalaciones industriales. Máxima eficiencia energética y capacidad de enfriamiento para aplicaciones exigentes.',
     series: 'TBSI',
@@ -58,6 +86,7 @@ const products = [
     priceRange: 'USD $35,000 - $85,000'
   },
   {
+    id: 'exs-series',
     title: 'Breezair EXS Series',
     summary: 'Versatilidad y adaptabilidad para procesos industriales especializados. Diseño modular que se adapta a cualquier configuración.',
     series: 'EXS',
@@ -92,6 +121,7 @@ const products = [
     priceRange: 'USD $25,000 - $65,000'
   },
   {
+    id: 'icon-series',
     title: 'Breezair Icon Series',
     summary: 'Solución compacta con alto rendimiento para espacios industriales medianos. Ideal para implementaciones rápidas y eficientes.',
     series: 'ICON',
@@ -127,6 +157,7 @@ const products = [
     priceRange: 'USD $15,000 - $45,000'
   },
   {
+    id: 'custom-solutions',
     title: 'Breezair Custom Solutions',
     summary: 'Soluciones completamente personalizadas para aplicaciones especiales y proyectos únicos que requieren ingeniería específica.',
     series: 'CUSTOM',
@@ -163,15 +194,80 @@ const products = [
   }
 ];
 
-export default function ProductosPage() {
-  // Structured Data para la página de productos
+// Función para obtener productos (simula fetch de API o base de datos)
+async function getProducts() {
+  try {
+    // Simular retraso de API para demostrar SSR
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
+    // En un caso real, aquí harías fetch a tu API o base de datos
+    // const response = await fetch('https://api.breezair.com.mx/products', {
+    //   next: { revalidate: 3600 }, // Cache por 1 hora
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // });
+    // 
+    // if (!response.ok) {
+    //   throw new Error(`HTTP error! status: ${response.status}`);
+    // }
+    // 
+    // return response.json();
+    
+    return products;
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    // Retornar datos de fallback en caso de error
+    return products;
+  }
+}
+
+// Función para obtener datos adicionales si es necesario
+async function getProductStats() {
+  try {
+    // Simular obtener estadísticas o datos adicionales
+    await new Promise(resolve => setTimeout(resolve, 50));
+    
+    // En un caso real, esto podría venir de analytics, base de datos, etc.
+    // const statsResponse = await fetch('https://api.breezair.com.mx/stats', {
+    //   next: { revalidate: 1800 }, // Cache por 30 minutos
+    // });
+    
+    return {
+      totalProducts: products.length,
+      categoriesCount: [...new Set(products.map(p => p.category))].length,
+      lastUpdated: new Date().toISOString(),
+      averageSavings: '85%'
+    };
+  } catch (error) {
+    console.error('Error fetching stats:', error);
+    // Datos de fallback
+    return {
+      totalProducts: products.length,
+      categoriesCount: 3,
+      lastUpdated: new Date().toISOString(),
+      averageSavings: '85%'
+    };
+  }
+}
+
+export default async function ProductosPage() {
+  // Obtener datos de forma asíncrona (SSR/SSG)
+  // Esta función se ejecutará en el servidor durante la generación estática (SSG)
+  // y se revalidará según la configuración de ISR
+  const [productsData, stats] = await Promise.all([
+    getProducts(),
+    getProductStats()
+  ]);
+  // Structured Data para la página de productos usando datos dinámicos
   const productCatalogSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     "name": "Catálogo Breezair Industrial México",
-    "description": "Sistemas de enfriamiento evaporativo industrial con hasta 87% de ahorro energético",
-    "numberOfItems": products.length,
-    "itemListElement": products.map((product, index) => ({
+    "description": `Sistemas de enfriamiento evaporativo industrial con hasta ${stats.averageSavings} de ahorro energético`,
+    "numberOfItems": stats.totalProducts,
+    "dateModified": stats.lastUpdated,
+    "itemListElement": productsData.map((product, index) => ({
       "@type": "Product",
       "position": index + 1,
       "name": product.title,
@@ -205,13 +301,13 @@ export default function ProductosPage() {
         "@type": "ListItem",
         "position": 1,
         "name": "Inicio",
-        "item": "https://breezair-industrial.mx"
+        "item": "https://www.breezair.com.mx"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Productos",
-        "item": "https://breezair-industrial.mx/productos"
+        "item": "https://www.breezair.com.mx/productos"
       }
     ]
   };
@@ -256,10 +352,17 @@ export default function ProductosPage() {
           </h1>
 
           <p className="text-premium-large max-w-4xl mx-auto mb-12 text-white">
-            Descubre nuestra línea completa de soluciones Breezair: desde aplicaciones 
+            Descubre nuestra línea completa de {stats.totalProducts} series de soluciones Breezair: desde aplicaciones 
             industriales pesadas hasta configuraciones especializadas personalizadas. 
-            Cada sistema garantiza máxima eficiencia energética y aire 100% exterior filtrado.
+            Cada sistema garantiza hasta {stats.averageSavings} de eficiencia energética y aire 100% exterior filtrado.
           </p>
+
+          <div className="flex items-center justify-center gap-2 text-sm text-blue-200 mb-8">
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+            </svg>
+            <span>Última actualización: {new Date(stats.lastUpdated).toLocaleDateString('es-MX')}</span>
+          </div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             {[
@@ -277,8 +380,32 @@ export default function ProductosPage() {
         </div>
       </section>
 
-      {/* Sección principal de productos */}
-      <ProductsSection products={products} />
+      {/* Sección principal de productos con datos dinámicos */}
+      <ProductsSection products={productsData} />
+
+      {/* Estadísticas dinámicas del catálogo */}
+      <section className="section-premium bg-white border-t border-gray-100">
+        <div className="container-premium py-12">
+          <div className="grid md:grid-cols-4 gap-8 text-center">
+            <div className="space-y-2">
+              <div className="text-3xl font-bold text-blue-600">{stats.totalProducts}</div>
+              <div className="text-sm font-medium text-gray-600">Series Disponibles</div>
+            </div>
+            <div className="space-y-2">
+              <div className="text-3xl font-bold text-blue-600">{stats.categoriesCount}</div>
+              <div className="text-sm font-medium text-gray-600">Categorías de Aplicación</div>
+            </div>
+            <div className="space-y-2">
+              <div className="text-3xl font-bold text-blue-600">{stats.averageSavings}</div>
+              <div className="text-sm font-medium text-gray-600">Ahorro Energético Promedio</div>
+            </div>
+            <div className="space-y-2">
+              <div className="text-3xl font-bold text-blue-600">24/7</div>
+              <div className="text-sm font-medium text-gray-600">Soporte Técnico</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Sección de comparación técnica */}
       <section className="section-premium bg-gray-50">
@@ -298,55 +425,64 @@ export default function ProductosPage() {
               <thead className="bg-gradient-primary text-black">
                 <tr>
                   <th className="px-6 py-4 text-left font-semibold">Especificación</th>
-                  <th className="px-6 py-4 text-center font-semibold">TBSI Series</th>
-                  <th className="px-6 py-4 text-center font-semibold">EXS Series</th>
-                  <th className="px-6 py-4 text-center font-semibold">Icon Series</th>
-                  <th className="px-6 py-4 text-center font-semibold">Custom</th>
+                  {productsData.map((product) => (
+                    <th key={product.slug} className="px-6 py-4 text-center font-semibold">
+                      <Link 
+                        href={`/productos/${product.id}`}
+                        className="hover:text-blue-800 transition-colors cursor-pointer inline-flex items-center gap-1"
+                      >
+                        {product.series} Series
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </Link>
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
                 <tr className="hover:bg-gray-50">
-                  <td className="px-6 py-4 font-medium text-steel-dark">Capacidad (m³/h)</td>
-                  <td className="px-6 py-4 text-center">18,000 - 50,000</td>
-                  <td className="px-6 py-4 text-center">12,000 - 35,000</td>
-                  <td className="px-6 py-4 text-center">8,000 - 25,000</td>
-                  <td className="px-6 py-4 text-center">Variable</td>
+                  <td className="px-6 py-4 font-medium text-steel-dark">Capacidad</td>
+                  {productsData.map((product) => (
+                    <td key={product.slug} className="px-6 py-4 text-center">
+                      {product.specs.capacity}
+                    </td>
+                  ))}
                 </tr>
                 <tr className="hover:bg-gray-50">
                   <td className="px-6 py-4 font-medium text-steel-dark">Eficiencia Energética</td>
-                  <td className="px-6 py-4 text-center font-semibold text-green-600">87%</td>
-                  <td className="px-6 py-4 text-center font-semibold text-green-600">82%</td>
-                  <td className="px-6 py-4 text-center font-semibold text-green-600">78%</td>
-                  <td className="px-6 py-4 text-center font-semibold text-green-600">Hasta 90%</td>
+                  {productsData.map((product) => (
+                    <td key={product.slug} className="px-6 py-4 text-center font-semibold text-green-600">
+                      {product.specs.efficiency}
+                    </td>
+                  ))}
                 </tr>
                 <tr className="hover:bg-gray-50">
-                  <td className="px-6 py-4 font-medium text-steel-dark">Área de Cobertura (m²)</td>
-                  <td className="px-6 py-4 text-center">1,500 - 5,000</td>
-                  <td className="px-6 py-4 text-center">1,200 - 3,500</td>
-                  <td className="px-6 py-4 text-center">800 - 2,500</td>
-                  <td className="px-6 py-4 text-center">Ilimitada</td>
+                  <td className="px-6 py-4 font-medium text-steel-dark">Área de Cobertura</td>
+                  {productsData.map((product) => (
+                    <td key={product.slug} className="px-6 py-4 text-center">
+                      {product.specs.coverageArea}
+                    </td>
+                  ))}
                 </tr>
                 <tr className="hover:bg-gray-50">
-                  <td className="px-6 py-4 font-medium text-steel-dark">Consumo Eléctrico (kW)</td>
-                  <td className="px-6 py-4 text-center">1.5 - 4.5</td>
-                  <td className="px-6 py-4 text-center">1.2 - 3.8</td>
-                  <td className="px-6 py-4 text-center">0.8 - 2.5</td>
-                  <td className="px-6 py-4 text-center">Optimizado</td>
+                  <td className="px-6 py-4 font-medium text-steel-dark">Consumo Eléctrico</td>
+                  {productsData.map((product) => (
+                    <td key={product.slug} className="px-6 py-4 text-center">
+                      {product.specs.powerConsumption}
+                    </td>
+                  ))}
                 </tr>
                 <tr className="hover:bg-gray-50">
                   <td className="px-6 py-4 font-medium text-steel-dark">Garantía</td>
-                  <td className="px-6 py-4 text-center">5 años</td>
-                  <td className="px-6 py-4 text-center">3-5 años</td>
-                  <td className="px-6 py-4 text-center">7 años</td>
+                  {productsData.map((product) => (
+                    <td key={product.slug} className="px-6 py-4 text-center">
+                      {product.warranty}
+                    </td>
+                  ))}
                   <td className="px-6 py-4 text-center">Hasta 10 años</td>
                 </tr>
-                <tr className="hover:bg-gray-50">
-                  <td className="px-6 py-4 font-medium text-steel-dark">Rango de Precio (USD)</td>
-                  <td className="px-6 py-4 text-center">$35K - $85K</td>
-                  <td className="px-6 py-4 text-center">$25K - $65K</td>
-                  <td className="px-6 py-4 text-center">$15K - $45K</td>
-                  <td className="px-6 py-4 text-center">Cotización</td>
-                </tr>
+
               </tbody>
             </table>
           </div>
@@ -365,23 +501,44 @@ export default function ProductosPage() {
             recomendar la configuración óptima, incluyendo cálculos de ROI y propuesta técnica detallada.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/contacto" className="btn-premium btn-premium-primary btn-premium-lg">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+            <Link href="/contacto" className="btn-premium btn-premium-primary btn-premium-lg">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
               Consultoría Técnica Gratuita
-            </a>
+            </Link>
             
             <a 
-              href="tel:+525555555555" 
-              className="btn-premium btn-premium-primary btn-premium-lg"
+              href="https://api.whatsapp.com/send/?phone=5255591975333&text=Hola%2C+estoy+en+breezair.com.mx+y+me+interesa+cotizar+sistemas+de+enfriamiento+evaporativo.&type=phone_number&app_absent=0"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-premium btn-premium-primary btn-premium-lg flex items-center justify-center gap-3"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.570-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
               </svg>
-              Llamar: +52 55 5555-5555
+              Cotizar por WhatsApp
             </a>
+          </div>
+          
+          {/* Enlaces rápidos a productos individuales */}
+          <div className="border-t border-white/20 pt-8">
+            <p className="text-blue-200 text-sm mb-4">O explora nuestras series individualmente:</p>
+            <div className="flex flex-wrap justify-center gap-3">
+              {productsData.map((product) => (
+                <Link
+                  key={product.id}
+                  href={`/productos/${product.id}`}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 border border-white/20"
+                >
+                  <span>Serie {product.series}</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>

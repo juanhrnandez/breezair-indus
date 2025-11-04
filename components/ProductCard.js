@@ -18,33 +18,33 @@ export default function ProductCard({ product, index = 0 }) {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50, scale: 0.95 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ 
-        delay: index * 0.15, 
-        duration: 0.7,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }}
-      className="group h-full"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <Link href={`/productos/${product.slug || product.id}`} className="block h-full group">
+      <motion.div
+        initial={{ opacity: 0, y: 50, scale: 0.95 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ 
+          delay: index * 0.15, 
+          duration: 0.7,
+          ease: [0.25, 0.46, 0.45, 0.94]
+        }}
+        className="h-full"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
       <div className="card-premium h-full flex flex-col relative overflow-hidden">
         {/* Premium Product Image Section */}
         <div className="relative overflow-hidden bg-gradient-hero">
           <div className="aspect-4/3 flex items-center justify-center relative">
             {/* Product Image */}
             {product.image ? (
-              <div className="absolute inset-0">
+              <div className="absolute inset-0 bg-gray-50">
                 <Image
                   src={product.image}
                   alt={product.title}
                   fill
-                  className="object-cover"
+                  className="object-contain p-4"
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"></div>
               </div>
             ) : (
               /* Industrial Pattern Background when no image */
@@ -186,7 +186,7 @@ export default function ProductCard({ product, index = 0 }) {
           {/* Premium Action Buttons */}
           <div className="space-y-3 mt-auto">
             <Link 
-              href={`#productos`}
+              href={`/productos/${product.slug || product.id}`}
               className="btn-premium btn-premium-primary w-full group/btn"
             >
               <svg className="w-5 h-5 group-hover/btn:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -237,6 +237,7 @@ export default function ProductCard({ product, index = 0 }) {
           transition={{ duration: 0.5 }}
         />
       </div>
-    </motion.div>
+      </motion.div>
+    </Link>
   );
 }

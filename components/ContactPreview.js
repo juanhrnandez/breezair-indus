@@ -14,7 +14,7 @@ const quickContactMethods = [
     ),
     title: 'Llamada Directa',
     description: 'Habla con un especialista',
-    action: 'tel:+521(55)12281088',
+    action: 'tel:+5255591975333',
     label: 'Llamar Ahora',
     highlight: 'Respuesta inmediata'
   },

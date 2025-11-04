@@ -17,7 +17,7 @@ export const metadata = {
   openGraph: {
     title: 'Contacto - Breezair Industrial',
     description: 'Contacta a nuestros especialistas para tu proyecto de enfriamiento industrial. Asesoría técnica especializada y respuesta en 24 horas.',
-    url: 'https://breezair-industrial.com/contacto',
+    url: 'https://www.breezair.com.mx/contacto',
     siteName: 'Breezair Industrial',
     locale: 'es_MX',
     type: 'website',
@@ -37,7 +37,7 @@ export const metadata = {
     images: ['/images/twitter-contacto.jpg']
   },
   alternates: {
-    canonical: 'https://breezair-industrial.com/contacto'
+    canonical: 'https://www.breezair.com.mx/contacto'
   },
   robots: {
     index: true,
@@ -57,12 +57,12 @@ const contactStructuredData = {
   "@type": "ContactPage",
   "name": "Contacto - Breezair Industrial",
   "description": "Página de contacto para solicitar información, cotizaciones y soporte técnico de sistemas de enfriamiento evaporativo industrial Breezair.",
-  "url": "https://breezair-industrial.com/contacto",
+  "url": "https://www.breezair.com.mx/contacto",
   "mainEntity": {
     "@type": "Organization",
     "name": "CG International - Breezair Industrial",
-    "url": "https://breezair-industrial.com",
-    "logo": "https://breezair-industrial.com/images/logo-breezair.png",
+    "url": "https://www.breezair.com.mx",
+    "logo": "https://www.breezair.com.mx/images/logo-breezair.png",
     "contactPoint": [
       {
         "@type": "ContactPoint",
@@ -107,13 +107,13 @@ const contactStructuredData = {
         "@type": "ListItem",
         "position": 1,
         "name": "Inicio",
-        "item": "https://breezair-industrial.com"
+        "item": "https://www.breezair.com.mx"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Contacto",
-        "item": "https://breezair-industrial.com/contacto"
+        "item": "https://www.breezair.com.mx/contacto"
       }
     ]
   },
@@ -121,7 +121,7 @@ const contactStructuredData = {
     "@type": "ContactAction",
     "target": {
       "@type": "EntryPoint",
-      "urlTemplate": "https://breezair-industrial.com/contacto#formulario",
+      "urlTemplate": "https://www.breezair.com.mx/contacto#formulario",
       "inLanguage": "es-MX",
       "actionPlatform": [
         "http://schema.org/DesktopWebPlatform",
@@ -195,7 +195,7 @@ export default function ContactoPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a 
-                href="tel:+52 1 (55) 1228 1088" 
+                href="tel:+5255591975333" 
                 className="btn-premium btn-premium-primary btn-premium-lg"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

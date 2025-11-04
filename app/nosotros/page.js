@@ -8,7 +8,7 @@ export const metadata = {
   openGraph: {
     title: 'Nosotros | CG International - Distribuidores Oficiales Breezair México',
     description: 'Conoce nuestra historia: 25+ años especializados en soluciones de enfriamiento industrial sustentable con más de 500 proyectos exitosos.',
-    url: 'https://breezair-industrial.mx/nosotros',
+    url: 'https://www.breezair.com.mx/nosotros',
     images: [
       {
         url: '/images/og-nosotros.jpg',
@@ -27,8 +27,8 @@ export default function NosotrosPage() {
     "@type": "Organization",
     "name": "CG International",
     "alternateName": "Breezair Industrial México",
-    "url": "https://breezair-industrial.mx",
-    "logo": "https://breezair-industrial.mx/images/logo-cg-international.svg",
+    "url": "https://www.breezair.com.mx",
+    "logo": "https://www.breezair.com.mx/images/logo-cg-international.svg",
     "description": "Distribuidores oficiales de Breezair en México desde 1999. Especialistas en sistemas de enfriamiento evaporativo industrial con más de 500 proyectos completados.",
     "foundingDate": "1999",
     "numberOfEmployees": "25-50",
@@ -72,13 +72,13 @@ export default function NosotrosPage() {
         "@type": "ListItem",
         "position": 1,
         "name": "Inicio",
-        "item": "https://breezair-industrial.mx"
+        "item": "https://www.breezair.com.mx"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Nosotros",
-        "item": "https://breezair-industrial.mx/nosotros"
+        "item": "https://www.breezair.com.mx/nosotros"
       }
     ]
   };

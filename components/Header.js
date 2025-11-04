@@ -13,7 +13,7 @@ export default function Header() {
 
   // Páginas que necesitan header con fondo desde el inicio
   const needsBackground = ['/productos', '/nosotros', '/contacto'];
-  const shouldHaveBackground = scrolled || needsBackground.includes(pathname);
+  const shouldHaveBackground = scrolled || needsBackground.includes(pathname) || pathname.startsWith('/productos/');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,13 +50,13 @@ export default function Header() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${shouldHaveBackground ? 'py-4' : 'py-6'} px-4 md:px-6`}
       style={{
         background: shouldHaveBackground 
-          ? 'linear-gradient(135deg, rgba(30, 64, 175, 0.65) 0%, rgba(37, 99, 235, 0.55) 50%, rgba(59, 130, 246, 0.50) 100%)'
+          ? 'rgba(255, 255, 255, 0.95)'
           : 'transparent',
-        backdropFilter: shouldHaveBackground ? 'blur(40px) saturate(180%)' : 'none',
-        WebkitBackdropFilter: shouldHaveBackground ? 'blur(40px) saturate(180%)' : 'none',
-        border: shouldHaveBackground ? '1px solid rgba(255, 255, 255, 0.18)' : 'none',
-        borderBottom: shouldHaveBackground ? '1px solid rgba(255, 255, 255, 0.18)' : 'none',
-        boxShadow: shouldHaveBackground ? '0 8px 32px rgba(30, 64, 175, 0.4), 0 4px 16px rgba(59, 130, 246, 0.2)' : 'none'
+        backdropFilter: shouldHaveBackground ? 'blur(20px) saturate(180%)' : 'none',
+        WebkitBackdropFilter: shouldHaveBackground ? 'blur(20px) saturate(180%)' : 'none',
+        border: shouldHaveBackground ? '1px solid rgba(229, 231, 235, 0.3)' : 'none',
+        borderBottom: shouldHaveBackground ? '1px solid rgba(229, 231, 235, 0.5)' : 'none',
+        boxShadow: shouldHaveBackground ? '0 4px 20px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.1)' : 'none'
       }}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -68,26 +68,24 @@ export default function Header() {
           <div 
             className="absolute inset-0"
             style={{
-              background: 'linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%)'
+              background: 'linear-gradient(90deg, transparent 0%, rgba(59, 130, 246, 0.03) 50%, transparent 100%)'
             }}
           />
-                      <div 
-                className="absolute bottom-0 left-0 right-0 h-px"
-                style={{
-                  background: 'linear-gradient(90deg, transparent 0%, rgba(0, 76, 151, 0.5) 20%, rgba(59, 130, 246, 0.4) 50%, rgba(0, 76, 151, 0.5) 80%, transparent 100%)'
-                }}
-              />
+          <div 
+            className="absolute bottom-0 left-0 right-0 h-px"
+            style={{
+              background: 'linear-gradient(90deg, transparent 0%, rgba(59, 130, 246, 0.2) 20%, rgba(37, 99, 235, 0.3) 50%, rgba(59, 130, 246, 0.2) 80%, transparent 100%)'
+            }}
+          />
         </div>
       )}
 
       <div className="container-premium relative z-10">
         <nav className="flex items-center justify-between">
           {/* Logo Premium */}
-                    {/* Logo Premium */}
           <Link href="/" className="flex items-center group">
-            {/* Placeholder para el logo de Breezair - reemplaza el src con tu archivo de logo */}
             <Image 
-              src="/images/breezair-logo-2.png" 
+              src={shouldHaveBackground ? "/dark-logo.svg" : "/images/breezair-logo-2.png"}
               alt="Breezair Logo" 
               width={120}
               height={120}
@@ -100,7 +98,6 @@ export default function Header() {
             {[
               { href: '/', label: 'Inicio' },
               { href: '/productos', label: 'Productos' },
-              { href: '#servicios', label: 'Servicios' },
               { href: '/nosotros', label: 'Nosotros' },
               { href: '/contacto', label: 'Contacto' }
             ].map((item, index) => (
@@ -112,17 +109,16 @@ export default function Header() {
               >
                 <Link 
                   href={item.href}
-                  className="relative font-medium transition-all duration-300 py-2 px-1 group text-white/90 hover:text-white"
+                  className={`relative font-medium transition-all duration-300 py-2 px-1 group ${shouldHaveBackground ? 'text-gray-700 hover:text-blue-600' : 'text-white/90 hover:text-white'}`}
                   style={{
-                    color: shouldHaveBackground ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.9)',
-                    textShadow: shouldHaveBackground ? '0 2px 4px rgba(0, 0, 0, 0.2)' : 'none'
+                    textShadow: shouldHaveBackground ? 'none' : '0 2px 4px rgba(0, 0, 0, 0.3)'
                   }}
                 >
                   {item.label}
                   <span 
-                    className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"
+                    className={`absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300 ${shouldHaveBackground ? 'bg-blue-600' : 'bg-white'}`}
                     style={{
-                      filter: shouldHaveBackground ? 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))' : 'none'
+                      filter: shouldHaveBackground ? 'none' : 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))'
                     }}
                   ></span>
                 </Link>
@@ -139,14 +135,15 @@ export default function Header() {
             >
               <Link 
                 href="/contacto" 
-                className={scrolled ? "btn-premium btn-premium-primary" : "btn-premium btn-premium-outline"}
+                className={shouldHaveBackground ? "btn-premium btn-premium-primary" : "btn-premium btn-premium-outline"}
                 style={{
-                  background: scrolled 
+                  background: shouldHaveBackground 
                     ? 'linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%)' 
                     : 'rgba(255, 255, 255, 0.1)',
-                  borderColor: scrolled ? 'rgba(59, 130, 246, 0.5)' : 'rgba(255, 255, 255, 0.3)',
-                  backdropFilter: scrolled ? 'blur(10px)' : 'blur(20px)',
-                  boxShadow: scrolled ? '0 4px 15px rgba(59, 130, 246, 0.3)' : 'none'
+                  borderColor: shouldHaveBackground ? 'rgba(59, 130, 246, 0.5)' : 'rgba(255, 255, 255, 0.3)',
+                  backdropFilter: shouldHaveBackground ? 'blur(10px)' : 'blur(20px)',
+                  boxShadow: shouldHaveBackground ? '0 4px 15px rgba(59, 130, 246, 0.3)' : 'none',
+                  color: shouldHaveBackground ? 'white' : 'rgba(255, 255, 255, 0.9)'
                 }}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -168,7 +165,7 @@ export default function Header() {
           >
             <div className="w-6 h-6 flex flex-col justify-center items-center">
               <motion.span
-                className="block w-5 h-0.5 bg-white rounded-full"
+                className={`block w-5 h-0.5 rounded-full ${shouldHaveBackground ? 'bg-gray-700' : 'bg-white'}`}
                 animate={{
                   rotate: isOpen ? 45 : 0,
                   y: isOpen ? 2 : -2
@@ -176,14 +173,14 @@ export default function Header() {
                 transition={{ duration: 0.3 }}
               />
               <motion.span
-                className="block w-5 h-0.5 bg-white rounded-full mt-1"
+                className={`block w-5 h-0.5 rounded-full mt-1 ${shouldHaveBackground ? 'bg-gray-700' : 'bg-white'}`}
                 animate={{
                   opacity: isOpen ? 0 : 1
                 }}
                 transition={{ duration: 0.3 }}
               />
               <motion.span
-                className="block w-5 h-0.5 bg-white rounded-full mt-1"
+                className={`block w-5 h-0.5 rounded-full mt-1 ${shouldHaveBackground ? 'bg-gray-700' : 'bg-white'}`}
                 animate={{
                   rotate: isOpen ? -45 : 0,
                   y: isOpen ? -2 : 2
@@ -205,13 +202,14 @@ export default function Header() {
               exit="hidden"
             >
               <div 
-                className="rounded-2xl shadow-industrial-lg border border-white/20 py-6"
+                className="rounded-2xl shadow-lg py-6"
                 style={{
                   background: shouldHaveBackground 
-                    ? 'linear-gradient(135deg, rgba(0, 76, 151, 0.20) 0%, rgba(0, 43, 92, 0.30) 50%, rgba(47, 58, 69, 0.25) 100%)'
+                    ? 'rgba(255, 255, 255, 0.95)'
                     : 'rgba(255, 255, 255, 0.1)',
-                  backdropFilter: shouldHaveBackground ? 'blur(25px) saturate(180%)' : 'blur(20px)',
-                  WebkitBackdropFilter: shouldHaveBackground ? 'blur(25px) saturate(180%)' : 'blur(20px)'
+                  backdropFilter: 'blur(20px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                  border: shouldHaveBackground ? '1px solid rgba(229, 231, 235, 0.5)' : '1px solid rgba(255, 255, 255, 0.2)'
                 }}
               >
                 <div className="space-y-1">
@@ -228,10 +226,10 @@ export default function Header() {
                     >
                       <Link
                         href={item.href}
-                        className="flex items-center space-x-3 px-6 py-3 text-white hover:bg-white/10 rounded-lg transition-all duration-300 group"
+                        className={`flex items-center space-x-3 px-6 py-3 rounded-lg transition-all duration-300 group ${shouldHaveBackground ? 'text-gray-700 hover:bg-blue-50 hover:text-blue-600' : 'text-white hover:bg-white/10'}`}
                         onClick={() => setIsOpen(false)}
                       >
-                        <svg className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className={`w-5 h-5 transition-colors ${shouldHaveBackground ? 'text-gray-500 group-hover:text-blue-600' : 'text-white/70 group-hover:text-white'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={item.icon} />
                         </svg>
                         <span className="font-medium">{item.label}</span>
