@@ -12,8 +12,8 @@ export default function Header() {
   const pathname = usePathname();
 
   // Páginas que necesitan header con fondo desde el inicio
-  const needsBackground = ['/productos', '/nosotros', '/contacto'];
-  const shouldHaveBackground = scrolled || needsBackground.includes(pathname) || pathname.startsWith('/productos/');
+  const needsBackground = ['/productos', '/nosotros', '/contacto', '/blog'];
+  const shouldHaveBackground = scrolled || needsBackground.includes(pathname) || pathname.startsWith('/productos/') || pathname.startsWith('/blog/');
 
   useEffect(() => {
     const handleScroll = () => {
