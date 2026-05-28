@@ -329,7 +329,9 @@ ${message}
     const internalRecipients = [
       'ventas@cg.international',
       'soporte@cg.international',
-      'gerencia@cg.international'
+      'gerencia@cg.international',
+      'adm@cg.international',
+      'jorge@cg.international'
     ];
 
     // Verificar si Resend está configurado

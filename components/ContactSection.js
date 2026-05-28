@@ -25,7 +25,9 @@ const contactInfo = [
     title: 'Correo Electrónico',
     details: [
       'ventas@cg.international',
-      'soporte@cg.international'
+      'soporte@cg.international',
+      'adm@cg.international',
+      'jorge@cg.international'
     ]
   },
   {
