@@ -4,7 +4,7 @@ Sitio web corporativo para CG International, distribuidor oficial de sistemas de
 
 ## 🚀 Características
 a
-### ✨ Diseño y UX
+### ✨ Diseño y UXs
 - **Diseño Industrial Moderno**: Paleta de colores profesionales y elementos visuales que reflejan la industria
 - **Responsive Design**: Optimizado para desktop, tablet y móvil
 - **Animaciones Suaves**: Implementadas con Framer Motion para una experiencia fluida
