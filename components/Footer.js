@@ -92,8 +92,8 @@ export default function Footer() {
                     <svg className="w-5 h-5 text-blue-200 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
                     </svg>
-                    <a href="mailto:ventas@cg.international" className="text-white hover:text-blue-200 transition-colors text-sm break-all">
-                      ventas@cg.international
+                    <a href="mailto:adm@cg.international" className="text-white hover:text-blue-200 transition-colors text-sm break-all">
+                      adm@cg.international
                     </a>
                   </div>
                   <div className="flex items-start gap-3">

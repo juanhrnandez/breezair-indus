@@ -99,7 +99,7 @@ const contactStructuredData = {
       "addressRegion": "CDMX",
       "addressCountry": "MX"
     },
-    "email": "ventas@cg.international",
+    "email": "adm@cg.international",
     "foundingDate": "2008",
     "numberOfEmployees": "50-100",
     "industry": "Industrial HVAC Systems",
