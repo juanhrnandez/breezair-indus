@@ -24,8 +24,6 @@ const contactInfo = [
     icon: <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>,
     title: 'Correo Electrónico',
     details: [
-      'ventas@cg.international',
-      'soporte@cg.international',
       'adm@cg.international',
       'jorge@cg.international'
     ]
@@ -238,7 +236,7 @@ export default function ContactSection() {
                 </a>
                 
                 <a 
-                  href="mailto:ventas@cg.international?subject=Consulta%20Urgente%20-%20Breezair%20Industrial" 
+                  href="mailto:adm@cg.international?subject=Consulta%20Urgente%20-%20Breezair%20Industrial" 
                   className="btn-premium btn-premium-steel w-full"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

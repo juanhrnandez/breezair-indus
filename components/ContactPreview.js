@@ -25,8 +25,8 @@ const quickContactMethods = [
       </svg>
     ),
     title: 'Email Comercial',
-    description: 'ventas@cg.international',
-    action: 'mailto:ventas@cg.international',
+    description: 'adm@cg.international',
+    action: 'mailto:adm@cg.international',
     label: 'Enviar Email',
     highlight: 'Respuesta en 2 horas'
   },

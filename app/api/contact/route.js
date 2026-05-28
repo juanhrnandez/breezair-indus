@@ -295,7 +295,7 @@ ${message}
               <h3 style="margin-top: 0;">📞 ¿Necesitas Atención Inmediata?</h3>
               <p>Si tu proyecto es urgente, puedes contactarnos directamente:</p>
               <a href="tel:+5255591975333" class="btn">📞 Llamar: (55) 5919-7533</a>
-              <a href="mailto:ventas@cg.international" class="btn">@ Email: ventas@cg.international</a>
+              <a href="mailto:adm@cg.international" class="btn">@ Email: adm@cg.international</a>
             </div>
 
             <h3>🏆 ¿Por qué elegir Breezair Industrial?</h3>
@@ -317,7 +317,7 @@ ${message}
           <div class="footer">
             <p><strong>CG International</strong> | Distribuidores Oficiales Breezair</p>
             <p>
-              📧 ventas@cg.international | 📞 (55) 5919-7533<br>
+              📧 adm@cg.international | 📞 (55) 5919-7533<br>
               🌐 <a href="https://www.breezair.com.mx" style="color: #3b82f6;">www.breezair.com.mx</a>
             </p>
           </div>
@@ -327,9 +327,6 @@ ${message}
 
     // Lista de destinatarios internos
     const internalRecipients = [
-      'ventas@cg.international',
-      'soporte@cg.international',
-      'gerencia@cg.international',
       'adm@cg.international',
       'jorge@cg.international'
     ];
@@ -359,7 +356,7 @@ ${message}
       to: [email],
       subject: `✓ Consulta Recibida - ${inquiryTypeLabel} | Breezair Industrial`,
       html: clientEmailHtml,
-      replyTo: 'ventas@cg.international'
+      replyTo: 'adm@cg.international'
     });
 
     console.log('Emails enviados:', { 

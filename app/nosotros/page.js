@@ -48,14 +48,14 @@ export default function NosotrosPage() {
         "@type": "ContactPoint",
         "telephone": "+52-55-5555-5555",
         "contactType": "sales",
-        "email": "ventas@cg.international",
+        "email": "adm@cg.international",
         "availableLanguage": ["Spanish", "English"]
       },
       {
         "@type": "ContactPoint",
         "telephone": "+52-55-5555-5556",
         "contactType": "technical support",
-        "email": "soporte@cg.international",
+        "email": "jorge@cg.international",
         "availableLanguage": ["Spanish", "English"]
       }
     ],
