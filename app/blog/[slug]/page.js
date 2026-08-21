@@ -34,20 +34,11 @@ export async function generateMetadata({ params }) {
       authors: [post.author || 'CG International'],
       section: post.category || 'Industrial HVAC',
       tags: post.tags || ['enfriamiento industrial', 'Breezair', 'eficiencia energética'],
-      images: [
-        {
-          url: `/images/blog/${post.slug}.jpg`,
-          width: 1200,
-          height: 630,
-          alt: post.title
-        }
-      ]
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.summary,
-      images: [`/images/blog/${post.slug}.jpg`]
     },
     alternates: {
       canonical: `https://www.breezair.com.mx/blog/${post.slug}/`
@@ -233,7 +224,7 @@ export default async function Post({ params }) {
     "@type": "Article",
     "headline": post.title,
     "description": post.summary,
-    "image": `https://www.breezair.com.mx/images/blog/${post.slug}.jpg`,
+    "image": `https://www.breezair.com.mx/blog/${post.slug}/opengraph-image`,
     "author": {
       "@type": "Person",
       "name": post.author || "CG International"

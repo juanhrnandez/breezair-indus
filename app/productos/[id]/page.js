@@ -290,15 +290,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: product.title,
       description: product.summary,
-      url: `https://www.breezair.com.mx/productos/${product.id}`,
-      images: [
-        {
-          url: product.image,
-          width: 1200,
-          height: 630,
-          alt: `${product.title} - Sistema de enfriamiento evaporativo industrial`
-        }
-      ]
+      url: `https://www.breezair.com.mx/productos/${product.id}/`
     },
     alternates: {
       canonical: `https://www.breezair.com.mx/productos/${product.id}/`

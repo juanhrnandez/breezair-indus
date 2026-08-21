@@ -28,20 +28,11 @@ export const metadata = {
     siteName: 'Breezair Industrial',
     locale: 'es_MX',
     type: 'website',
-    images: [
-      {
-        url: '/images/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Contacto Breezair Industrial - Especialistas en Enfriamiento Evaporativo'
-      }
-    ]
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Contacto - Breezair Industrial',
     description: 'Especialistas en enfriamiento evaporativo industrial. Contacta para asesoría técnica y cotizaciones.',
-    images: ['/images/og-image.jpg']
   },
   alternates: {
     canonical: 'https://www.breezair.com.mx/contacto/'

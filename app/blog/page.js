@@ -24,14 +24,6 @@ export const metadata = {
     title: 'Blog Técnico | Breezair Industrial México',
     description: 'Conocimiento especializado en enfriamiento evaporativo industrial. Artículos técnicos, casos de éxito y tendencias de la industria.',
     url: 'https://www.breezair.com.mx/blog',
-    images: [
-      {
-        url: '/images/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Blog Técnico Breezair Industrial'
-      }
-    ]
   },
   alternates: {
     canonical: 'https://www.breezair.com.mx/blog/'

@@ -26,14 +26,6 @@ export const metadata = {
     title: 'Nosotros | CG International - Distribuidores Oficiales Breezair México',
     description: 'Conoce nuestra historia: 25+ años especializados en soluciones de enfriamiento industrial sustentable con más de 500 proyectos exitosos.',
     url: 'https://www.breezair.com.mx/nosotros',
-    images: [
-      {
-        url: '/images/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'CG International - Historia y experiencia en México'
-      }
-    ]
   }
 };
 

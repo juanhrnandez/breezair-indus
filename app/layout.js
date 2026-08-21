@@ -77,15 +77,6 @@ export const metadata = {
     title: 'Breezair Industrial México | Enfriamiento Evaporativo Industrial',
     description: 'Líderes en soluciones de enfriamiento evaporativo industrial en México. Ahorro energético hasta 87%, aire 100% exterior filtrado.',
     siteName: 'Breezair Industrial México',
-    images: [
-      {
-        url: '/images/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Breezair Industrial México - Soluciones de Enfriamiento Evaporativo',
-        type: 'image/jpeg'
-      }
-    ]
   },
 
   alternates: {

@@ -32,14 +32,6 @@ export async function generateMetadata() {
       title: 'Productos Breezair Industrial | Sistemas de Enfriamiento Evaporativo',
       description: `Descubre nuestra línea completa de ${productsCount} series Breezair: TBSI, EXS e Icon. Soluciones industriales con hasta 87% de ahorro energético.`,
       url: 'https://www.breezair.com.mx/productos',
-      images: [
-        {
-          url: '/images/og-image.jpg',
-          width: 1200,
-          height: 630,
-          alt: 'Catálogo de productos Breezair Industrial'
-        }
-      ]
     },
     alternates: {
       canonical: 'https://www.breezair.com.mx/productos/'
@@ -69,11 +61,6 @@ const products = [
     slug: 'tbsi-series',
     category: 'industrial',
     image: '/images/breezair-product-1.jpg',
-    images: [
-      '/images/breezair-product-1.jpg',
-      '/images/breezair-product-2.jpg',
-      '/images/breezair-product-3.jpg'
-    ],
     features: [
       'Hasta 87% ahorro energético vs. aire acondicionado tradicional',
       'Capacidad de 18,000-50,000 m³/h de aire tratado',
@@ -104,11 +91,6 @@ const products = [
     slug: 'exs-series',
     category: 'commercial',
     image: '/images/breezair-product-2.jpg',
-    images: [
-      '/images/breezair-product-2.jpg',
-      '/images/breezair-product-2.jpg',
-      '/images/breezair-product-2.jpg'
-    ],
     features: [
       'Diseño modular completamente flexible',
       'Filtración HEPA opcional para ambientes críticos',
@@ -140,11 +122,6 @@ const products = [
     slug: 'icon-series',
     category: 'specialized',
     image: '/images/breezair-product-3.jpg',
-    images: [
-      '/images/breezair-product-3.jpg',
-      '/images/breezair-product-3.jpg',
-      '/images/breezair-product-3.jpg'
-    ],
     features: [
       'Instalación plug-and-play simplificada',
       'Mantenimiento mínimo requerido',
@@ -176,11 +153,6 @@ const products = [
     slug: 'custom-solutions',
     category: 'specialized',
     image: '/images/breezair-product-4.jpg',
-    images: [
-      '/images/breezair-product-4.jpg',
-      '/images/breezair-product-4.jpg',
-      '/images/breezair-product-4.jpg'
-    ],
     features: [
       'Diseño 100% personalizado según necesidades',
       'Ingeniería especializada incluida',
