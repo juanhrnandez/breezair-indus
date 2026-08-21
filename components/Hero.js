@@ -2,213 +2,198 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { whatsappLink } from '@/lib/site';
+import { trackContactClick } from '@/lib/analytics';
+
+/**
+ * Hero de portada.
+ *
+ * Composición editorial asimétrica en lugar de la pila centrada de siempre: el
+ * texto ocupa la columna izquierda sobre el degradado más denso —donde el tipo
+ * es legible— y la fotografía respira a la derecha.
+ *
+ * La imagen es una nave logística real, no un primer plano del logotipo: el
+ * comprador tiene que reconocer su propio espacio en la primera pantalla.
+ *
+ * Las tres cifras van en una regla técnica al pie, con retícula y tipografía
+ * monoespaciada, no en tarjetas de cristal flotantes.
+ */
+
+const EASE = [0.22, 1, 0.36, 1];
+
+const CIFRAS = [
+  { valor: '87', unidad: '%', label: 'Menos consumo eléctrico', nota: 'vs. aire acondicionado' },
+  { valor: '100', unidad: '%', label: 'Aire exterior filtrado', nota: 'sin recirculación' },
+  { valor: '1.5', unidad: 'kW', label: 'Por equipo industrial', nota: '≈ 17,000 m³/h' },
+];
 
 export default function Hero() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"]
-  });
+  const reduceMotion = useReducedMotion();
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 1]); // Mantener opacidad hasta 80% del scroll
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.8,
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 60 },
-    visible: {
+  const entrada = {
+    hidden: { opacity: 0, y: reduceMotion ? 0 : 22 },
+    visible: (i = 0) => ({
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    }
-  };
-
-  const wordVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (i) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.1,
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    })
-  };
-
-  const floatingVariants = {
-    floating: {
-      y: [-20, 20, -20],
-      rotate: [0, 5, 0],
-      transition: {
-        duration: 6,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }
-    }
+      transition: { duration: reduceMotion ? 0 : 0.7, delay: reduceMotion ? 0 : i * 0.08, ease: EASE },
+    }),
   };
 
   return (
-    <section
-      ref={ref}
-      className="section-hero relative overflow-hidden pt-24"
-    >
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0">
+    <section className="relative isolate overflow-hidden bg-[#0A121C]">
+      {/* ── Fotografía ─────────────────────────────────────────────────── */}
+      <div className="absolute inset-0 -z-10">
         <Image
-          src="/images/breezair-1.jpg"
-          alt="Breezair Industrial Installation"
+          src="/images/breezair-3.jpg"
+          alt="Interior de un centro de distribución climatizado con sistemas Breezair"
           fill
-          className="object-cover"
           priority
+          sizes="100vw"
+          className="object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/30 via-slate-500/75 to-blue-900/50"></div>
-        <div className="absolute inset-0 "></div>
+        {/* Degradado direccional: denso donde va el texto, limpio donde va la foto */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0A121C] via-[#0A121C]/88 to-[#0A121C]/45" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A121C] via-transparent to-[#0A121C]/70" />
       </div>
-      {/* Parallax Background Elements - Converted to Particles */}
 
+      {/* Retícula técnica: textura de plano, casi imperceptible */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.07]"
+        style={{
+          backgroundImage:
+            'linear-gradient(rgba(255,255,255,.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.6) 1px, transparent 1px)',
+          backgroundSize: '88px 88px',
+          maskImage: 'radial-gradient(ellipse 80% 60% at 30% 40%, #000 30%, transparent 75%)',
+        }}
+      />
 
+      <div className="container-premium relative">
+        <div className="grid items-center gap-12 pb-16 pt-36 lg:min-h-[86vh] lg:grid-cols-12 lg:gap-8 lg:pb-24 lg:pt-44">
+          <div className="lg:col-span-7 xl:col-span-6">
+            {/* Antetítulo */}
+            <motion.div
+              custom={0}
+              variants={entrada}
+              initial="hidden"
+              animate="visible"
+              className="mb-7 flex items-center gap-3"
+            >
+              <span className="h-px w-10 bg-[#22B8D6]" />
+              <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-[#22B8D6]">
+                Enfriamiento evaporativo industrial
+              </span>
+            </motion.div>
 
+            {/* Titular */}
+            <motion.h1
+              custom={1}
+              variants={entrada}
+              initial="hidden"
+              animate="visible"
+              className="font-display text-[clamp(2.75rem,6.2vw,5rem)] font-bold uppercase leading-[0.94] tracking-[-0.01em] text-white"
+            >
+              Climatiza tu nave
+              <span className="mt-1 block text-[#5FD3EB]">sin la factura del aire acondicionado</span>
+            </motion.h1>
 
-      <motion.div
-        className="container-premium relative z-20 f"
-      >
-        <motion.div
-          className="hero-content"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
+            {/* Bajada */}
+            <motion.p
+              custom={2}
+              variants={entrada}
+              initial="hidden"
+              animate="visible"
+              className="mt-7 max-w-xl text-lg leading-relaxed text-slate-300 md:text-xl"
+            >
+              Un equipo Breezair trata el aire de una nave completa con el consumo de un par de
+              electrodomésticos. Somos el distribuidor oficial de Seeley International en México:
+              dimensionamos el proyecto antes de cotizarlo.
+            </motion.p>
 
-
-          {/* Título Principal */}
-          <div >
-            {[
-              "Climatización Industrial Breezair",
-
-            ].map((line, lineIndex) => (
-              <div key={lineIndex} className="overflow-hidden">
-                <motion.h1
-                  className="heading-premium-1"
-                  variants={itemVariants}
-                  custom={lineIndex}
-                >
-                  {line.split(' ').map((word, wordIndex) => (
-                    <motion.span
-                      key={wordIndex}
-                      className="inline-block mr-4"
-                      variants={wordVariants}
-                      custom={lineIndex * 3 + wordIndex}
-                    >
-                      {wordIndex === 1 && lineIndex === 2 ? (
-                        <span className="text-gradient-premium bg-linear-to-r from-blue-200 via-white to-blue-100 bg-clip-text text-transparent">
-                          {word}
-                        </span>
-                      ) : (
-                        word
-                      )}
-                    </motion.span>
-                  ))}
-                </motion.h1>
-              </div>
-            ))}
-          </div>
-
-          {/* Descripción Premium */}
-          <motion.p
-            variants={itemVariants}
-            className="text-premium-hero text-center mb-10"
-          >
-            Soluciones de enfriamiento evaporativo industrial con{' '}
-            <span className="font-semibold text-white">hasta 87% de ahorro energético</span>,
-            aire 100% filtrado del exterior y máximo confort térmico para grandes espacios.
-          </motion.p>
-
-          {/* Estadísticas Hero */}
-          <motion.div
-            variants={itemVariants}
-            className="hero-stats"
-          >
-            {[
-              {
-                number: "87%",
-                label: "Ahorro Energético",
-                icon: <svg className="w-8 h-8 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" /></svg>
-              },
-              {
-                number: "100%",
-                label: "Aire Exterior",
-                icon: <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
-              },
-              {
-                number: "24/7",
-                label: "Operación Continua",
-                icon: <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-              }
-            ].map((stat, index) => (
-              <motion.div
-                key={index}
-                className="hero-stat hover-float bg-white/10 backdrop-blur-md border border-white/20"
-                whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.15)" }}
-                transition={{ type: "spring", stiffness: 300 }}
+            {/* Acciones */}
+            <motion.div
+              custom={3}
+              variants={entrada}
+              initial="hidden"
+              animate="visible"
+              className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
+            >
+              <Link
+                href="#cotizar"
+                onClick={() => trackContactClick('form', 'hero_primary')}
+                className="group inline-flex items-center justify-center gap-2.5 rounded-lg bg-[#0A4FA0] px-7 py-4 text-base font-semibold text-white shadow-[0_16px_40px_-12px_rgba(10,79,160,0.7)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#1E6FCC]"
               >
-                <div className="mb-3">{stat.icon}</div>
-                <div className="hero-stat-number text-white font-bold">{stat.number}</div>
-                <div className="hero-stat-label text-white/90">{stat.label}</div>
-              </motion.div>
-            ))}
-          </motion.div>
+                Cotizar mi proyecto
+                <svg
+                  className="h-4.5 w-4.5 transition-transform duration-300 group-hover:translate-x-1"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2.2}
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12" />
+                </svg>
+              </Link>
 
-          {/* CTAs Premium */}
-          <motion.div
-            variants={itemVariants}
-            className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12"
-          >
-            <Link href="#productos" className="btn-premium btn-premium-primary btn-premium-lg group bg-blue-600 hover:bg-blue-700 text-white shadow-xl">
-              <svg className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-              </svg>
-              Explorar Productos
-            </Link>
-            <Link href="#contacto" className="btn-premium btn-premium-outline btn-premium-lg group bg-white/10 backdrop-blur-md border-2 border-white text-white hover:bg-white hover:text-blue-700 shadow-xl">
-              <svg className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-              </svg>
-              Consultoría Gratuita
-            </Link>
-          </motion.div>
+              <Link
+                href="#calculadora"
+                onClick={() => trackContactClick('calculator', 'hero_secondary')}
+                className="inline-flex items-center justify-center gap-2.5 rounded-lg border border-white/25 px-7 py-4 text-base font-semibold text-white transition-all duration-200 hover:border-white/60 hover:bg-white/5"
+              >
+                Calcular mi ahorro
+              </Link>
+            </motion.div>
 
+            {/* Alternativa inmediata */}
+            <motion.p
+              custom={4}
+              variants={entrada}
+              initial="hidden"
+              animate="visible"
+              className="mt-6 text-sm text-slate-400"
+            >
+              Cotización sin costo y sin compromiso · o{' '}
+              <a
+                href={whatsappLink('Hola, vi el sitio de Breezair y quiero información para climatizar mi planta.')}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackContactClick('whatsapp', 'hero')}
+                className="font-semibold text-white underline decoration-white/30 underline-offset-4 transition-colors hover:decoration-white"
+              >
+                escríbenos por WhatsApp
+              </a>
+            </motion.p>
+          </div>
+        </div>
 
-
-
-
-        </motion.div>
-
-        {/* Scroll Indicator Premium */}
-        <motion.div
-          className="scroll-indicator text-white"
-          initial={{ opacity: 0, y: 20 }}
+        {/* ── Regla técnica de cifras ────────────────────────────────────── */}
+        <motion.dl
+          initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5 }}
+          transition={{ duration: reduceMotion ? 0 : 0.7, delay: reduceMotion ? 0 : 0.5, ease: EASE }}
+          className="relative grid grid-cols-1 border-t border-white/12 sm:grid-cols-3"
         >
-
-        </motion.div>
-      </motion.div>
+          {CIFRAS.map((c, i) => (
+            <div
+              key={c.label}
+              className={`py-7 sm:py-8 ${i > 0 ? 'border-t border-white/12 sm:border-l sm:border-t-0 sm:pl-8' : ''} ${
+                i < 2 ? 'sm:pr-8' : ''
+              }`}
+            >
+              <dd className="flex items-baseline gap-1.5">
+                <span className="font-display text-5xl font-bold leading-none tracking-tight text-white tabular">
+                  {c.valor}
+                </span>
+                <span className="font-display text-2xl font-semibold text-[#5FD3EB]">{c.unidad}</span>
+              </dd>
+              <dt className="mt-2.5 text-[15px] font-semibold text-white/85">{c.label}</dt>
+              <p className="mt-0.5 font-mono text-[11px] uppercase tracking-wider text-slate-400">{c.nota}</p>
+            </div>
+          ))}
+        </motion.dl>
+      </div>
     </section>
   );
 }

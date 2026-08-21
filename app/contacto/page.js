@@ -2,13 +2,15 @@ import ContactSection from '@/components/ContactSection'
 import StructuredData from '@/components/StructuredData'
 import Image from 'next/image'
 import Link from 'next/link'
+import { TEL_LINK, EMAIL_SALES, PHONE_SCHEMA } from '@/lib/site'
+import { FUNDACION } from '@/lib/company'
 
 // Configuración para SSG optimizado 
 export const revalidate = 86400; // Revalidar cada 24 horas
 export const dynamic = 'force-static'; // Forzar generación estática
 
 export const metadata = {
-  title: 'Contacto - Breezair Industrial | Soluciones de Enfriamiento Evaporativo',
+  title: 'Contacto y cotización',
   description: 'Contacta a nuestros especialistas en enfriamiento evaporativo industrial. Asesoría técnica, cotizaciones y soporte post-venta. Respuesta garantizada en 24 horas.',
   keywords: [
     'contacto breezair',
@@ -28,7 +30,7 @@ export const metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/og-contacto.jpg',
+        url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Contacto Breezair Industrial - Especialistas en Enfriamiento Evaporativo'
@@ -39,10 +41,10 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Contacto - Breezair Industrial',
     description: 'Especialistas en enfriamiento evaporativo industrial. Contacta para asesoría técnica y cotizaciones.',
-    images: ['/images/twitter-contacto.jpg']
+    images: ['/images/og-image.jpg']
   },
   alternates: {
-    canonical: 'https://www.breezair.com.mx/contacto'
+    canonical: 'https://www.breezair.com.mx/contacto/'
   },
   robots: {
     index: true,
@@ -71,7 +73,7 @@ const contactStructuredData = {
     "contactPoint": [
       {
         "@type": "ContactPoint",
-        "telephone": "+52-55-5555-5555",
+        "telephone": PHONE_SCHEMA,
         "contactType": "sales",
         "availableLanguage": ["Spanish", "English"],
         "areaServed": ["MX", "LatAm"],
@@ -87,7 +89,7 @@ const contactStructuredData = {
       },
       {
         "@type": "ContactPoint",
-        "telephone": "+52-55-5555-5556",
+        "telephone": PHONE_SCHEMA,
         "contactType": "technical support",
         "availableLanguage": ["Spanish", "English"],
         "areaServed": ["MX", "LatAm"]
@@ -99,8 +101,8 @@ const contactStructuredData = {
       "addressRegion": "CDMX",
       "addressCountry": "MX"
     },
-    "email": "adm@cg.international",
-    "foundingDate": "2008",
+    "email": EMAIL_SALES,
+    "foundingDate": String(FUNDACION),
     "numberOfEmployees": "50-100",
     "industry": "Industrial HVAC Systems",
     "slogan": "Líderes en Enfriamiento Evaporativo Industrial"
@@ -153,6 +155,7 @@ export default function ContactoPage() {
             src="/images/breezair-1.jpg"
             alt="Contacto Breezair Industrial - Sistemas de enfriamiento evaporativo"
             fill
+            sizes="100vw"
             className="object-cover"
             style={{ filter: 'blur(1px)' }}
             priority
@@ -200,7 +203,7 @@ export default function ContactoPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a 
-                href="tel:+5255591975333" 
+                href={TEL_LINK} 
                 className="btn-premium btn-premium-primary btn-premium-lg"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

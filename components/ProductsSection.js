@@ -5,12 +5,13 @@ import { useRef, useState } from 'react';
 import Link from 'next/link';
 import ProductCard from './ProductCard';
 import Image from 'next/image';
+import { whatsappLink } from '../lib/site';
 
 const productCategories = [
-  { id: 'all', name: 'Todos los Productos', icon: <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/></svg> },
-  { id: 'industrial', name: 'Industrial Heavy Duty', icon: <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm.53 5.47a.75.75 0 00-1.06 0L6.72 12.47a.75.75 0 101.06 1.06L12 9.31l4.22 4.22a.75.75 0 101.06-1.06l-4.75-4.75z"/></svg> },
-  { id: 'commercial', name: 'Comercial ', icon: <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M4 21V9l8-6 8 6v12h-6v-7h-4v7H4zm2-2h2v-5h8v5h2v-9L12 6 6 10v9z"/></svg> },
-  { id: 'specialized', name: 'Aplicaciones Especiales', icon: <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0L19.2 12l-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg> }
+  { id: 'all', name: 'Todos los Productos' },
+  { id: 'industrial', name: 'Industrial Heavy Duty' },
+  { id: 'commercial', name: 'Comercial ' },
+  { id: 'specialized', name: 'Aplicaciones Especiales' }
 ];
 
 export default function ProductsSection({ products }) {
@@ -86,19 +87,17 @@ export default function ProductsSection({ products }) {
         <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-gradient-steel opacity-5 rounded-full blur-3xl"></div>
       </div>
 
-      {/* Geometric Pattern */}
-      <div className="absolute inset-0 opacity-[0.015]">
-        <div 
-          className="w-full h-full"
-          style={{
-            backgroundImage: `
-              linear-gradient(30deg, var(--color-primary) 12%, transparent 12.5%, transparent 87%, var(--color-primary) 87.5%, var(--color-primary)),
-              linear-gradient(150deg, var(--color-primary) 12%, transparent 12.5%, transparent 87%, var(--color-primary) 87.5%, var(--color-primary))
-            `,
-            backgroundSize: '80px 80px'
-          }}
-        ></div>
-      </div>
+      {/* Retícula técnica, coherente con el resto del sitio */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.045]"
+        style={{
+          backgroundImage:
+            'linear-gradient(rgba(10,79,160,.55) 1px, transparent 1px), linear-gradient(90deg, rgba(10,79,160,.55) 1px, transparent 1px)',
+          backgroundSize: '96px 96px',
+          maskImage: 'radial-gradient(ellipse 75% 45% at 50% 0%, #000 25%, transparent 72%)',
+        }}
+      />
 
       <div className="container-premium relative z-10">
         {/* Section Header Premium */}
@@ -139,7 +138,7 @@ export default function ProductsSection({ products }) {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <span className="mr-2 flex items-center">{category.icon}</span>
+                <span className="mr-2 flex items-center"></span>
                 {category.name}
               </motion.button>
             ))}
@@ -253,7 +252,7 @@ export default function ProductsSection({ products }) {
                 </Link>
                 
                 <a 
-                  href="https://api.whatsapp.com/send/?phone=5255591975333&text=Hola%2C+estoy+en+breezair.com.mx+y+me+interesa+una+consultor%C3%ADa+t%C3%A9cnica+gratuita.&type=phone_number&app_absent=0"
+                  href={whatsappLink('Hola, estoy en breezair.com.mx y me interesa una consultoría técnica gratuita.')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-premium btn-premium-steel btn-premium-lg"
@@ -284,6 +283,7 @@ function ProductListItem({ product, index }) {
               src={product.image}
               alt={product.title}
               fill
+            sizes="(min-width: 1024px) 33vw, 100vw"
               className="object-contain p-4"
             />
           ) : (

@@ -4,6 +4,21 @@ import Testimonials from '../components/Testimonials'
 import ProductsPreview from '../components/ProductsPreview'
 import AboutPreview from '../components/AboutPreview'
 import ContactPreview from '../components/ContactPreview'
+import TrustBar from '../components/TrustBar'
+import SavingsCalculator from '../components/SavingsCalculator'
+import LeadSection from '../components/LeadSection'
+import RelatedLinks from '../components/RelatedLinks'
+import ClientsBar from '../components/ClientsBar'
+import { SECTORES } from '../data/soluciones'
+import { TECNOLOGIAS } from '../data/tecnologia'
+import { ZONAS } from '../data/zonas'
+import { registerSectors, registerTech, registerZonas } from '../lib/internal-links'
+import { PHONE_SCHEMA } from '../lib/site'
+import { FUNDACION } from '../lib/company'
+
+registerSectors(SECTORES)
+registerTech(TECNOLOGIAS)
+registerZonas(ZONAS)
 
 // Configuración para SSG optimizado
 export const revalidate = 86400; // Revalidar cada 24 horas
@@ -42,7 +57,7 @@ export const metadata = {
     images: ['/images/og-home.jpg']
   },
   alternates: {
-    canonical: 'https://www.breezair.com.mx'
+    canonical: 'https://www.breezair.com.mx/'
   }
 }
 
@@ -113,7 +128,7 @@ export default function Home() {
     "logo": "https://www.breezair.com.mx/images/logo.png",
     "image": "https://www.breezair.com.mx/images/company-photo.jpg",
     "description": "Distribuidor oficial de Breezair en México. Líderes en soluciones de enfriamiento evaporativo industrial con más de 10 años de experiencia.",
-    "foundingDate": "2010",
+    "foundingDate": String(FUNDACION),
     "address": {
       "@type": "PostalAddress",
       "addressCountry": "MX",
@@ -122,14 +137,14 @@ export default function Home() {
     "contactPoint": [
       {
         "@type": "ContactPoint",
-        "telephone": "+52-800-BREEZAIR",
+        "telephone": PHONE_SCHEMA,
         "contactType": "sales",
         "availableLanguage": ["Spanish"],
         "areaServed": "MX"
       },
       {
         "@type": "ContactPoint",
-        "telephone": "+52-800-BREEZAIR",
+        "telephone": PHONE_SCHEMA,
         "contactType": "customer service",
         "availableLanguage": ["Spanish"],
         "areaServed": "MX"
@@ -207,13 +222,6 @@ export default function Home() {
           "manufacturer": {
             "@type": "Organization",
             "name": "CG International"
-          },
-          "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "reviewCount": "127",
-            "bestRating": "5",
-            "worstRating": "1"
           },
           "additionalProperty": [
             {
@@ -338,13 +346,6 @@ export default function Home() {
             "returnFees": "https://schema.org/FreeReturn"
           }
         },
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.8",
-          "reviewCount": "127",
-          "bestRating": "5",
-          "worstRating": "1"
-        },
         "additionalProperty": [
           {
             "@type": "PropertyValue",
@@ -415,10 +416,39 @@ export default function Home() {
       />
       
       <Hero />
+      <TrustBar />
+      <ClientsBar />
       <Features />
       <ProductsPreview products={products} />
+      <RelatedLinks
+        keys={[
+          'sector-naves-industriales',
+          'sector-centros-de-distribucion',
+          'sector-industria-alimentaria',
+          'sector-talleres-y-metalmecanica',
+          'sector-agroindustria',
+          'sector-espacios-comerciales'
+        ]}
+        title="Soluciones para tu tipo de instalación"
+        subtitle="El calor no se resuelve igual en una nave de manufactura que en una granja o una terraza. Estas páginas explican el diseño, las cifras y los límites de cada caso."
+      />
+      <SavingsCalculator />
+      <RelatedLinks
+        keys={['tecnologia', 'comparativa', 'tec-chillcel-black-opal', 'tec-magiqtouch']}
+        title="Cómo funciona por dentro"
+        subtitle="Somos distribuidor oficial de Seeley International: la tecnología de estos equipos explicada sin folleto."
+        columns={4}
+        tone="dark"
+      />
+      <RelatedLinks
+        keys={['cobertura', 'zona-bajio', 'zona-monterrey-y-noreste', 'zona-frontera-norte']}
+        title="¿Dónde está tu planta?"
+        subtitle="El rendimiento del enfriamiento evaporativo depende del clima local. Estas páginas dicen cuánto rinde en tu zona —y dónde no lo recomendamos—."
+        columns={4}
+      />
       <AboutPreview />
       <Testimonials />
+      <LeadSection />
       <ContactPreview />
     </div>
   )

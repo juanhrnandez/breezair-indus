@@ -9,7 +9,6 @@ export default function robots() {
           '/admin/',
           '/_next/',
           '/private/',
-          '*.pdf$',
         ],
       },
       {

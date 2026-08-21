@@ -12,7 +12,9 @@ const config = {
         'light-gray': '#f5f5f5'
       },
       fontFamily: {
-        sans: ['Inter', 'Poppins', 'ui-sans-serif', 'system-ui']
+        sans: ['var(--font-body)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'var(--font-body)', 'sans-serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'monospace']
       }
     }
   },

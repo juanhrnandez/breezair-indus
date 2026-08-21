@@ -1,5 +1,6 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
+import { EMAIL_SALES, PHONE_DISPLAY, TEL_LINK } from '@/lib/site';
 
 // Configurar Resend solo si hay API key disponible
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
@@ -7,21 +8,31 @@ const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KE
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { 
-      name, 
-      email, 
-      phone, 
-      company, 
-      sector, 
-      inquiryType, 
-      projectSize, 
-      message 
+    const {
+      name,
+      email,
+      phone,
+      company,
+      sector,
+      inquiryType = 'cotizacion',
+      projectSize,
+      message,
+      website,        // honeypot: sólo lo llenan los bots
+      formName = 'formulario_web',
+      attribution = {}
     } = body;
 
-    // Validaciones básicas
-    if (!name || !email || !phone || !company || !inquiryType || !message) {
+    // Trampa anti-spam: respondemos 200 para que el bot no reintente,
+    // pero no enviamos nada.
+    if (website) {
+      return NextResponse.json({ success: true, message: 'Consulta recibida' });
+    }
+
+    // Validación mínima deliberada: cada campo obligatorio extra cuesta leads.
+    // Basta con un nombre y una forma de contactar a la persona.
+    if (!name || (!email && !phone)) {
       return NextResponse.json(
-        { error: 'Faltan campos requeridos' }, 
+        { error: 'Necesitamos tu nombre y un teléfono o correo para contactarte' },
         { status: 400 }
       );
     }
@@ -32,10 +43,21 @@ export async function POST(request) {
       tecnica: 'Consulta Técnica',
       soporte: 'Soporte Post-Venta',
       distribuidor: 'Ser Distribuidor',
-      general: 'Información General'
+      general: 'Información General',
+      informacion: 'Información de Productos',
+      visita: 'Visita Técnica',
+      demo: 'Demostración de Tecnología'
     };
 
     const inquiryTypeLabel = inquiryTypeLabels[inquiryType] || inquiryType;
+    const companyLabel = company || 'No especificada';
+    const messageBody = message || 'El prospecto no dejó mensaje. Solicitud enviada desde un formulario corto.';
+
+    // Trazabilidad de origen: de dónde vino el lead (campaña, buscador, página).
+    const attributionRows = Object.entries(attribution)
+      .filter(([, v]) => v)
+      .map(([k, v]) => `<strong>${k}:</strong> ${v}`)
+      .join('<br>');
 
     // Email para el equipo interno
     const internalEmailHtml = `
@@ -133,7 +155,7 @@ export async function POST(request) {
                 <strong>Nombre:</strong> ${name}<br>
                 <strong>Email:</strong> <a href="mailto:${email}">${email}</a><br>
                 <strong>Teléfono:</strong> <a href="tel:${phone}">${phone}</a><br>
-                <strong>Empresa:</strong> ${company}
+                <strong>Empresa:</strong> ${companyLabel}
                 ${sector ? `<br><strong>Sector:</strong> ${sector}` : ''}
               </div>
             </div>
@@ -150,7 +172,7 @@ export async function POST(request) {
             <div class="field-group">
               <div class="field-label">💬 Mensaje Detallado</div>
               <div class="field-value" style="white-space: pre-wrap; background: #f8fafc; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0;">
-${message}
+${messageBody}
               </div>
             </div>
 
@@ -165,7 +187,8 @@ ${message}
                   hour: '2-digit',
                   minute: '2-digit'
                 })}<br>
-                <strong>Origen:</strong> Sitio Web - Formulario de Contacto
+                <strong>Origen:</strong> Sitio Web · ${formName}
+                ${attributionRows ? `<br>${attributionRows}` : ''}
               </div>
             </div>
           </div>
@@ -278,7 +301,7 @@ ${message}
             <h3>📋 Resumen de tu Consulta:</h3>
             <ul>
               <li><strong>Tipo:</strong> ${inquiryTypeLabel}</li>
-              <li><strong>Empresa:</strong> ${company}</li>
+              ${company ? `<li><strong>Empresa:</strong> ${company}</li>` : ''}
               ${sector ? `<li><strong>Sector:</strong> ${sector}</li>` : ''}
               ${projectSize ? `<li><strong>Proyecto:</strong> ${projectSize}</li>` : ''}
               <li><strong>Fecha:</strong> ${new Date().toLocaleString('es-MX', {
@@ -294,8 +317,8 @@ ${message}
             <div class="contact-info">
               <h3 style="margin-top: 0;">📞 ¿Necesitas Atención Inmediata?</h3>
               <p>Si tu proyecto es urgente, puedes contactarnos directamente:</p>
-              <a href="tel:+5255591975333" class="btn">📞 Llamar: (55) 5919-7533</a>
-              <a href="mailto:adm@cg.international" class="btn">@ Email: adm@cg.international</a>
+              <a href="${TEL_LINK}" class="btn">📞 Llamar: ${PHONE_DISPLAY}</a>
+              <a href="mailto:${EMAIL_SALES}" class="btn">@ Email: ${EMAIL_SALES}</a>
             </div>
 
             <h3>🏆 ¿Por qué elegir Breezair Industrial?</h3>
@@ -317,7 +340,7 @@ ${message}
           <div class="footer">
             <p><strong>CG International</strong> | Distribuidores Oficiales Breezair</p>
             <p>
-              📧 adm@cg.international | 📞 (55) 5919-7533<br>
+              📧 ${EMAIL_SALES} | 📞 ${PHONE_DISPLAY}<br>
               🌐 <a href="https://www.breezair.com.mx" style="color: #3b82f6;">www.breezair.com.mx</a>
             </p>
           </div>
@@ -325,15 +348,17 @@ ${message}
       </html>
     `;
 
-    // Lista de destinatarios internos
-    const internalRecipients = [
-      'adm@cg.international',
-      'jorge@cg.international'
-    ];
+    // Destinatarios internos (configurables sin tocar código)
+    const internalRecipients = (process.env.LEAD_RECIPIENTS || EMAIL_SALES)
+      .split(',')
+      .map((address) => address.trim())
+      .filter(Boolean);
 
     // Verificar si Resend está configurado
     if (!resend) {
-      console.log('Resend no configurado - guardando consulta localmente:', { name, email, company, inquiryType });
+      console.log('Resend no configurado - lead registrado en consola:', {
+        formName, name, email, phone, company: companyLabel, sector, projectSize, inquiryType, attribution
+      });
       return NextResponse.json({ 
         success: true, 
         message: 'Consulta recibida (modo desarrollo)',
@@ -341,35 +366,51 @@ ${message}
       });
     }
 
-    // Enviar email al equipo interno
+    // 1) Aviso al equipo comercial: es lo único que NO se puede perder.
     const internalEmail = await resend.emails.send({
       from: 'Breezair Industrial <no-reply@cg.international>',
       to: internalRecipients,
-      subject: `🚨 Nueva ${inquiryTypeLabel} - ${company} (${name})`,
+      subject: `🚨 Nueva ${inquiryTypeLabel} - ${companyLabel} (${name})`,
       html: internalEmailHtml,
-      replyTo: email
+      ...(email ? { replyTo: email } : {})
     });
 
-    // Enviar email de confirmación al cliente
-    const clientEmail = await resend.emails.send({
-      from: 'Breezair Industrial México <no-reply@cg.international>',
-      to: [email],
-      subject: `✓ Consulta Recibida - ${inquiryTypeLabel} | Breezair Industrial`,
-      html: clientEmailHtml,
-      replyTo: 'adm@cg.international'
+    if (internalEmail.error) {
+      // El lead existe aunque falle el correo: queda en logs para rescatarlo.
+      console.error('LEAD SIN NOTIFICAR', { name, email, phone, companyLabel, projectSize, messageBody });
+      throw new Error(internalEmail.error.message || 'No se pudo notificar al equipo');
+    }
+
+    // 2) Confirmación al prospecto: mejora la experiencia, pero su fallo
+    //    nunca debe hacer que el usuario vea un error y vuelva a enviar.
+    let clientEmailId = null;
+    if (email) {
+      try {
+        const clientEmail = await resend.emails.send({
+          from: 'Breezair Industrial México <no-reply@cg.international>',
+          to: [email],
+          subject: `✓ Consulta Recibida - ${inquiryTypeLabel} | Breezair Industrial`,
+          html: clientEmailHtml,
+          replyTo: EMAIL_SALES
+        });
+        clientEmailId = clientEmail.data?.id ?? null;
+      } catch (clientError) {
+        console.error('No se pudo enviar la confirmación al cliente:', clientError);
+      }
+    }
+
+    console.log('Lead recibido:', {
+      formName,
+      internal: internalEmail.data?.id,
+      client: clientEmailId
     });
 
-    console.log('Emails enviados:', { 
-      internal: internalEmail.data?.id, 
-      client: clientEmail.data?.id 
-    });
-
-    return NextResponse.json({ 
-      success: true, 
+    return NextResponse.json({
+      success: true,
       message: 'Consulta enviada exitosamente',
       emailIds: {
         internal: internalEmail.data?.id,
-        client: clientEmail.data?.id
+        client: clientEmailId
       }
     });
 

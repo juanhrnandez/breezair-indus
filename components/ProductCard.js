@@ -18,7 +18,7 @@ export default function ProductCard({ product, index = 0 }) {
   };
 
   return (
-    <Link href={`/productos/${product.slug || product.id}`} className="block h-full group">
+    <div className="block h-full group">
       <motion.div
         initial={{ opacity: 0, y: 50, scale: 0.95 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -43,6 +43,7 @@ export default function ProductCard({ product, index = 0 }) {
                   src={product.image}
                   alt={product.title}
                   fill
+            sizes="(min-width: 1024px) 33vw, 100vw"
                   className="object-contain p-4"
                 />
               </div>
@@ -73,14 +74,9 @@ export default function ProductCard({ product, index = 0 }) {
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: index * 0.1 + 0.3 }}
               >
-                <div 
-                  className="rounded-full px-3 py-1"
-                  style={glassStyle}
-                >
-                  <span className="text-white text-xs font-semibold tracking-wide">
-                    {product.badge}
-                  </span>
-                </div>
+                <span className="inline-block rounded-md bg-[#0A121C] px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-white">
+                  {product.badge}
+                </span>
               </motion.div>
             )}
             
@@ -91,11 +87,8 @@ export default function ProductCard({ product, index = 0 }) {
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: index * 0.1 + 0.4 }}
             >
-              <div 
-                className="rounded-xl px-4 py-2"
-                style={glassStyle}
-              >
-                <span className="text-white font-bold text-sm">
+              <div className="rounded-md border border-slate-200 bg-white/90 px-2.5 py-1 backdrop-blur-sm">
+                <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-700">
                   {product.series || 'PRO'}
                 </span>
               </div>
@@ -196,7 +189,7 @@ export default function ProductCard({ product, index = 0 }) {
             </Link>
             
             <Link 
-              href="#contacto" 
+              href="#cotizar"
               className="btn-premium btn-premium-steel w-full group/btn"
             >
               <svg className="w-5 h-5 group-hover/btn:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -228,16 +221,16 @@ export default function ProductCard({ product, index = 0 }) {
         <motion.div 
           className="absolute inset-0 border-2 border-transparent rounded-3xl pointer-events-none"
           animate={isHovered ? { 
-            borderColor: 'rgba(0, 76, 151, 0.3)',
-            boxShadow: '0 0 30px rgba(0, 76, 151, 0.2)'
+            borderColor: 'rgba(10, 79, 160, 0.28)',
+            boxShadow: '0 0 28px rgba(10, 79, 160, 0.18)'
           } : { 
-            borderColor: 'transparent',
-            boxShadow: '0 0 0px rgba(0, 76, 151, 0)'
+            borderColor: 'rgba(10, 79, 160, 0)',
+            boxShadow: '0 0 0px rgba(10, 79, 160, 0)'
           }}
           transition={{ duration: 0.5 }}
         />
       </div>
       </motion.div>
-    </Link>
+    </div>
   );
 }

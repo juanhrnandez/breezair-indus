@@ -2,6 +2,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 import StructuredData from '../../../components/StructuredData';
 import ProductImageGallery from '../../../components/ProductImageGallery';
+import QuickQuoteForm from '../../../components/QuickQuoteForm';
+import RelatedLinks from '../../../components/RelatedLinks';
+import { SECTORES } from '../../../data/soluciones';
+import { TECNOLOGIAS } from '../../../data/tecnologia';
+import { ZONAS } from '../../../data/zonas';
+import { registerSectors, registerTech, registerZonas } from '../../../lib/internal-links';
+
+registerSectors(SECTORES);
+registerTech(TECNOLOGIAS);
+registerZonas(ZONAS);
+import { whatsappLink } from '../../../lib/site';
 
 
 
@@ -16,19 +27,14 @@ const products = [
     id: 'tbsi-series',
     title: 'Breezair TBSI Series',
     shortTitle: 'TBSI',
-    summary: 'La serie premium para grandes instalaciones industriales. Máxima eficiencia energética y capacidad de enfriamiento para aplicaciones exigentes.',
+    summary: 'Equipo de alta capacidad para naves industriales de gran volumen, con la mayor eficiencia de la gama.',
     description: 'La serie TBSI representa la cumbre de la tecnología de enfriamiento evaporativo industrial. Diseñada específicamente para grandes instalaciones que requieren máximo rendimiento, eficiencia energética superior y operación continua en condiciones severas.',
     series: 'TBSI',
     badge: 'MÁS VENDIDO',
     slug: 'tbsi-series',
     category: 'industrial',
     image: '/images/breezair-product-1.jpg',
-    images: [
-      '/images/breezair-product-1.jpg',
-      '/images/breezair-product-1-detail.jpg',
-      '/images/breezair-product-1-installation.jpg',
-      '/images/breezair-product-1-interior.jpg'
-    ],
+    images: ['/images/breezair-product-1.jpg'],
     features: [
       'Hasta 87% ahorro energético vs. aire acondicionado tradicional',
       'Capacidad de 18,000-50,000 m³/h de aire tratado',
@@ -82,18 +88,13 @@ const products = [
     id: 'exs-series',
     title: 'Breezair EXS Series',
     shortTitle: 'EXS',
-    summary: 'Versatilidad y adaptabilidad para procesos industriales especializados. Diseño modular que se adapta a cualquier configuración.',
+    summary: 'Configuración modular para procesos industriales con requisitos especiales de instalación.',
     description: 'La serie EXS ofrece flexibilidad sin comprometer el rendimiento. Su diseño modular permite adaptarse a espacios únicos y requisitos específicos, siendo ideal para aplicaciones donde las soluciones estándar no son suficientes.',
     series: 'EXS',
     slug: 'exs-series',
     category: 'commercial',
     image: '/images/breezair-product-2.jpg',
-    images: [
-      '/images/breezair-product-2.jpg',
-      '/images/breezair-product-2-modules.jpg',
-      '/images/breezair-product-2-controls.jpg',
-      '/images/breezair-product-2-filters.jpg'
-    ],
+    images: ['/images/breezair-product-2.jpg'],
     features: [
       'Diseño modular completamente flexible',
       'Filtración HEPA opcional para ambientes críticos',
@@ -146,19 +147,14 @@ const products = [
     id: 'icon-series',
     title: 'Breezair Icon Series',
     shortTitle: 'ICON',
-    summary: 'Solución compacta con alto rendimiento para espacios industriales medianos. Ideal para implementaciones rápidas y eficientes.',
+    summary: 'Formato compacto y alto rendimiento para espacios industriales medianos.',
     description: 'La serie Icon combina eficiencia energética superior con un diseño compacto, perfecta para instalaciones que requieren máximo rendimiento en espacios limitados. Su tecnología avanzada garantiza 7 años de operación confiable.',
     series: 'ICON',
     badge: 'COMPACTO',
     slug: 'icon-series',
     category: 'specialized',
     image: '/images/breezair-product-3.jpg',
-    images: [
-      '/images/breezair-product-3.jpg',
-      '/images/breezair-product-3-compact.jpg',
-      '/images/breezair-product-3-smart.jpg',
-      '/images/breezair-product-3-efficient.jpg'
-    ],
+    images: ['/images/breezair-product-3.jpg'],
     features: [
       'Diseño ultra-compacto con máximo rendimiento',
       'Eficiencia energética líder en su categoría',
@@ -211,19 +207,14 @@ const products = [
     id: 'custom-solutions',
     title: 'Breezair Custom Solutions',
     shortTitle: 'CUSTOM',
-    summary: 'Soluciones completamente personalizadas para aplicaciones especiales y proyectos únicos que requieren ingeniería específica.',
+    summary: 'Diseño a medida cuando el catálogo estándar no resuelve la instalación.',
     description: 'Las Soluciones Personalizadas Breezair están diseñadas para proyectos únicos donde las soluciones estándar no son suficientes. Nuestro equipo de ingenieros especializados desarrolla sistemas a medida que cumplen con los requisitos más exigentes.',
     series: 'CUSTOM',
     badge: 'PERSONALIZADO',
     slug: 'custom-solutions',
     category: 'specialized',
     image: '/images/breezair-product-4.jpg',
-    images: [
-      '/images/breezair-product-4.jpg',
-      '/images/breezair-custom-engineering.jpg',
-      '/images/breezair-custom-installation.jpg',
-      '/images/breezair-custom-monitoring.jpg'
-    ],
+    images: ['/images/breezair-product-4.jpg'],
     features: [
       'Diseño 100% personalizado según necesidades específicas',
       'Ingeniería especializada y validación completa incluida',
@@ -283,7 +274,8 @@ export async function generateStaticParams() {
 
 // Generar metadata dinámico para cada producto
 export async function generateMetadata({ params }) {
-  const product = products.find(p => p.id === params.id);
+  const { id } = await params;
+  const product = products.find(p => p.id === id);
   
   if (!product) {
     return {
@@ -293,11 +285,11 @@ export async function generateMetadata({ params }) {
   }
 
   return {
-    title: `${product.title} | Breezair Industrial México`,
-    description: `${product.summary} Especificaciones técnicas, aplicaciones y beneficios de la ${product.series} Series. Solicita cotización especializada.`,
+    title: product.title,
+    description: `${product.summary} Especificaciones y cotización sin costo.`,
     openGraph: {
-      title: `${product.title} - Sistemas de Enfriamiento Industrial`,
-      description: product.description,
+      title: product.title,
+      description: product.summary,
       url: `https://www.breezair.com.mx/productos/${product.id}`,
       images: [
         {
@@ -309,7 +301,7 @@ export async function generateMetadata({ params }) {
       ]
     },
     alternates: {
-      canonical: `https://www.breezair.com.mx/productos/${product.id}`
+      canonical: `https://www.breezair.com.mx/productos/${product.id}/`
     }
   };
 }
@@ -348,9 +340,10 @@ async function getRelatedProducts(currentProductId, category) {
 }
 
 export default async function ProductDetailPage({ params }) {
+  const { id } = await params;
   const [product, relatedProducts] = await Promise.all([
-    getProduct(params.id),
-    getRelatedProducts(params.id, 'industrial')
+    getProduct(id),
+    getRelatedProducts(id, 'industrial')
   ]);
 
   // Si no se encuentra el producto, mostrar 404
@@ -394,11 +387,6 @@ export default async function ProductDetailPage({ params }) {
         "name": "CG International",
         "url": "https://www.breezair.com.mx"
       }
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.8",
-      "reviewCount": "127"
     }
   };
 
@@ -450,6 +438,7 @@ export default async function ProductDetailPage({ params }) {
                     src={product.image}
                     alt={product.title}
                     fill
+                    priority
                     className="object-contain p-4"
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
@@ -546,7 +535,7 @@ export default async function ProductDetailPage({ params }) {
                 
                 <div className="flex flex-col sm:flex-row gap-4">
                   <a 
-                    href={`https://api.whatsapp.com/send/?phone=5255591975333&text=Hola%2C+estoy+en+breezair.com.mx+y+me+interesa+cotizar+el+${encodeURIComponent(product.title)}.&type=phone_number&app_absent=0`}
+                    href={whatsappLink(`Hola, estoy en breezair.com.mx y me interesa cotizar el ${product.title}.`)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group relative flex-1 inline-flex items-center justify-center gap-3 px-8 py-4 border-2 border-green-600 text-green-600 hover:text-white hover:bg-green-600 rounded-xl font-semibold transition-all duration-300"
@@ -898,19 +887,19 @@ export default async function ProductDetailPage({ params }) {
                 <path key={2} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />,
                 <path key={3} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />,
                 <path key={4} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />,
-                <path key={5} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 18.657A8 8 0 716.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />,
+                <path key={5} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />,
                 <path key={6} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />,
                 <path key={7} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               ];
 
               const colors = [
-                'from-blue-500 to-indigo-600',
-                'from-green-500 to-emerald-600', 
-                'from-purple-500 to-violet-600',
-                'from-red-500 to-rose-600',
+                'from-[#0A4FA0] to-[#073A78]',
+                'from-[#0A4FA0] to-[#073A78]',
+                'from-[#0A4FA0] to-[#073A78]',
+                'from-red-500 to-[#073A78]',
                 'from-yellow-500 to-orange-600',
                 'from-cyan-500 to-teal-600',
-                'from-pink-500 to-fuchsia-600',
+                'from-[#0A4FA0] to-[#073A78]',
                 'from-slate-500 to-gray-600'
               ];
 
@@ -968,6 +957,7 @@ export default async function ProductDetailPage({ params }) {
                       src={relatedProduct.image}
                       alt={relatedProduct.title}
                       fill
+            sizes="(min-width: 1024px) 33vw, 100vw"
                       className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
@@ -988,40 +978,70 @@ export default async function ProductDetailPage({ params }) {
         </section>
       )}
 
-      {/* CTA Final */}
-      <section className="relative overflow-hidden py-20 border-t border-gray-200">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-8">
-            ¿Listo para Implementar {product.shortTitle} en tu Proyecto?
-          </h2>
-          
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-12 leading-relaxed">
-            Nuestros ingenieros especialistas pueden realizar un análisis técnico gratuito de tu instalación 
-            y diseñar la solución óptima con {product.title}.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a 
-              href={`https://api.whatsapp.com/send/?phone=5255591975333&text=Hola%2C+estoy+en+breezair.com.mx+y+me+interesa+un+an%C3%A1lisis+t%C3%A9cnico+para+${encodeURIComponent(product.title)}.&type=phone_number&app_absent=0`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-3 px-8 py-4 border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white rounded-xl font-semibold transition-all duration-300"
-            >
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.570-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
-              </svg>
-              Análisis Técnico por WhatsApp
-            </a>
-            
-            <Link 
-              href="/contacto" 
-              className="inline-flex items-center justify-center gap-3 px-8 py-4 border-2 border-gray-400 text-gray-600 hover:border-gray-600 hover:text-gray-800 rounded-xl font-semibold transition-all duration-300"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-              Contacto Tradicional
-            </Link>
+      <RelatedLinks
+        keys={[
+          'sector-naves-industriales',
+          'sector-centros-de-distribucion',
+          'sector-talleres-y-metalmecanica',
+          'tec-chillcel-black-opal',
+          'tec-magiqtouch',
+          'calculadora'
+        ]}
+        title="Dónde se instala este equipo"
+        subtitle="Cómo se dimensiona y qué se puede esperar en cada tipo de instalación."
+      />
+
+      {/* CTA Final: el formulario vive aquí, no a un clic de distancia */}
+      <section id="cotizar" className="relative overflow-hidden border-t border-gray-200 bg-slate-50 py-20 scroll-mt-24">
+        <div className="container-premium">
+          <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
+            <div>
+              <h2 className="mb-6 text-3xl font-bold leading-tight text-gray-900 lg:text-4xl">
+                ¿Listo para implementar {product.shortTitle} en tu proyecto?
+              </h2>
+              <p className="mb-8 text-lg leading-relaxed text-gray-600">
+                Nuestros ingenieros realizan el análisis técnico de tu instalación sin costo y
+                dimensionan la solución óptima con {product.title}: número de equipos, ubicación,
+                consumo estimado y ahorro proyectado.
+              </p>
+
+              <ul className="mb-10 space-y-4">
+                {[
+                  'Cálculo de carga térmica de tu nave',
+                  'Propuesta con número y ubicación de equipos',
+                  'Ahorro energético estimado y retorno de inversión',
+                  'Plan de instalación y servicio post-venta'
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-gray-700">
+                    <svg className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href={whatsappLink(`Hola, estoy viendo el ${product.title} en breezair.com.mx y quiero un análisis técnico.`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-3 rounded-xl bg-[#25D366] px-8 py-4 font-semibold text-white transition-opacity duration-300 hover:opacity-90"
+              >
+                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.82 9.82 0 016.988 2.898 9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                </svg>
+                Prefiero WhatsApp
+              </a>
+            </div>
+
+            <QuickQuoteForm
+              context={`producto_${product.id}`}
+              title={`Cotiza el ${product.shortTitle}`}
+              subtitle="Dos preguntas y un ingeniero te envía la propuesta técnica de este equipo."
+              prefill={{
+                message: `Solicitud de cotización para ${product.title} desde la ficha de producto.`
+              }}
+            />
           </div>
         </div>
       </section>

@@ -15,8 +15,8 @@ const features = [
     ),
     stats: '87%',
     metric: 'Ahorro Energético',
-    gradient: 'from-emerald-500 via-green-500 to-teal-600',
-    bgGradient: 'from-emerald-50 to-green-50'
+    gradient: 'from-[#0A4FA0] to-[#073A78]',
+    bgGradient: 'from-[#EAF2FC] to-white'
   },
   {
     title: 'Aire 100% Exterior Filtrado',
@@ -28,8 +28,8 @@ const features = [
     ),
     stats: '100%',
     metric: 'Aire Renovado',
-    gradient: 'from-blue-500 via-cyan-500 to-sky-600',
-    bgGradient: 'from-blue-50 to-cyan-50'
+    gradient: 'from-[#0A4FA0] to-[#073A78]',
+    bgGradient: 'from-[#EAF2FC] to-white'
   },
   {
     title: 'Diseño Industrial Robusto',
@@ -41,8 +41,8 @@ const features = [
     ),
     stats: '24/7',
     metric: 'Operación Continua',
-    gradient: 'from-violet-500 via-purple-500 to-indigo-600',
-    bgGradient: 'from-violet-50 to-purple-50'
+    gradient: 'from-[#0A4FA0] to-[#073A78]',
+    bgGradient: 'from-[#EAF2FC] to-white'
   },
   {
     title: 'Tecnología Evaporativa Avanzada',
@@ -55,8 +55,8 @@ const features = [
     ),
     stats: 'ECO',
     metric: 'Sostenible',
-    gradient: 'from-orange-500 via-amber-500 to-yellow-600',
-    bgGradient: 'from-orange-50 to-amber-50'
+    gradient: 'from-[#0A4FA0] to-[#073A78]',
+    bgGradient: 'from-[#EAF2FC] to-white'
   },
   {
     title: 'Control Inteligente',
@@ -68,8 +68,8 @@ const features = [
     ),
     stats: 'IoT',
     metric: 'Smart Control',
-    gradient: 'from-rose-500 via-pink-500 to-fuchsia-600',
-    bgGradient: 'from-rose-50 to-pink-50'
+    gradient: 'from-[#0A4FA0] to-[#073A78]',
+    bgGradient: 'from-[#EAF2FC] to-white'
   },
   {
     title: 'Instalación y Mantenimiento',
@@ -81,8 +81,8 @@ const features = [
     ),
     stats: '365',
     metric: 'Días de Soporte',
-    gradient: 'from-slate-500 via-gray-500 to-zinc-600',
-    bgGradient: 'from-slate-50 to-gray-50'
+    gradient: 'from-[#0A4FA0] to-[#073A78]',
+    bgGradient: 'from-[#EAF2FC] to-white'
   }
 ];
 
@@ -147,23 +147,23 @@ export default function Features() {
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center mb-20"
+          className="mb-16 max-w-3xl"
         >
-          <div className="inline-flex items-center gap-3 glass-effect rounded-full px-6 py-3 mb-8 border border-black/5">
-            <div className="w-3 h-3 bg-gradient-primary rounded-full pulse-glow"></div>
-            <span className="text-sm font-semibold text-steel tracking-wide">VENTAJAS COMPETITIVAS</span>
-            <div className="w-1 h-1 bg-steel/40 rounded-full"></div>
-            <span className="text-xs text-steel/60 font-medium">BREEZAIR INDUSTRIAL</span>
+          <div className="mb-5 flex items-center gap-3">
+            <span className="h-px w-10 bg-[#0E8FAB]" />
+            <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-[#0E8FAB]">
+              Por qué el evaporativo
+            </span>
           </div>
 
-          <h2 className="heading-premium-2 max-w-4xl mx-auto mb-6">
-            Tecnología Industrial de
-            <span className="text-gradient-premium"> Vanguardia Global</span>
+          <h2 className="mb-5 max-w-3xl font-display text-[clamp(2rem,4.2vw,3.25rem)] font-bold uppercase leading-[1.03] text-[#0A121C]">
+            Seis razones por las que
+            <span className="block text-[#0A4FA0]">una nave no se climatiza como una oficina</span>
           </h2>
 
-          <p className="text-premium-products text-center max-w-3xl mx-auto">
-            Soluciones de enfriamiento evaporativo que combinan eficiencia energética extrema, 
-            sostenibilidad ambiental y rendimiento industrial superior.
+          <p className="max-w-2xl text-lg leading-relaxed text-slate-600">
+            El aire acondicionado enfría un aire que recircula. Esto sustituye el aire del edificio.
+            De esa diferencia sale todo lo demás.
           </p>
         </motion.div>
 
@@ -183,14 +183,14 @@ export default function Features() {
               <div className="card-feature relative h-full overflow-hidden">
                 {/* Background Pattern */}
                 <div 
-                  className={`absolute inset-0 bg-linear-to-br ${feature.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+                  className={`absolute inset-0 bg-gradient-to-br ${feature.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
                 ></div>
 
                 {/* Content */}
                 <div className="relative z-10">
                   {/* Icon Section */}
                   <div className="flex items-start justify-between mb-6">
-                    <div className={`w-16 h-16 bg-linear-to-br ${feature.gradient} rounded-2xl flex items-center justify-center text-white shadow-industrial-md group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
+                    <div className={`w-16 h-16 bg-gradient-to-br ${feature.gradient} rounded-2xl flex items-center justify-center text-white shadow-industrial-md group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
                       {feature.icon}
                     </div>
                     
@@ -207,7 +207,7 @@ export default function Features() {
 
                   {/* Text Content */}
                   <div className="space-y-4">
-                    <h3 className="heading-premium-3 group-hover:text-primary transition-colors duration-300">
+                    <h3 className="text-[1.35rem] font-semibold leading-snug text-[#0A121C] transition-colors duration-300 group-hover:text-[#0A4FA0]">
                       {feature.title}
                     </h3>
                     
@@ -241,53 +241,42 @@ export default function Features() {
           transition={{ delay: 1, duration: 0.8 }}
           className="relative"
         >
-          <div className="card-premium p-12 text-center max-w-4xl mx-auto relative overflow-hidden">
-            {/* Background Gradient */}
-            <div className="absolute inset-0 bg-gradient-hero opacity-95 rounded-3xl"></div>
-            
-            {/* Content */}
-            <div className="relative z-10 text-white">
-              <div className="inline-flex items-center gap-2 glass-effect rounded-full px-4 py-2 mb-6 border border-white/20">
-                <svg className="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                </svg>
-                <span className="text-black font-medium">Consultoría Premium</span>
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-[#0A121C]">
+            <div className="grid items-center gap-8 p-9 lg:grid-cols-[1.4fr_auto] lg:p-12">
+              <div>
+                <div className="mb-4 flex items-center gap-3">
+                  <span className="h-px w-8 bg-[#22B8D6]" />
+                  <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-[#22B8D6]">
+                    Ingeniería de proyecto
+                  </span>
+                </div>
+                <h3 className="mb-3 font-display text-[clamp(1.6rem,2.6vw,2.25rem)] font-bold uppercase leading-[1.05] text-white">
+                  ¿Tu instalación no encaja en ningún caso estándar?
+                </h3>
+                <p className="max-w-xl leading-relaxed text-slate-300">
+                  Calculamos la carga térmica de tu nave, las renovaciones necesarias y el área de
+                  salida de aire antes de proponer nada. Sin costo, y con la respuesta honesta si
+                  esta tecnología no es la adecuada para tu caso.
+                </p>
               </div>
-              
-              <h3 className="heading-premium-3 text-white mb-4">
-                ¿Necesitas una Solución Industrial Personalizada?
-              </h3>
-              
-              <p className="text-premium-products text-white/90 mb-8 max-w-2xl mx-auto">
-                Nuestro equipo de ingenieros especialistas puede diseñar y dimensionar 
-                la solución perfecta para tu aplicación industrial específica.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a 
-                  href="#contacto" 
-                  className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl font-semibold text-gray-900 bg-white border-2 border-gray-900 hover:bg-gray-900 hover:text-white transition-all duration-300"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  </svg>
-                  Consultoría Gratuita
-                </a>
-                
-                <a href="#productos" className="btn-premium btn-premium-steel btn-premium-lg">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                  </svg>
-                  Ver Productos
-                </a>
-              </div>
-            </div>
 
-            {/* Floating Elements */}
-            <div className="absolute top-6 right-6 w-12 h-12 glass-effect rounded-full flex items-center justify-center">
-              <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-              </svg>
+              <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
+                <a
+                  href="#cotizar"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#0A4FA0] px-7 py-3.5 font-semibold text-white transition-colors duration-200 hover:bg-[#1E6FCC]"
+                >
+                  Solicitar el cálculo
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12" />
+                  </svg>
+                </a>
+                <a
+                  href="#productos-preview"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/25 px-7 py-3.5 font-semibold text-white transition-colors duration-200 hover:border-white/60 hover:bg-white/5"
+                >
+                  Ver los equipos
+                </a>
+              </div>
             </div>
           </div>
         </motion.div>

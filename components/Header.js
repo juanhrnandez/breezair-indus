@@ -1,260 +1,407 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
+import { MENU } from '@/lib/navigation';
+import { PHONE_DISPLAY, TEL_LINK, EMAIL_SALES, MAILTO_LINK, BUSINESS_HOURS } from '@/lib/site';
+import { trackContactClick } from '@/lib/analytics';
+
+/**
+ * Encabezado principal.
+ *
+ * Dos franjas con trabajos distintos:
+ *   1. Utilidad — condición de distribuidor oficial y datos de contacto. Sacar
+ *      el teléfono de la fila principal es lo que descongestiona el conjunto.
+ *   2. Navegación — logotipo, tres entradas con mega-menú y un único CTA.
+ *
+ * Antes había seis destinos compitiendo en una sola fila. El problema no era
+ * el espaciado sino la cantidad: seis decisiones simultáneas no se leen.
+ *
+ * El mega-menú se abre con clic o con teclado, se cierra con Escape, con clic
+ * fuera y al cambiar de ruta. No se abre al pasar el ratón: en escritorio eso
+ * dispara paneles que el usuario no pidió.
+ */
+
+const EASE = [0.22, 1, 0.36, 1];
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [openId, setOpenId] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const headerRef = useRef(null);
+  const reduceMotion = useReducedMotion();
 
-  // Páginas que necesitan header con fondo desde el inicio
-  const needsBackground = ['/productos', '/nosotros', '/contacto', '/blog'];
-  const shouldHaveBackground = scrolled || needsBackground.includes(pathname) || pathname.startsWith('/productos/') || pathname.startsWith('/blog/');
+  // El encabezado flota sólo sobre el hero de la portada; en el resto es sólido.
+  const overHero = pathname === '/' && !scrolled && !openId && !mobileOpen;
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const menuVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: -20,
-      transition: { duration: 0.2 }
-    },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { 
-        duration: 0.3,
-        staggerChildren: 0.1
-      }
-    }
-  };
+  useEffect(() => {
+    setOpenId(null);
+    setMobileOpen(false);
+  }, [pathname]);
 
-  const menuItemVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: { opacity: 1, x: 0 }
-  };
+  useEffect(() => {
+    if (!openId && !mobileOpen) return;
+
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        setOpenId(null);
+        setMobileOpen(false);
+      }
+    };
+    const onPointer = (e) => {
+      if (headerRef.current && !headerRef.current.contains(e.target)) setOpenId(null);
+    };
+
+    document.addEventListener('keydown', onKey);
+    document.addEventListener('mousedown', onPointer);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.removeEventListener('mousedown', onPointer);
+    };
+  }, [openId, mobileOpen]);
+
+  // Con el menú móvil abierto, el fondo no debe desplazarse
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileOpen]);
+
+  const isActive = useCallback(
+    (href) => (href === '/' ? pathname === '/' : pathname.startsWith(href.split('#')[0])),
+    [pathname]
+  );
+
+  const panel = MENU.find((m) => m.id === openId);
 
   return (
-    <motion.header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${shouldHaveBackground ? 'py-4' : 'py-6'} px-4 md:px-6`}
-      style={{
-        background: shouldHaveBackground 
-          ? 'rgba(255, 255, 255, 0.95)'
-          : 'transparent',
-        backdropFilter: shouldHaveBackground ? 'blur(20px) saturate(180%)' : 'none',
-        WebkitBackdropFilter: shouldHaveBackground ? 'blur(20px) saturate(180%)' : 'none',
-        border: shouldHaveBackground ? '1px solid rgba(229, 231, 235, 0.3)' : 'none',
-        borderBottom: shouldHaveBackground ? '1px solid rgba(229, 231, 235, 0.5)' : 'none',
-        boxShadow: shouldHaveBackground ? '0 4px 20px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.1)' : 'none'
-      }}
-      initial={{ y: -100 }}
+    <motion.header
+      ref={headerRef}
+      initial={{ y: -80 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.8, type: "spring", stiffness: 120 }}
+      transition={{ duration: reduceMotion ? 0 : 0.5, ease: EASE }}
+      className="fixed inset-x-0 top-0 z-50"
     >
-      {/* Overlay de brillo cuando tiene background */}
-      {shouldHaveBackground && (
-        <div className="absolute inset-0 pointer-events-none">
-          <div 
-            className="absolute inset-0"
-            style={{
-              background: 'linear-gradient(90deg, transparent 0%, rgba(59, 130, 246, 0.03) 50%, transparent 100%)'
-            }}
-          />
-          <div 
-            className="absolute bottom-0 left-0 right-0 h-px"
-            style={{
-              background: 'linear-gradient(90deg, transparent 0%, rgba(59, 130, 246, 0.2) 20%, rgba(37, 99, 235, 0.3) 50%, rgba(59, 130, 246, 0.2) 80%, transparent 100%)'
-            }}
-          />
-        </div>
-      )}
+      {/* ── Franja de utilidad ─────────────────────────────────────────── */}
+      <div
+        className={`hidden lg:block border-b transition-colors duration-300 ${
+          overHero ? 'border-white/15 bg-[#0A121C]/40 backdrop-blur-sm' : 'border-[#1F2D3D] bg-[#0A121C]'
+        }`}
+      >
+        <div className="container-premium">
+          <div className="flex h-10 items-center justify-between text-[13px]">
+            <p className="flex items-center gap-2.5 font-medium text-white/70">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#22B8D6]" />
+              Distribuidor oficial de Breezair · Seeley International en México
+            </p>
 
-      <div className="container-premium relative z-10">
-        <nav className="flex items-center justify-between">
-          {/* Logo Premium */}
-          <Link href="/" className="flex items-center group">
-            <Image 
-              src={shouldHaveBackground ? "/dark-logo.svg" : "/images/breezair-logo-2.png"}
-              alt="Breezair Logo" 
-              width={120}
-              height={120}
-              className="object-contain" 
-            />
-          </Link>
-
-          {/* Navegación Desktop */}
-          <div className="hidden lg:flex items-center space-x-8">
-            {[
-              { href: '/', label: 'Inicio' },
-              { href: '/productos', label: 'Productos' },
-              { href: '/nosotros', label: 'Nosotros' },
-              { href: '/contacto', label: 'Contacto' }
-            ].map((item, index) => (
-              <motion.div
-                key={item.href}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 + 0.3 }}
+            <div className="flex items-center gap-6 text-white/70">
+              <span className="hidden xl:inline">{BUSINESS_HOURS}</span>
+              <a
+                href={MAILTO_LINK}
+                onClick={() => trackContactClick('email', 'header_utility')}
+                className="transition-colors hover:text-white"
               >
-                <Link 
-                  href={item.href}
-                  className={`relative font-medium transition-all duration-300 py-2 px-1 group ${shouldHaveBackground ? 'text-gray-700 hover:text-blue-600' : 'text-white/90 hover:text-white'}`}
-                  style={{
-                    textShadow: shouldHaveBackground ? 'none' : '0 2px 4px rgba(0, 0, 0, 0.3)'
-                  }}
-                >
-                  {item.label}
-                  <span 
-                    className={`absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300 ${shouldHaveBackground ? 'bg-blue-600' : 'bg-white'}`}
-                    style={{
-                      filter: shouldHaveBackground ? 'none' : 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))'
-                    }}
-                  ></span>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* CTA Button Desktop */}
-          <div className="hidden lg:block">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.6 }}
-            >
-              <Link 
-                href="/contacto" 
-                className={shouldHaveBackground ? "btn-premium btn-premium-primary" : "btn-premium btn-premium-outline"}
-                style={{
-                  background: shouldHaveBackground 
-                    ? 'linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%)' 
-                    : 'rgba(255, 255, 255, 0.1)',
-                  borderColor: shouldHaveBackground ? 'rgba(59, 130, 246, 0.5)' : 'rgba(255, 255, 255, 0.3)',
-                  backdropFilter: shouldHaveBackground ? 'blur(10px)' : 'blur(20px)',
-                  boxShadow: shouldHaveBackground ? '0 4px 15px rgba(59, 130, 246, 0.3)' : 'none',
-                  color: shouldHaveBackground ? 'white' : 'rgba(255, 255, 255, 0.9)'
-                }}
+                {EMAIL_SALES}
+              </a>
+              <a
+                href={TEL_LINK}
+                onClick={() => trackContactClick('phone', 'header_utility')}
+                className="flex items-center gap-2 font-semibold text-white transition-colors hover:text-[#22B8D6]"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                Cotizar Ahora
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* Botón Hamburguesa */}
-          <motion.button
-            className="lg:hidden relative w-10 h-10 rounded-lg glass-effect flex items-center justify-center"
-            onClick={() => setIsOpen(!isOpen)}
-            whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
-            <div className="w-6 h-6 flex flex-col justify-center items-center">
-              <motion.span
-                className={`block w-5 h-0.5 rounded-full ${shouldHaveBackground ? 'bg-gray-700' : 'bg-white'}`}
-                animate={{
-                  rotate: isOpen ? 45 : 0,
-                  y: isOpen ? 2 : -2
-                }}
-                transition={{ duration: 0.3 }}
-              />
-              <motion.span
-                className={`block w-5 h-0.5 rounded-full mt-1 ${shouldHaveBackground ? 'bg-gray-700' : 'bg-white'}`}
-                animate={{
-                  opacity: isOpen ? 0 : 1
-                }}
-                transition={{ duration: 0.3 }}
-              />
-              <motion.span
-                className={`block w-5 h-0.5 rounded-full mt-1 ${shouldHaveBackground ? 'bg-gray-700' : 'bg-white'}`}
-                animate={{
-                  rotate: isOpen ? -45 : 0,
-                  y: isOpen ? -2 : 2
-                }}
-                transition={{ duration: 0.3 }}
-              />
+                {PHONE_DISPLAY}
+              </a>
             </div>
-          </motion.button>
-        </nav>
+          </div>
+        </div>
+      </div>
 
-        {/* Menú Mobile */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              className="lg:hidden absolute top-full left-0 right-0 mt-4 mx-6"
-              variants={menuVariants}
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-            >
-              <div 
-                className="rounded-2xl shadow-lg py-6"
-                style={{
-                  background: shouldHaveBackground 
-                    ? 'rgba(255, 255, 255, 0.95)'
-                    : 'rgba(255, 255, 255, 0.1)',
-                  backdropFilter: 'blur(20px) saturate(180%)',
-                  WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-                  border: shouldHaveBackground ? '1px solid rgba(229, 231, 235, 0.5)' : '1px solid rgba(255, 255, 255, 0.2)'
-                }}
-              >
-                <div className="space-y-1">
-                  {[
-                    { href: '/', label: 'Inicio', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
-                    { href: '/productos', label: 'Productos', icon: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10' },
-                    { href: '#servicios', label: 'Servicios', icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z' },
-                    { href: '/nosotros', label: 'Nosotros', icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z' },
-                    { href: '/contacto', label: 'Contacto', icon: 'M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' }
-                  ].map((item, index) => (
-                    <motion.div
-                      key={item.href}
-                      variants={menuItemVariants}
+      {/* ── Franja de navegación ───────────────────────────────────────── */}
+      <div
+        className={`border-b transition-[background-color,border-color,box-shadow] duration-300 ${
+          overHero
+            ? 'border-transparent bg-transparent'
+            : 'border-slate-200 bg-white/92 shadow-[0_1px_3px_rgba(10,18,28,0.06)] backdrop-blur-xl backdrop-saturate-150'
+        }`}
+      >
+        <div className="container-premium">
+          <nav
+            aria-label="Navegación principal"
+            className={`flex items-center justify-between transition-[height] duration-300 ${
+              scrolled ? 'h-16' : 'h-[4.75rem]'
+            }`}
+          >
+            <Link href="/" className="relative z-10 flex shrink-0 items-center" aria-label="Breezair Industrial México, ir al inicio">
+              <Image
+                src={overHero ? '/images/breezair-logo-2.png' : '/dark-logo.svg'}
+                alt="Breezair"
+                width={132}
+                height={40}
+                className="h-9 w-auto object-contain"
+                style={{ width: 'auto', height: 'auto', maxHeight: '2.25rem' }}
+                priority
+              />
+            </Link>
+
+            <ul className="hidden lg:flex items-center gap-1">
+              {MENU.map((item) => {
+                const open = openId === item.id;
+                const active =
+                  isActive(item.href) || item.columns.some((c) => c.items.some((i) => isActive(i.href)));
+
+                return (
+                  <li key={item.id}>
+                    <button
+                      type="button"
+                      onClick={() => setOpenId(open ? null : item.id)}
+                      aria-expanded={open}
+                      aria-haspopup="true"
+                      className={`relative flex items-center gap-1.5 rounded-md px-4 py-2.5 text-[15px] font-medium transition-colors duration-200 ${
+                        overHero
+                          ? 'text-white/85 hover:text-white'
+                          : open || active
+                            ? 'text-[#0A4FA0]'
+                            : 'text-slate-700 hover:text-[#0A4FA0]'
+                      }`}
                     >
-                      <Link
-                        href={item.href}
-                        className={`flex items-center space-x-3 px-6 py-3 rounded-lg transition-all duration-300 group ${shouldHaveBackground ? 'text-gray-700 hover:bg-blue-50 hover:text-blue-600' : 'text-white hover:bg-white/10'}`}
-                        onClick={() => setIsOpen(false)}
+                      {item.label}
+                      <svg
+                        className={`h-3.5 w-3.5 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2.2}
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
                       >
-                        <svg className={`w-5 h-5 transition-colors ${shouldHaveBackground ? 'text-gray-500 group-hover:text-blue-600' : 'text-white/70 group-hover:text-white'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={item.icon} />
-                        </svg>
-                        <span className="font-medium">{item.label}</span>
-                      </Link>
-                    </motion.div>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+
+                      {active && !overHero && (
+                        <motion.span
+                          layoutId="nav-active"
+                          className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-[#0A4FA0]"
+                          transition={{ duration: reduceMotion ? 0 : 0.35, ease: EASE }}
+                        />
+                      )}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <div className="flex items-center gap-2">
+              <Link
+                href="/contacto#cotizar"
+                onClick={() => trackContactClick('form', 'header_cta')}
+                className={`hidden lg:inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-[15px] font-semibold transition-all duration-200 ${
+                  overHero
+                    ? 'border border-white/35 bg-white/10 text-white backdrop-blur-md hover:bg-white hover:text-[#073A78]'
+                    : 'bg-[#0A4FA0] text-white shadow-[0_12px_32px_-8px_rgba(10,79,160,0.38)] hover:-translate-y-px hover:bg-[#073A78]'
+                }`}
+              >
+                Cotizar proyecto
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12" />
+                </svg>
+              </Link>
+
+              <button
+                type="button"
+                onClick={() => setMobileOpen((v) => !v)}
+                aria-expanded={mobileOpen}
+                aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
+                className={`lg:hidden flex h-11 w-11 items-center justify-center rounded-lg border transition-colors ${
+                  overHero ? 'border-white/25 text-white' : 'border-slate-200 text-slate-800'
+                }`}
+              >
+                <span className="relative block h-4 w-5" aria-hidden="true">
+                  {[0, 1, 2].map((i) => (
+                    <motion.span
+                      key={i}
+                      className="absolute left-0 block h-[2px] w-full rounded-full bg-current"
+                      initial={false}
+                      animate={
+                        mobileOpen
+                          ? i === 1
+                            ? { opacity: 0, top: 7 }
+                            : { top: 7, rotate: i === 0 ? 45 : -45, opacity: 1 }
+                          : { top: i * 7, rotate: 0, opacity: 1 }
+                      }
+                      transition={{ duration: reduceMotion ? 0 : 0.25, ease: EASE }}
+                    />
                   ))}
-                </div>
-                
-                <div className="mt-6 px-6">
-                  <Link 
-                    href="/contacto" 
-                    className="btn-premium btn-premium-primary w-full"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                    Solicitar Cotización
-                  </Link>
+                </span>
+              </button>
+            </div>
+          </nav>
+        </div>
+
+        {/* ── Panel del mega-menú ──────────────────────────────────────── */}
+        <AnimatePresence>
+          {panel && (
+            <motion.div
+              key={panel.id}
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: reduceMotion ? 0 : 0.22, ease: EASE }}
+              className="absolute inset-x-0 top-full hidden lg:block border-b border-slate-200 bg-white shadow-[0_24px_48px_-24px_rgba(10,18,28,0.28)]"
+            >
+              <div className="container-premium">
+                <div className="grid gap-10 py-9 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)_minmax(0,1.1fr)]">
+                  <div className="border-r border-slate-100 pr-8">
+                    <p className="mb-3 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[#0E8FAB]">
+                      {panel.label}
+                    </p>
+                    <p className="mb-3 font-display text-2xl font-bold leading-[1.1] text-[#0A121C]">
+                      {panel.intro.title}
+                    </p>
+                    <p className="mb-5 text-[15px] leading-relaxed text-slate-600">{panel.intro.text}</p>
+                    <Link
+                      href={panel.intro.href}
+                      className="inline-flex items-center gap-2 text-[15px] font-semibold text-[#0A4FA0] underline-offset-4 hover:underline"
+                    >
+                      {panel.intro.cta}
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24" aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12" />
+                      </svg>
+                    </Link>
+                  </div>
+
+                  {panel.columns.map((col, ci) => (
+                    <div key={col.title}>
+                      <p className="mb-4 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">
+                        {col.title}
+                      </p>
+                      <ul className="space-y-0.5">
+                        {col.items.map((it, ii) => (
+                          <motion.li
+                            key={it.href}
+                            initial={{ opacity: 0, x: -6 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{
+                              duration: reduceMotion ? 0 : 0.25,
+                              delay: reduceMotion ? 0 : 0.03 + ci * 0.04 + ii * 0.025,
+                              ease: EASE,
+                            }}
+                          >
+                            <Link
+                              href={it.href}
+                              className="group flex items-baseline justify-between gap-4 rounded-md px-3 py-2 transition-colors duration-150 hover:bg-[#EAF2FC]"
+                            >
+                              <span
+                                className={`text-[15px] leading-snug transition-colors ${
+                                  it.strong
+                                    ? 'font-semibold text-[#0A4FA0]'
+                                    : 'font-medium text-slate-700 group-hover:text-[#0A4FA0]'
+                                }`}
+                              >
+                                {it.label}
+                              </span>
+                              {it.note && (
+                                <span className="shrink-0 font-mono text-[11px] uppercase tracking-wider text-slate-400">
+                                  {it.note}
+                                </span>
+                              )}
+                            </Link>
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
                 </div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
+
+      {/* ── Menú móvil ─────────────────────────────────────────────────── */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: reduceMotion ? 0 : 0.2 }}
+            className="lg:hidden fixed inset-x-0 bottom-0 top-16 overflow-y-auto overscroll-contain bg-white"
+          >
+            <div className="container-premium py-6">
+              {MENU.map((section, si) => (
+                <motion.section
+                  key={section.id}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: reduceMotion ? 0 : 0.3, delay: reduceMotion ? 0 : si * 0.06, ease: EASE }}
+                  className="border-b border-slate-100 py-5 first:pt-0"
+                >
+                  <Link href={section.href} className="mb-3 block font-display text-2xl font-bold text-[#0A121C]">
+                    {section.label}
+                  </Link>
+                  <div className="space-y-4">
+                    {section.columns.map((col) => (
+                      <div key={col.title}>
+                        <p className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">
+                          {col.title}
+                        </p>
+                        <ul>
+                          {col.items.map((it) => (
+                            <li key={it.href}>
+                              <Link
+                                href={it.href}
+                                className={`block py-2 text-[15px] ${
+                                  it.strong ? 'font-semibold text-[#0A4FA0]' : 'text-slate-700'
+                                }`}
+                              >
+                                {it.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </motion.section>
+              ))}
+
+              <div className="mt-6 space-y-3 border-t border-slate-200 pt-5">
+                <Link
+                  href="/contacto#cotizar"
+                  onClick={() => trackContactClick('form', 'header_mobile')}
+                  className="btn-premium btn-premium-primary w-full"
+                >
+                  Cotizar proyecto
+                </Link>
+                <a
+                  href={TEL_LINK}
+                  onClick={() => trackContactClick('phone', 'header_mobile')}
+                  className="flex items-center justify-center gap-2 py-2 font-semibold text-slate-700"
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                  {PHONE_DISPLAY}
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 }

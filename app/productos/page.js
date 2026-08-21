@@ -2,6 +2,17 @@ import Link from 'next/link';
 import ProductsSection from '../../components/ProductsSection';
 import StructuredData from '../../components/StructuredData';
 import Image from 'next/image';
+import QuickQuoteForm from '../../components/QuickQuoteForm';
+import RelatedLinks from '../../components/RelatedLinks';
+import { SECTORES } from '../../data/soluciones';
+import { TECNOLOGIAS } from '../../data/tecnologia';
+import { ZONAS } from '../../data/zonas';
+import { registerSectors, registerTech, registerZonas } from '../../lib/internal-links';
+import { whatsappLink } from '../../lib/site';
+
+registerSectors(SECTORES);
+registerTech(TECNOLOGIAS);
+registerZonas(ZONAS);
 
 // Configuración de rendering y caching
 export const revalidate = 3600; // ISR - Revalidar cada hora
@@ -15,15 +26,15 @@ export async function generateMetadata() {
   const productsCount = products.length;
   
   return {
-    title: 'Productos | Breezair Industrial México',
-    description: `Catálogo completo de ${productsCount} series de sistemas de enfriamiento evaporativo industrial Breezair. Series TBSI, EXS e Icon con hasta 87% de ahorro energético para naves industriales.`,
+    title: 'Catálogo de equipos Breezair',
+    description: `Catálogo de ${productsCount} series Breezair para enfriamiento evaporativo industrial: TBSI, EXS, Icon y soluciones a medida.`,
     openGraph: {
       title: 'Productos Breezair Industrial | Sistemas de Enfriamiento Evaporativo',
       description: `Descubre nuestra línea completa de ${productsCount} series Breezair: TBSI, EXS e Icon. Soluciones industriales con hasta 87% de ahorro energético.`,
       url: 'https://www.breezair.com.mx/productos',
       images: [
         {
-          url: '/images/og-productos.jpg',
+          url: '/images/og-image.jpg',
           width: 1200,
           height: 630,
           alt: 'Catálogo de productos Breezair Industrial'
@@ -31,7 +42,7 @@ export async function generateMetadata() {
       ]
     },
     alternates: {
-      canonical: 'https://www.breezair.com.mx/productos'
+      canonical: 'https://www.breezair.com.mx/productos/'
     }
   };
 }
@@ -342,13 +353,6 @@ export default async function ProductosPage() {
             "returnFees": "https://schema.org/FreeReturn"
           }
         },
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.8",
-          "reviewCount": "127",
-          "bestRating": "5",
-          "worstRating": "1"
-        },
         "additionalProperty": [
           {
             "@type": "PropertyValue",
@@ -403,6 +407,7 @@ export default async function ProductosPage() {
             src="/images/breezair-1.jpg"
             alt="Sistemas de enfriamiento evaporativo Breezair Industrial"
             fill
+            sizes="100vw"
             className="object-cover"
             style={{ filter: 'blur(1px)' }}
             priority
@@ -450,7 +455,7 @@ export default async function ProductosPage() {
             ].map((item, idx) => (
               <div key={idx} className="text-center">
                 <div className="flex justify-center mb-4">{item.icon}</div>
-                <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
+                <p className="font-semibold text-lg mb-2">{item.title}</p>
                 <p className="text-blue-200 text-sm">{item.desc}</p>
               </div>
             ))}
@@ -566,6 +571,43 @@ export default async function ProductosPage() {
         </div>
       </section>
 
+      <RelatedLinks
+        keys={[
+          'sector-naves-industriales',
+          'sector-centros-de-distribucion',
+          'sector-industria-alimentaria',
+          'sector-talleres-y-metalmecanica',
+          'sector-agroindustria',
+          'sector-espacios-comerciales',
+          'tecnologia',
+          'comparativa'
+        ]}
+        title="¿No sabes por dónde empezar? Busca tu instalación"
+        subtitle="La serie correcta depende del tipo de espacio, no del catálogo. Estas páginas explican cómo se resuelve cada uno."
+      />
+
+      {/* Captación en la propia página: elegir serie es el momento de máxima intención */}
+      <section id="cotizar" className="section-premium bg-slate-50 scroll-mt-24">
+        <div className="container-premium">
+          <div className="mx-auto max-w-3xl text-center mb-10">
+            <h2 className="heading-premium-2 mb-4 text-slate-800">
+              ¿No sabes qué serie necesitas?
+            </h2>
+            <p className="text-lg text-slate-600">
+              Dinos el tamaño de tu espacio y te decimos exactamente qué equipos necesitas,
+              cuántos y cuánto ahorrarías. Sin costo.
+            </p>
+          </div>
+          <div className="mx-auto max-w-3xl">
+            <QuickQuoteForm
+              context="productos"
+              title="Recomendación técnica sin costo"
+              subtitle="Un ingeniero analiza tu caso y te propone la serie correcta."
+            />
+          </div>
+        </div>
+      </section>
+
       {/* CTA final para contacto */}
       <section className="section-premium relative overflow-hidden bg-gradient-steel text-white">
         <div className="container-premium text-center py-20">
@@ -587,7 +629,7 @@ export default async function ProductosPage() {
             </Link>
             
             <a 
-              href="https://api.whatsapp.com/send/?phone=5255591975333&text=Hola%2C+estoy+en+breezair.com.mx+y+me+interesa+cotizar+sistemas+de+enfriamiento+evaporativo.&type=phone_number&app_absent=0"
+              href={whatsappLink('Hola, estoy en breezair.com.mx y me interesa cotizar sistemas de enfriamiento evaporativo.')}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-premium btn-premium-primary btn-premium-lg flex items-center justify-center gap-3"

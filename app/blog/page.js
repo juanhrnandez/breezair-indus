@@ -2,21 +2,31 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { getAllPosts } from '../../lib/posts'
 import StructuredData from '../../components/StructuredData'
+import { whatsappLink } from '../../lib/site'
+import RelatedLinks from '../../components/RelatedLinks'
+import { SECTORES } from '../../data/soluciones'
+import { TECNOLOGIAS } from '../../data/tecnologia'
+import { ZONAS } from '../../data/zonas'
+import { registerSectors, registerTech, registerZonas } from '../../lib/internal-links'
+
+registerSectors(SECTORES)
+registerTech(TECNOLOGIAS)
+registerZonas(ZONAS)
 
 // Configuración de rendering y caching
 export const revalidate = 3600; // ISR - Revalidar cada hora
 export const dynamic = 'force-static'; // Forzar generación estática cuando sea posible
 
 export const metadata = {
-  title: 'Blog - Breezair Industrial México | Artículos sobre Enfriamiento Evaporativo',
-  description: 'Artículos técnicos, guías especializadas y actualizaciones de la industria sobre sistemas de enfriamiento evaporativo industrial. Aprende sobre eficiencia energética, mantenimiento y mejores prácticas.',
+  title: 'Blog técnico',
+  description: 'Guías técnicas de enfriamiento evaporativo industrial: cálculo de renovaciones de aire, consumo de agua, diseño de instalaciones y mantenimiento.',
   openGraph: {
     title: 'Blog Técnico | Breezair Industrial México',
     description: 'Conocimiento especializado en enfriamiento evaporativo industrial. Artículos técnicos, casos de éxito y tendencias de la industria.',
     url: 'https://www.breezair.com.mx/blog',
     images: [
       {
-        url: '/images/og-blog.jpg',
+        url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Blog Técnico Breezair Industrial'
@@ -24,7 +34,7 @@ export const metadata = {
     ]
   },
   alternates: {
-    canonical: 'https://www.breezair.com.mx/blog'
+    canonical: 'https://www.breezair.com.mx/blog/'
   }
 }
 
@@ -134,7 +144,7 @@ export default function Blog(){
               ].map((item, idx) => (
                 <div key={idx} className="text-center">
                   <div className="flex justify-center mb-4">{item.icon}</div>
-                  <h3 className="font-semibold text-lg text-gray-900 mb-2">{item.title}</h3>
+                  <p className="font-semibold text-lg text-gray-900 mb-2">{item.title}</p>
                   <p className="text-gray-600 text-sm">{item.desc}</p>
                 </div>
               ))}
@@ -168,6 +178,9 @@ export default function Blog(){
       {/* Lista de artículos mejorada */}
       <section className="py-16 lg:py-20">
         <div className="container mx-auto px-4">
+          <h2 className="mb-10 text-3xl lg:text-4xl font-bold text-gray-900">
+            Todos los artículos
+          </h2>
           <div className="max-w-6xl mx-auto">
             {posts.length > 0 ? (
               <div className="grid lg:grid-cols-3 gap-8">
@@ -257,7 +270,7 @@ export default function Blog(){
                   <svg className="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Contenido en desarrollo</h3>
+                  <p className="text-xl font-semibold text-gray-900 mb-2">Contenido en desarrollo</p>
                   <p className="text-gray-600 mb-6">
                     Estamos preparando artículos técnicos especializados para compartir contigo. 
                     Pronto tendrás acceso a guías detalladas y casos de éxito.
@@ -322,7 +335,7 @@ export default function Blog(){
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
-              href="https://api.whatsapp.com/send/?phone=5255591975333&text=Hola%2C+vengo+del+blog+de+breezair.com.mx+y+necesito+asesoramiento+t%C3%A9cnico.&type=phone_number&app_absent=0"
+              href={whatsappLink('Hola, vengo del blog de breezair.com.mx y necesito asesoramiento técnico.')}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-3 px-8 py-4 border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white rounded-xl font-semibold transition-all duration-300"
@@ -344,6 +357,19 @@ export default function Blog(){
           </div>
         </div>
       </section>
+      <RelatedLinks
+        keys={[
+          'soluciones',
+          'tecnologia',
+          'cobertura',
+          'comparativa',
+          'productos',
+          'calculadora',
+        ]}
+        title="Del artículo a la solución"
+        subtitle="Las páginas donde el contenido técnico se convierte en un proyecto concreto."
+      />
+
     </div>
   )
 }

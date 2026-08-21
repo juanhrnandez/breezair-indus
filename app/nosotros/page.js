@@ -2,21 +2,33 @@ import AboutSection from '../../components/AboutSection';
 import StructuredData from '../../components/StructuredData';
 import Image from 'next/image';
 import Link from 'next/link';
+import RelatedLinks from '../../components/RelatedLinks';
+import ClientsBar from '../../components/ClientsBar';
+import { SECTORES } from '../../data/soluciones';
+import { TECNOLOGIAS } from '../../data/tecnologia';
+import { ZONAS } from '../../data/zonas';
+import { registerSectors, registerTech, registerZonas } from '../../lib/internal-links';
+import { PHONE_SCHEMA, EMAIL_SALES } from '../../lib/site';
+import { FUNDACION, EXPERIENCIA_TEXTO } from '../../lib/company';
+
+registerSectors(SECTORES);
+registerTech(TECNOLOGIAS);
+registerZonas(ZONAS);
 
 // Configuración para SSG optimizado
 export const revalidate = 86400; // Revalidar cada 24 horas
 export const dynamic = 'force-static'; // Forzar generación estática
 
 export const metadata = {
-  title: 'Acerca de Nosotros | CG International - Breezair Industrial México',
-  description: '25+ años de experiencia como distribuidores oficiales de Breezair en México. Más de 500 proyectos completados y líderes en enfriamiento evaporativo industrial sustentable.',
+  title: 'Quiénes somos',
+  description: 'Distribuidor oficial de Breezair y Seeley International en México. Ingeniería de proyecto, instalación y servicio post-venta con cobertura nacional.',
   openGraph: {
     title: 'Nosotros | CG International - Distribuidores Oficiales Breezair México',
     description: 'Conoce nuestra historia: 25+ años especializados en soluciones de enfriamiento industrial sustentable con más de 500 proyectos exitosos.',
     url: 'https://www.breezair.com.mx/nosotros',
     images: [
       {
-        url: '/images/og-nosotros.jpg',
+        url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'CG International - Historia y experiencia en México'
@@ -34,8 +46,8 @@ export default function NosotrosPage() {
     "alternateName": "Breezair Industrial México",
     "url": "https://www.breezair.com.mx",
     "logo": "https://www.breezair.com.mx/images/logo-cg-international.svg",
-    "description": "Distribuidores oficiales de Breezair en México desde 1999. Especialistas en sistemas de enfriamiento evaporativo industrial con más de 500 proyectos completados.",
-    "foundingDate": "1999",
+    "description": `Distribuidores oficiales de Breezair en México desde ${FUNDACION}. Especialistas en sistemas de enfriamiento evaporativo industrial con más de 500 proyectos completados.`,
+    "foundingDate": String(FUNDACION),
     "numberOfEmployees": "25-50",
     "address": {
       "@type": "PostalAddress",
@@ -46,16 +58,16 @@ export default function NosotrosPage() {
     "contactPoint": [
       {
         "@type": "ContactPoint",
-        "telephone": "+52-55-5555-5555",
+        "telephone": PHONE_SCHEMA,
         "contactType": "sales",
-        "email": "adm@cg.international",
+        "email": EMAIL_SALES,
         "availableLanguage": ["Spanish", "English"]
       },
       {
         "@type": "ContactPoint",
-        "telephone": "+52-55-5555-5556",
+        "telephone": PHONE_SCHEMA,
         "contactType": "technical support",
-        "email": "jorge@cg.international",
+        "email": EMAIL_SALES,
         "availableLanguage": ["Spanish", "English"]
       }
     ],
@@ -101,6 +113,7 @@ export default function NosotrosPage() {
             src="/images/breezair-1.jpg"
             alt="CG International - Instalaciones industriales Breezair"
             fill
+            sizes="100vw"
             className="object-cover"
             style={{ filter: 'blur(1px)' }}
             priority
@@ -119,7 +132,7 @@ export default function NosotrosPage() {
             <div className="w-3 h-3 bg-white rounded-full pulse-glow"></div>
             <span className="text-sm font-semibold tracking-wide">DISTRIBUIDORES OFICIALES</span>
             <div className="w-1 h-1 bg-white/40 rounded-full"></div>
-            <span className="text-xs opacity-80 font-medium">DESDE 1999</span>
+            <span className="text-xs opacity-80 font-medium">DESDE {FUNDACION}</span>
           </div>
 
           <h1 className="heading-premium-1 mb-8">
@@ -135,7 +148,7 @@ export default function NosotrosPage() {
 
           <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {[
-              { number: '25+', label: 'Años de Experiencia', icon: <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> },
+              { number: EXPERIENCIA_TEXTO.replace(' años', ''), label: 'Años de Experiencia', icon: <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> },
               { number: '500+', label: 'Proyectos Completados', icon: <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/></svg> },
               { number: '50+', label: 'Clientes Satisfechos', icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg> },
               { number: '87%', label: 'Ahorro Energético Promedio', icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> }
@@ -154,33 +167,33 @@ export default function NosotrosPage() {
       <section className="section-premium bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
           {/* Company Stats */}
-          <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8 mb-20">
+          <div className="mb-20 grid border-t border-slate-200 md:grid-cols-2 lg:grid-cols-4">
             {[
-              { number: '25+', label: 'Años de Experiencia', icon: <svg className="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> },
+              { number: EXPERIENCIA_TEXTO.replace(' años', ''), label: 'Años de Experiencia', icon: <svg className="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> },
               { number: '500+', label: 'Proyectos Completados', icon: <svg className="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/></svg> },
               { number: '50+', label: 'Clientes Satisfechos', icon: <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg> },
               { number: '87%', label: 'Ahorro Energético Promedio', icon: <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> }
             ].map((stat, index) => (
-              <div key={index} className="text-center group">
-                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:transform hover:-translate-y-2">
-                  <div className="flex justify-center mb-4">{stat.icon}</div>
-                  <div className="text-4xl font-bold text-gray-900 mb-2">{stat.number}</div>
-                  <div className="text-gray-600 font-medium">{stat.label}</div>
-                </div>
+              <div
+                key={index}
+                className={`py-7 ${index > 0 ? 'border-slate-200 md:border-l md:pl-8' : ''} ${index < 3 ? 'md:pr-8' : ''}`}
+              >
+                <div className="font-display text-4xl font-bold leading-none text-[#0A121C] tabular">{stat.number}</div>
+                <div className="mt-2.5 font-semibold leading-snug text-slate-800">{stat.label}</div>
               </div>
             ))}
           </div>
 
           {/* Mission & Vision */}
           <div className="grid lg:grid-cols-2 gap-12 mb-20">
-            <div className="bg-linear-to-br from-blue-50 to-white rounded-3xl p-8 lg:p-12">
+            <div className="rounded-2xl border border-slate-200 bg-white p-8 lg:p-10">
               <div className="inline-flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#EAF2FC] text-[#0A4FA0]">
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900">Nuestra Misión</h3>
+                <h2 className="font-display text-2xl font-bold uppercase tracking-tight text-[#0A121C]">Nuestra Misión</h2>
               </div>
               <p className="text-gray-700 leading-relaxed text-lg">
                 Proporcionar soluciones de enfriamiento evaporativo de clase mundial que maximicen 
@@ -190,15 +203,15 @@ export default function NosotrosPage() {
               </p>
             </div>
 
-            <div className="bg-linear-to-br from-gray-50 to-white rounded-3xl p-8 lg:p-12">
+            <div className="rounded-2xl border border-slate-200 bg-white p-8 lg:p-10">
               <div className="inline-flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-gray-700 rounded-2xl flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#EAF2FC] text-[#0A4FA0]">
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900">Nuestra Visión</h3>
+                <h2 className="font-display text-2xl font-bold uppercase tracking-tight text-[#0A121C]">Nuestra Visión</h2>
               </div>
               <p className="text-gray-700 leading-relaxed text-lg">
                 Ser reconocidos como la empresa líder en México en soluciones de climatización 
@@ -211,7 +224,7 @@ export default function NosotrosPage() {
 
           {/* Values Section */}
           <div className="text-center mb-16">
-            <h3 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">Nuestros Valores</h3>
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">Nuestros Valores</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Los principios que guían cada decisión y cada proyecto que desarrollamos.
             </p>
@@ -244,7 +257,7 @@ export default function NosotrosPage() {
                 <div className="flex items-start gap-4">
                   <div className="flex justify-center">{value.icon}</div>
                   <div>
-                    <h4 className="text-xl font-bold text-gray-900 mb-3">{value.title}</h4>
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">{value.title}</h3>
                     <p className="text-gray-700 leading-relaxed">
                       {value.description}
                     </p>
@@ -285,6 +298,15 @@ export default function NosotrosPage() {
           </div>
         </div>
       </section>
+
+      <ClientsBar tone="dark" />
+
+      <RelatedLinks
+        keys={['soluciones', 'productos', 'calculadora', 'blog']}
+        title="Explora nuestro trabajo"
+        subtitle="Soluciones por sector, catálogo de equipos y herramientas de dimensionamiento."
+        columns={4}
+      />
     </div>
   );
 }

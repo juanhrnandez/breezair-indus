@@ -2,39 +2,26 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
+import Link from 'next/link';
+import { trackLead, track } from '@/lib/analytics';
+import { getAttribution } from '@/lib/attribution';
+import { EMAIL_SALES, PHONE_DISPLAY, TEL_LINK, MAILTO_LINK, BUSINESS_HOURS, RESPONSE_PROMISE } from '@/lib/site';
 
 const contactInfo = [
   {
-    icon: <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>,
-    title: 'Oficinas Principales',
-    details: [
-      'Ciudad de México, México',
-      'Cobertura Nacional'
-    ]
+    icon: <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>,
+    title: 'Teléfono directo',
+    details: [PHONE_DISPLAY, BUSINESS_HOURS]
   },
   {
-    icon: <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>,
-    title: 'Contacto Directo',
-    details: [
-      'Ventas: (55) 5919-7533',
-      'Soporte: (55) 5919-7533'
-    ]
+    icon: <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>,
+    title: 'Correo comercial',
+    details: [EMAIL_SALES, RESPONSE_PROMISE]
   },
   {
-    icon: <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>,
-    title: 'Correo Electrónico',
-    details: [
-      'adm@cg.international',
-      'jorge@cg.international'
-    ]
-  },
-  {
-    icon: <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
-    title: 'Horario de Atención',
-    details: [
-      'Lun - Vie: 8:00 AM - 6:00 PM',
-      'Sab: 9:00 AM - 2:00 PM'
-    ]
+    icon: <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>,
+    title: 'Cobertura',
+    details: ['Ciudad de México · cobertura nacional', 'Instalación y servicio post-venta']
   }
 ];
 
@@ -71,7 +58,8 @@ export default function ContactSection() {
     inquiryType: '',
     projectSize: '',
     message: '',
-    acceptTerms: false
+    acceptTerms: false,
+    website: '' // honeypot anti-spam
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -96,11 +84,16 @@ export default function ContactSection() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          formName: 'contacto_completo',
+          attribution: getAttribution()
+        }),
       });
 
       if (response.ok) {
         setSubmitStatus('success');
+        trackLead('contacto_completo', { sector: formData.sector, inquiry_type: formData.inquiryType });
         setFormData({
           name: '',
           email: '',
@@ -110,14 +103,17 @@ export default function ContactSection() {
           inquiryType: '',
           projectSize: '',
           message: '',
-          acceptTerms: false
+          acceptTerms: false,
+          website: ''
         });
       } else {
         setSubmitStatus('error');
+        track('lead_form_error', { form: 'contacto_completo' });
       }
     } catch (error) {
       console.error('Error sending form:', error);
       setSubmitStatus('error');
+      track('lead_form_error', { form: 'contacto_completo' });
     } finally {
       setIsSubmitting(false);
     }
@@ -198,23 +194,20 @@ export default function ContactSection() {
             animate={isInView ? "visible" : "hidden"}
             className="lg:col-span-1"
           >
-            <div className="space-y-6 mb-12">
+            <div className="mb-10 grid gap-px overflow-hidden rounded-2xl border border-slate-200 bg-slate-200">
               {contactInfo.map((info, index) => (
-                <motion.div
-                  key={index}
-                  variants={itemVariants}
-                  className="card-premium p-6 hover-float group"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="flex justify-center items-center">{info.icon}</div>
-                    <div>
-                      <h3 className="heading-premium-4 text-steel-dark mb-3">{info.title}</h3>
-                      {info.details.map((detail, idx) => (
-                        <p key={idx} className="text-premium-body text-steel-light mb-1">
-                          {detail}
-                        </p>
-                      ))}
-                    </div>
+                <motion.div key={index} variants={itemVariants} className="flex gap-4 bg-white p-6">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#EAF2FC] text-[#0A4FA0]">
+                    {info.icon}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="mb-1 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
+                      {info.title}
+                    </p>
+                    <p className="font-semibold text-slate-900">{info.details[0]}</p>
+                    {info.details[1] && (
+                      <p className="mt-0.5 text-sm leading-snug text-slate-500">{info.details[1]}</p>
+                    )}
                   </div>
                 </motion.div>
               ))}
@@ -222,11 +215,11 @@ export default function ContactSection() {
 
             {/* Quick Actions */}
             <motion.div variants={itemVariants} className="card-premium p-8 text-center">
-              <h3 className="heading-premium-4 text-steel-dark mb-6">¿Necesitas Atención Inmediata?</h3>
+              <p className="heading-premium-4 text-steel-dark mb-6">¿Necesitas Atención Inmediata?</p>
               
               <div className="space-y-4">
                 <a 
-                  href="tel:+5255591975333" 
+                  href={TEL_LINK} 
                   className="btn-premium btn-premium-primary w-full"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -236,7 +229,7 @@ export default function ContactSection() {
                 </a>
                 
                 <a 
-                  href="mailto:adm@cg.international?subject=Consulta%20Urgente%20-%20Breezair%20Industrial" 
+                  href={`${MAILTO_LINK}?subject=${encodeURIComponent("Consulta urgente - Breezair Industrial")}`} 
                   className="btn-premium btn-premium-steel w-full"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -256,9 +249,9 @@ export default function ContactSection() {
             className="lg:col-span-2"
           >
             <div className="card-premium p-10">
-              <h3 className="heading-premium-3 text-steel-dark mb-8 text-center">
+              <h2 className="heading-premium-3 text-steel-dark mb-8 text-center">
                 CONTACTA NUESTROS ESPECIALISTAS
-              </h3>
+              </h2>
 
               {submitStatus && (
                 <div className={`p-4 rounded-xl mb-6 ${
@@ -284,7 +277,7 @@ export default function ContactSection() {
                 </div>
               )}
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form id="cotizar" onSubmit={handleSubmit} className="space-y-6 scroll-mt-28">
                 {/* Personal Information */}
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
@@ -330,7 +323,7 @@ export default function ContactSection() {
                       onChange={handleInputChange}
                       required
                       className="input-premium"
-                      placeholder="(55) 5919-7533"
+                      placeholder="55 1234 5678"
                     />
                   </div>
                   
@@ -404,6 +397,18 @@ export default function ContactSection() {
                   />
                 </div>
 
+                {/* Honeypot: invisible para humanos, irresistible para bots */}
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  value={formData.website}
+                  onChange={handleInputChange}
+                  className="absolute left-[-9999px] h-0 w-0 opacity-0"
+                />
+
                 <div>
                   <label className="block text-sm font-semibold text-steel-dark mb-3">
                     Mensaje Detallado *
@@ -431,9 +436,9 @@ export default function ContactSection() {
                   />
                   <label className="text-sm text-steel-light leading-relaxed">
                     Acepto el tratamiento de mis datos personales conforme a la{' '}
-                    <a href="/privacy" className="text-primary hover:underline font-medium">
-                      Política de Privacidad
-                    </a>{' '}
+                    <Link href="/aviso-de-privacidad" className="text-primary hover:underline font-medium">
+                      Aviso de Privacidad
+                    </Link>{' '}
                     y autorizo el contacto por parte del equipo comercial de CG International para 
                     fines relacionados con esta consulta.
                   </label>

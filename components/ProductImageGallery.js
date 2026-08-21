@@ -14,6 +14,7 @@ export default function ProductImageGallery({ images, title, badge }) {
           src={images[activeImageIndex] || images[0]}
           alt={`${title} - Vista ${activeImageIndex + 1}`}
           fill
+            sizes="(min-width: 1024px) 33vw, 100vw"
           className="object-cover transition-all duration-500"
           priority
         />
@@ -71,6 +72,7 @@ export default function ProductImageGallery({ images, title, badge }) {
               src={img}
               alt={`${title} vista ${index + 1}`}
               fill
+            sizes="(min-width: 1024px) 33vw, 100vw"
               className="object-cover"
             />
             {activeImageIndex === index && (

@@ -5,44 +5,85 @@
    ============================================ */
 
 :root {
-  /* Paleta Industrial Premium */
-  --color-primary: #2185e9;
-  --color-primary-dark: #002B5C;
-  --color-steel: #2F3A45;
-  --color-steel-light: #475569;
-  --color-steel-dark: #1e2832;
-  --color-metal: #F5F5F5;
-  --color-white: #FFFFFF;
-  
-  /* Gradientes industriales */
-  --gradient-hero: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 50%, var(--color-steel) 100%);
-  --gradient-primary: linear-gradient(135deg, var(--color-blue-600) 0%, #283746 100%);
-  --gradient-steel: linear-gradient(135deg, var(--color-steel) 0%, var(--color-steel-light) 100%);
-  --gradient-dark: linear-gradient(135deg, #1a1a1a 0%, var(--color-steel-dark) 100%);
-  --gradient-section: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(47,58,69,0.05) 100%);
-  
-  /* Sombras industriales */
-  --shadow-industrial-sm: 0 2px 8px rgba(0, 76, 151, 0.1);
-  --shadow-industrial-md: 0 8px 25px rgba(0, 76, 151, 0.15);
-  --shadow-industrial-lg: 0 20px 40px rgba(0, 76, 151, 0.2);
-  --shadow-industrial-xl: 0 35px 60px rgba(47, 58, 69, 0.3);
-  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
-  --shadow-card-hover: 0 12px 40px rgba(0, 76, 151, 0.25);
-  
-  /* Overlays */
-  --overlay-dark: rgba(0, 43, 92, 0.85);
-  --overlay-light: rgba(255, 255, 255, 0.95);
-  --overlay-steel: rgba(47, 58, 69, 0.75);
-  
-  /* Espaciado premium */
-  --spacing-section: 5rem;
-  --spacing-section-lg: 7rem;
-  --spacing-container: 2rem;
-  
-  /* Transiciones */
-  --transition-smooth: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-hover: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-reveal: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* ── Paleta: acero e ingeniería ──────────────────────────────────────────
+     Un azul dominante con autoridad, un cian de «aire frío» usado con avaricia
+     y una escala de grises con sesgo azul para que nada se vea inerte.        */
+  --ink:            #0A121C;   /* casi negro, con azul */
+  --ink-soft:       #1C2A3A;
+  --steel-900:      #16202C;
+  --steel-800:      #1F2D3D;
+  --steel-700:      #2C3E52;
+  --steel-500:      #55697F;
+  --steel-400:      #7A8CA1;
+  --steel-300:      #A9B7C6;
+  --steel-200:      #D2DAE3;
+  --steel-100:      #E8EDF2;
+  --steel-50:       #F4F7FA;
+
+  --brand:          #0A4FA0;   /* azul Breezair, profundizado a autoridad */
+  --brand-dark:     #073A78;
+  --brand-light:    #1E6FCC;
+  --brand-wash:     #EAF2FC;
+
+  --chill:          #22B8D6;   /* aire frío: acentos, datos, estados activos */
+  --chill-dark:     #0E8FAB;
+  --chill-wash:     #E3F7FB;
+
+  --signal-good:    #167A5B;
+  --signal-warn:    #A86A12;
+  --signal-alert:   #A93A22;
+
+  /* Compatibilidad con las clases existentes del sitio */
+  --color-primary:      var(--brand);
+  --color-primary-dark: var(--brand-dark);
+  --color-steel:        var(--steel-800);
+  --color-steel-light:  var(--steel-500);
+  --color-steel-dark:   var(--steel-900);
+  --color-metal:        var(--steel-50);
+  --color-white:        #FFFFFF;
+
+  /* ── Gradientes: sobrios, nunca decorativos ───────────────────────────── */
+  --gradient-hero:    linear-gradient(160deg, var(--steel-900) 0%, var(--brand-dark) 55%, var(--steel-800) 100%);
+  --gradient-primary: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+  --gradient-steel:   linear-gradient(135deg, var(--steel-800) 0%, var(--steel-700) 100%);
+  --gradient-dark:    linear-gradient(135deg, var(--ink) 0%, var(--steel-900) 100%);
+  --gradient-section: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(28,42,58,0.04) 100%);
+
+  /* ── Sombras: cortas y con color, como en producto físico ─────────────── */
+  --shadow-xs:  0 1px 2px rgba(10, 18, 28, 0.06);
+  --shadow-sm:  0 2px 6px rgba(10, 18, 28, 0.07);
+  --shadow-md:  0 8px 24px -6px rgba(10, 18, 28, 0.14);
+  --shadow-lg:  0 20px 48px -12px rgba(10, 18, 28, 0.20);
+  --shadow-xl:  0 32px 72px -16px rgba(10, 18, 28, 0.26);
+  --shadow-brand: 0 12px 32px -8px rgba(10, 79, 160, 0.38);
+
+  --shadow-industrial-sm: var(--shadow-sm);
+  --shadow-industrial-md: var(--shadow-md);
+  --shadow-industrial-lg: var(--shadow-lg);
+  --shadow-industrial-xl: var(--shadow-xl);
+  --shadow-card:          var(--shadow-sm);
+  --shadow-card-hover:    var(--shadow-lg);
+
+  --overlay-dark:  rgba(10, 18, 28, 0.86);
+  --overlay-light: rgba(255, 255, 255, 0.96);
+  --overlay-steel: rgba(31, 45, 61, 0.78);
+
+  /* ── Ritmo vertical ───────────────────────────────────────────────────── */
+  --spacing-section:    5.5rem;
+  --spacing-section-lg: 8rem;
+  --spacing-container:  2rem;
+
+  /* ── Altura de las barras del encabezado ──────────────────────────────── */
+  --utility-h: 2.5rem;
+  --nav-h:     4.75rem;
+  --nav-h-sm:  4rem;
+
+  /* ── Curvas: sin rebote; esto es equipo industrial, no un juguete ─────── */
+  --ease-out:   cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out:cubic-bezier(0.65, 0, 0.35, 1);
+  --transition-smooth: all 0.55s var(--ease-out);
+  --transition-hover:  all 0.25s var(--ease-out);
+  --transition-reveal: all 0.7s var(--ease-out);
 }
 
 /* ============================================
@@ -64,13 +105,59 @@ html, body, #__next {
 
 body {
   background: var(--color-white);
-  color: var(--color-steel);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--ink-soft);
+  font-family: var(--font-body), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-weight: 400;
-  line-height: 1.7;
+  font-size: 1.0625rem;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+
+/* Los titulares van en condensada: presencia industrial sin ocupar de más.
+   El ajuste óptico y el equilibrado de línea son lo que separa un titular
+   compuesto de uno simplemente escrito. */
+h1, h2, .font-display {
+  font-family: var(--font-display), var(--font-body), sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+h3, h4, h5, h6 {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+p { text-wrap: pretty; }
+
+/* Cifras que se comparan en columna deben alinearse */
+.tabular { font-variant-numeric: tabular-nums; }
+
+::selection {
+  background: var(--brand);
+  color: #fff;
+}
+
+/* El foco visible es parte del diseño, no un residuo del navegador */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--chill);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Scroll suave personalizado */
@@ -83,12 +170,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-primary);
+  background: var(--steel-300);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary-dark);
+  background: var(--steel-500);
 }
 
 /* ============================================
@@ -169,43 +256,37 @@ body {
   justify-content: center;
   gap: 0.75rem;
   padding: 1rem 2rem;
-  border-radius: 0.75rem;
+  border-radius: 0.5rem;
   font-weight: 600;
-  font-size: 1rem;
-  line-height: 1.5;
+  font-size: 0.9375rem;
+  letter-spacing: 0.005em;
+  line-height: 1.4;
   text-decoration: none;
-  transition: var(--transition-hover);
+  transition: background-color 0.2s var(--ease-out), border-color 0.2s var(--ease-out),
+              box-shadow 0.25s var(--ease-out), transform 0.2s var(--ease-out), color 0.2s var(--ease-out);
   cursor: pointer;
-  border: 2px solid;
+  border: 1px solid transparent;
   position: relative;
-  overflow: hidden;
-  backdrop-filter: blur(10px);
   transform: translateY(0);
 }
 
-.btn-premium::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-  transform: translateX(-100%);
-  transition: transform 0.6s;
-}
-
-.btn-premium:hover::before {
-  transform: translateX(100%);
-}
-
 .btn-premium-primary {
-  background: var(--color-primary);
-  color: white;
-  border-color: var(--color-primary);
-  box-shadow: var(--shadow-industrial-md);
+  background: var(--brand);
+  color: #fff;
+  border-color: var(--brand);
+  box-shadow: var(--shadow-brand);
 }
 
 .btn-premium-primary:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: var(--shadow-industrial-lg);
+  background: var(--brand-dark);
+  border-color: var(--brand-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 16px 36px -10px rgba(10, 79, 160, 0.46);
+}
+
+.btn-premium-primary:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-premium-outline {
@@ -223,14 +304,15 @@ body {
 }
 
 .btn-premium-steel {
-  background: var(--gradient-steel);
-  color: white;
-  box-shadow: var(--shadow-card);
+  background: transparent;
+  color: var(--brand);
+  border-color: var(--steel-200);
 }
 
 .btn-premium-steel:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-card-hover);
+  background: var(--brand-wash);
+  border-color: var(--brand);
+  color: var(--brand-dark);
 }
 
 .btn-premium-lg {
@@ -244,56 +326,59 @@ body {
    ============================================ */
 
 .heading-premium-1 {
-  font-size: clamp(2.5rem, 4vw, 5.5rem);
-  font-weight: 800;
-  line-height: 1.1;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.75rem, 6.5vw, 5.25rem);
+  font-weight: 700;
+  line-height: 0.98;
   color: var(--color-white);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   margin-bottom: 1.5rem;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 .heading-title {
-  font-size: clamp(3rem, 8vw, 5.5rem);
-  font-weight: 800;
-  line-height: 1.1;
-  color: rgb(21, 78, 175);
-  letter-spacing: -0.02em;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.75rem, 7vw, 5rem);
+  font-weight: 700;
+  line-height: 0.98;
+  color: var(--brand);
+  letter-spacing: -0.01em;
   margin-bottom: 1.5rem;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .heading-premium-2 {
-  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
   font-weight: 700;
-  line-height: 1.2;
-  color: var(--color-gray-600);
-  letter-spacing: -0.015em;
-  margin-bottom: 1.5rem;
+  line-height: 1.05;
+  color: var(--ink);            /* antes apuntaba a una variable inexistente */
+  letter-spacing: -0.008em;
+  margin-bottom: 1.25rem;
 }
 
 .heading-premium-title {
-  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.05;
   color: var(--color-white);
-  letter-spacing: -0.015em;
-  margin-bottom: 1.5rem;
+  letter-spacing: -0.008em;
+  margin-bottom: 1.25rem;
 }
 
 .heading-premium-3 {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  font-weight: 600;
-  line-height: 1.3;
-  color: var(--color-steel);
+  font-family: var(--font-display), sans-serif;  /* titular de sección, no de tarjeta */
+  font-size: clamp(1.5rem, 3vw, 2.125rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ink);
+  letter-spacing: -0.006em;
   margin-bottom: 1rem;
 }
 
 .text-premium-hero {
   font-size: clamp(1.25rem, 3vw, 1.5rem);
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.88);
   margin-bottom: 2rem;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .text-premium-large {
@@ -316,10 +401,9 @@ body {
 }
 
 .text-gradient-premium {
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* Antes era texto relleno con degradado. En una marca industrial el color
+     sólido lee mejor y es más legible a tamaños pequeños. */
+  color: var(--brand);
   font-weight: 700;
 }
 .text-gradient-premium-testimonials {

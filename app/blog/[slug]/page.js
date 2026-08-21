@@ -1,12 +1,19 @@
 import { getPostBySlug, getAllPosts } from '../../../lib/posts'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import RelatedLinks from '@/components/RelatedLinks'
+import { SECTORES } from '@/data/soluciones'
+import { TECNOLOGIAS } from '@/data/tecnologia'
+import { ZONAS } from '@/data/zonas'
+import { registerSectors, registerTech, registerZonas } from '@/lib/internal-links'
+import { whatsappLink } from '@/lib/site'
 import Image from 'next/image'
 import StructuredData from '../../../components/StructuredData'
 
 // Generar metadata dinámico para cada post
 export async function generateMetadata({ params }) {
-  const post = getPostBySlug(params.slug)
+  const { slug } = await params;
+  const post = getPostBySlug(slug)
   
   if (!post) {
     return {
@@ -43,7 +50,7 @@ export async function generateMetadata({ params }) {
       images: [`/images/blog/${post.slug}.jpg`]
     },
     alternates: {
-      canonical: `https://www.breezair.com.mx/blog/${post.slug}`
+      canonical: `https://www.breezair.com.mx/blog/${post.slug}/`
     }
   }
 }
@@ -57,8 +64,13 @@ export function generateStaticParams() {
   }))
 }
 
-export default function Post({ params }) {
-  const post = getPostBySlug(params.slug)
+registerSectors(SECTORES)
+registerTech(TECNOLOGIAS)
+registerZonas(ZONAS)
+
+export default async function Post({ params }) {
+  const { slug } = await params;
+  const post = getPostBySlug(slug)
   const allPosts = getAllPosts()
   
   if (!post) {
@@ -70,19 +82,47 @@ export default function Post({ params }) {
     .filter(p => p.slug !== post.slug && (p.category === post.category || allPosts.length <= 3))
     .slice(0, 2)
 
-  // Función auxiliar para renderizar texto con negritas
+  // Renderiza enlaces markdown dentro de una cadena de texto plano.
+  const LINK_CLASS = 'font-medium text-blue-600 underline underline-offset-2 hover:text-blue-800'
+
+  const renderLinks = (text, keyPrefix) =>
+    text.split(/(\[[^\]]+?\]\([^)]+?\))/g).map((part, i) => {
+      const match = /^\[([^\]]+?)\]\(([^)]+?)\)$/.exec(part)
+      if (!match) return part
+
+      const [, label, href] = match
+      const key = `${keyPrefix}-${i}`
+
+      if (/^https?:\/\//.test(href)) {
+        return (
+          <a key={key} href={href} target="_blank" rel="noopener noreferrer" className={LINK_CLASS}>
+            {label}
+          </a>
+        )
+      }
+
+      return (
+        <Link key={key} href={href} className={LINK_CLASS}>
+          {label}
+        </Link>
+      )
+    })
+
+  // Renderiza el formato en línea: negritas y enlaces, incluidos los enlaces
+  // que van dentro de una negrita —el caso de las listas de sectores—.
   const renderTextWithBold = (text) => {
-    // Usar una expresión regular global para capturar TODOS los casos de **texto**
     const parts = text.split(/(\*\*[^*]+?\*\*)/g)
+
     return parts.map((part, partIndex) => {
       if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
         return (
           <strong key={partIndex} className="font-semibold text-gray-900">
-            {part.slice(2, -2)} {/* Remover los ** del inicio y final */}
+            {renderLinks(part.slice(2, -2), `b${partIndex}`)}
           </strong>
         )
       }
-      return part
+
+      return renderLinks(part, `t${partIndex}`)
     })
   }
 
@@ -178,7 +218,7 @@ export default function Post({ params }) {
       if (section.trim()) {
         return (
           <p key={index} className="text-gray-700 leading-relaxed mb-6">
-            {section}
+            {renderTextWithBold(section)}
           </p>
         )
       }
@@ -395,6 +435,23 @@ export default function Post({ params }) {
         </div>
       </article>
 
+      {/* Enlaces internos: llevar al lector del artículo a la página que resuelve su caso */}
+      <RelatedLinks
+        keys={[
+          'sector-naves-industriales',
+          'sector-centros-de-distribucion',
+          'sector-industria-alimentaria',
+          'blog-renovaciones',
+          'blog-salida-aire',
+          'comparativa',
+          'tecnologia',
+          'cobertura',
+          'calculadora',
+        ]}
+        title="¿Cuál es tu caso?"
+        subtitle="Cada sector tiene su propio diseño, sus propios límites y sus propias cifras."
+      />
+
       {/* CTA de contacto */}
       <section className="py-16 bg-gradient-to-r from-blue-50 to-blue-100">
         <div className="container mx-auto px-4">
@@ -409,7 +466,7 @@ export default function Post({ params }) {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a 
-                href={`https://api.whatsapp.com/send/?phone=5255591975333&text=Hola%2C+le%C3%AD+el+art%C3%ADculo+${encodeURIComponent(post.title)}+y+me+interesa+una+consulta+t%C3%A9cnica.&type=phone_number&app_absent=0`}
+                href={whatsappLink(`Hola, leí el artículo ${post.title} y me interesa una consulta técnica.`)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-3 px-8 py-4 border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white rounded-xl font-semibold transition-all duration-300"
